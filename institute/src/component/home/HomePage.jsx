@@ -11,11 +11,10 @@ import profile2 from '../../images/pro2.webp'
 import profile3 from '../../images/pro3.webp'
 import profile4 from '../../images/pro4.webp'
 import { FaGraduationCap,FaInstagram ,FaFacebookF ,FaTwitter } from "react-icons/fa";
-
 import { MdStarRate } from "react-icons/md";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 import { useState } from "react"
-
+import MyCarousel from './MyCarousel'
 const HomePage=(props)=>{
 
     const[modalLogin,setModalLogin]=useState(false);
@@ -209,6 +208,9 @@ const HomePage=(props)=>{
                 </div>
             </section>
 
+            <br/>
+            <MyCarousel/>
+            <br/>
             {/* registration section */}
 
             <section id="registration">
