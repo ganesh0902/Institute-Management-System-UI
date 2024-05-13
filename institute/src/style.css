@@ -199,7 +199,7 @@ nav .navigation ul li .NavLink:hover{
 /* course */
 
 #course{
-  padding: 8vw 8vw 0 8vw;
+  padding: 4vw 8vw 0 8vw;
   text-align: center;
 }
 
@@ -210,6 +210,7 @@ nav .navigation ul li .NavLink:hover{
   margin-top: 50px;
   border-radius: 20px;
   margin-bottom: 20px;  
+  margin-right: 10px;
 }
 #course .course-box .course-box-link{
   text-decoration: none;
@@ -248,8 +249,8 @@ nav .navigation ul li .NavLink:hover{
   background-color: rgb(74,74, 136);
   color: #f9f9ff;
   position: absolute;
-  right: 15px;
-  bottom: 100px;  
+  right: 5px;
+  bottom: 40px;  
 }
 
 /* end course  */

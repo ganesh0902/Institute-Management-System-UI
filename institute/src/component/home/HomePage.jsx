@@ -14,7 +14,7 @@ import { FaGraduationCap,FaInstagram ,FaFacebookF ,FaTwitter } from "react-icons
 import { MdStarRate } from "react-icons/md";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 import { useState } from "react"
-import MyCarousel from './MyCarousel'
+import CourseCarousel from './CourseCarousel'
 const HomePage=(props)=>{
 
     const[modalLogin,setModalLogin]=useState(false);
@@ -90,130 +90,13 @@ const HomePage=(props)=>{
                 </div>                                                
             </div>
 
-            {/* courses  */}
-            <section id="course">
-                <h1> Our Popular Courses </h1>
-                <p> Replenish Man Have Thing Gathering lights yielding shall you </p>
-                <div className="course-box">
-                    <Link to="#" className="course-box-link">
-                    <div className="courses">
-                        <img src={c1}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                    </Link>
-                    <div className="courses">
-                        <img src={c2}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                    <div className="courses">
-                        <img src={c3}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                    <div className="courses">
-                        <img src={c4}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                    <div className="courses">
-                        <img src={c5}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                    <div className="courses">
-                        <img src={c6}  alt=""/>
-                        <div className="details">
-                            <span> Updated 09/02/2024</span>
-                            <h6> JavaScript Beginners Course </h6>
-                            <div className="start">
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <MdStarRate/>
-                                <span>(202)</span>
-                            </div>
-                        </div>
-                        <div className="cost">
-                            $49.99
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+            {/* courses  */}            
             <br/>
-            <MyCarousel/>
+            <CourseCarousel/>
             <br/>
             {/* registration section */}
 
-            <section id="registration">
+            <section id="registration" className="mt-4">
                 <div className="reminder">
                     <p> Get 100 online courses free </p>
                     <h2> Register to Get It</h2>
