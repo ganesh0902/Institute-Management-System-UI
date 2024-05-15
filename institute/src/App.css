@@ -140,6 +140,7 @@ body {
   grid-template-areas:
     'sidebar header header header'
     'sidebar main main main';
+    height: 100vh;
   
 }
 
@@ -154,14 +155,6 @@ body {
   background-color: #263043;
   color: white;
   box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-}
-.c-main-component{
-
-  height: 100vh;
-}
-.course-container{
-
-  height: 85vh;
 }
 .course-header{
   padding: 10px;
@@ -299,10 +292,8 @@ body {
 
  /* Main  */
  .main-container-course{
-
   overflow-y: auto;
-  height: 92vh;
-  padding: 20px 20px;
+  height: 92vh;  
   color: rgba(255, 255, 255, 0.95);
   background-color: #B7C9F2;
 

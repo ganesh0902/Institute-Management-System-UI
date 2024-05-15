@@ -159,7 +159,14 @@ const Course =()=>{
 
       const data=[
         {
-            courseName:"Java Development",
+            courseName:"python Development",
+            description:"This is course for Java Development",
+            skills:"Java, Spring boot, Hibernate",
+            fees:"2000",
+            lastUpdatedDate:"02/09/2002"
+        },
+        {
+            courseName:"sql Development",
             description:"This is course for Java Development",
             skills:"Java, Spring boot, Hibernate",
             fees:"2000",
@@ -446,21 +453,14 @@ const Course =()=>{
             lastUpdatedDate:"02/09/2002"
         },
         {
-            courseName:"Java Development",
+            courseName:"android Development",
             description:"This is course for Java Development",
             skills:"Java, Spring boot, Hibernate",
             fees:"2000",
             lastUpdatedDate:"02/09/2002"
         },
         {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
+            courseName:"power BI Development",
             description:"This is course for Java Development",
             skills:"Java, Spring boot, Hibernate",
             fees:"2000",
@@ -966,16 +966,26 @@ const Course =()=>{
                 
 
       ]
+
+      const[records,setRecords]=useState(data);
+
+      const handleFilter=(event)=>{
+        const newData=data.filter(row=>{
+            return row.courseName.toLowerCase().includes(event.target.value.toLowerCase());
+        })
+        setRecords(newData);
+      }
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
             <div className='containers' style={{paddingTop:"10px"}}>
-                <div style={{ height: '70vh' }}>
-                <div style={{float:"right"}}> <input type="text"></input> </div>
+                <div>
+                <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
                 <DataTable columns={column}
                             data={data}
                             selectableRows                            
                             fixedHeader   
+                            pagination
                             paginationPerPage={5} // items per page
                             paginationRowsPerPageOptions={[5, 10, 15]} // available per page options                                                                                                 
                             ></DataTable>
