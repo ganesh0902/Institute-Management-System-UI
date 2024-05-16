@@ -1,13 +1,11 @@
 import { useState,useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import {saveCourse} from '../apis/apiServices'
 import axios from 'axios';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import {Formik,Form,Field,ErrorMessage, useFormik} from 'formik'
 import * as Yup from 'yup';
 import e from 'cors';
 import DataTable from 'react-data-table-component';
+import { BsPencil, BsTrash, BsEye } from 'react-icons/bs';
 
 const CourseSchema =Yup.object().shape({
     courseName:Yup.string().required("course Name is Mandatory"),
@@ -148,19 +146,32 @@ const Course =()=>{
         {
             name:"Fees",            
             selector:row=>row.fees,
-            sortable:true
+            sortable:true,
+            width:'100px'
         },
         {
             name:"Last Updated Date",
             selector:row=>row.lastUpdatedDate,
-            sortable:true
-        },
+            sortable:true,
+            width:'110px'
+        },        
         {
-            name:"Action",
-            selector:row=>row.Action,
-            sortable:true
-        }
+            name: 'Action',
+            cell: row =>(
+                <div className='courseButtons' >
+                    <BsPencil className="courseUpdate" onClick={() => handleButtonClick(row)} />
+                    <BsTrash className="courseDelete" onClick={() => handleButtonClick(row)} />
+                    <BsEye className="courseView" onClick={() => handleButtonClick(row)} />
+                </div>
+            ),            
+            button: true,
+            width:'280px'
+          },
       ]
+      const handleButtonClick = (row) => {
+        console.log('Button clicked for row:', row);
+        // You can handle button click here
+      };
 
       const data=[
         {
@@ -986,14 +997,16 @@ const Course =()=>{
             <div className='containers' style={{paddingTop:"10px"}}>
                 <div>
                 <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
-                <DataTable columns={column}
+                <div className=''>
+                <DataTable className='course-pagination' columns={column }
                             data={data}
                             selectableRows                            
                             fixedHeader   
                             pagination
                             paginationPerPage={5} // items per page
-                            paginationRowsPerPageOptions={[5, 10, 15]} // available per page options                                                                                                 
+                            paginationRowsPerPageOptions={[5, 10, 15]} // available per page options                                                                                                                         
                             ></DataTable>
+                </div>
                 </div>
             </div>                                
             </div>
