@@ -153,12 +153,15 @@ nav .navigation ul li .NavLink:hover{
   background-color: #fff;
   color:rgb(21, 21, 100);
 }
+.home-page{
+
+  height: 100vh;
+}
 
 /* end home  */
 
 /* features */
 #features{
-
   padding: 5vw 8vw 0 8vw;
   text-align: center;
 }

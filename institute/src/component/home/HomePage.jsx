@@ -49,8 +49,6 @@ const HomePage=(props)=>{
     const submitRegistration=()=>{
         console.log("Registration Save");
     }
-
-
     return(
         <div>
              <NavigationBar modalAction={()=>modalAction()}/> 

@@ -154,6 +154,11 @@ const Course =()=>{
             name:"Last Updated Date",
             selector:row=>row.lastUpdatedDate,
             sortable:true
+        },
+        {
+            name:"Action",
+            selector:row=>row.Action,
+            sortable:true
         }
       ]
 
@@ -163,7 +168,7 @@ const Course =()=>{
             description:"This is course for Java Development",
             skills:"Java, Spring boot, Hibernate",
             fees:"2000",
-            lastUpdatedDate:"02/09/2002"
+            lastUpdatedDate:"02/09/2002",            
         },
         {
             courseName:"sql Development",

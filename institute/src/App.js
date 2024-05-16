@@ -34,7 +34,7 @@ const openSidebar=()=>{
   <Router>
       {
         !login && 
-        <div>
+        <div className='home-page'>
           <NavigationBar/>
           <HomePage loginStatus={loginStatus}/>          
         </div>        
