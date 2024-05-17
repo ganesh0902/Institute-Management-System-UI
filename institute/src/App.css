@@ -188,8 +188,12 @@ body {
   background-color: white;
   cursor: pointer;
   outline: none;
-  font-size: 20px;
+  font-size: 30px;
   margin: 8px;
+  background-color: #2C4E80;
+  color: white;
+  padding: 5px;
+  
 }
 .courseDelete{  
   color: black;
@@ -198,8 +202,11 @@ body {
   background-color: white;
   cursor: pointer;
   outline: none;
-  font-size: 20px;
+  font-size: 30px;
+  color: #F3F8FF;
   margin: 6px;
+  background-color: #E72929;
+  padding: 5px;
 }
 .courseView{ 
   color: black;
@@ -208,11 +215,21 @@ body {
   background-color: white;
   cursor: pointer;
   outline: none;
-  font-size: 20px;
+  font-size: 30px;
   margin: 6px;
+  padding: 5px;
+  background-color: #7077A1;
+  color: #fff;
+
 }
 .courseUpdate:hover {
   background-color: #0056b3; /* Darker color on hover */
+}
+.courseDelete:hover {
+  background-color: #D37676; /* Darker color on hover */
+}
+.courseView:hover {
+  background-color: #6DC5D1; /* Darker color on hover */
 }
 .courseButtons{
   display: flex;

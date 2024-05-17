@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import e from 'cors';
 import DataTable from 'react-data-table-component';
 import { BsPencil, BsTrash, BsEye } from 'react-icons/bs';
+import Swal from 'sweetalert2'
 
 const CourseSchema =Yup.object().shape({
     courseName:Yup.string().required("course Name is Mandatory"),
@@ -160,7 +161,7 @@ const Course =()=>{
             cell: row =>(
                 <div className='courseButtons' >
                     <BsPencil className="courseUpdate" onClick={() => handleButtonClick(row)} />
-                    <BsTrash className="courseDelete" onClick={() => handleButtonClick(row)} />
+                    <BsTrash className="courseDelete" onClick={() => deleteRecord(row)} />
                     <BsEye className="courseView" onClick={() => handleButtonClick(row)} />
                 </div>
             ),            
@@ -172,6 +173,27 @@ const Course =()=>{
         console.log('Button clicked for row:', row);
         setNewCourse(!addCourse);        
       };
+
+     const deleteRecord=(row)=>{
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your record has been deleted.",
+                icon: "success"
+              });
+            }
+          });
+     } 
 
       const data=[
         {
@@ -991,6 +1013,8 @@ const Course =()=>{
         })
         setRecords(newData);
       }
+
+
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
@@ -1003,7 +1027,7 @@ const Course =()=>{
                             fixedHeader   
                             pagination
                             paginationPerPage={5} // items per page
-                            paginationRowsPerPageOptions={[5, 10, 15,25,30,35]} // available per page options                                                                                                                         
+                            paginationRowsPerPageOptions={[5,8,10,15,18]} // available per page options                                                                                                                         
                             ></DataTable>                      
             </div>                                
             </div>
@@ -1058,7 +1082,8 @@ const Course =()=>{
                     </Row>
                 </form>
                 </ModalBody>
-            </Modal>                            
+            </Modal> 
+                                       
         </main>
     )
 }
