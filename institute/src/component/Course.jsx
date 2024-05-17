@@ -170,7 +170,7 @@ const Course =()=>{
       ]
       const handleButtonClick = (row) => {
         console.log('Button clicked for row:', row);
-        // You can handle button click here
+        setNewCourse(!addCourse);        
       };
 
       const data=[
@@ -994,20 +994,17 @@ const Course =()=>{
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
-            <div className='containers' style={{paddingTop:"10px"}}>
-                <div>
+            <div className='containers' style={{paddingTop:"10px"}}>                
                 <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
-                <div className=''>
+                <div style={{float:"right"}}> <button className="btn btn-primary p-2 pl-3 mt-1" onClick={()=>setNewCourse(!addCourse)}> Add new Course </button></div>          
                 <DataTable className='course-pagination' columns={column }
                             data={data}
                             selectableRows                            
                             fixedHeader   
                             pagination
                             paginationPerPage={5} // items per page
-                            paginationRowsPerPageOptions={[5, 10, 15]} // available per page options                                                                                                                         
-                            ></DataTable>
-                </div>
-                </div>
+                            paginationRowsPerPageOptions={[5, 10, 15,25,30,35]} // available per page options                                                                                                                         
+                            ></DataTable>                      
             </div>                                
             </div>
             <Modal size="lg" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">
