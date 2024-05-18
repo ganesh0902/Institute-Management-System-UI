@@ -1,11 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
-import c1 from '../../images/c1.jpg'
-import c2 from '../../images/c2.jpg'
-import c3 from '../../images/c3.jpg'
-import c4 from '../../images/c4.jpg'
-import c5 from '../../images/c5.jpg'
-import c6 from '../../images/c6.jpg'
 import profile from '../../images/pro1.webp'
 import profile2 from '../../images/pro2.webp'
 import profile3 from '../../images/pro3.webp'
@@ -128,7 +122,7 @@ const HomePage=(props)=>{
                 <h1> Community Expert </h1>
                 <p> Replenish Man Have Thing Gathering lights yielding shall you </p>
                 <div className="expert-box">
-                    <div className="profile">
+                    <div className="profile shadow">
                         <img src={profile}></img>
                         <h6> Sakshi </h6>
                         <p> Python and Angular Expert </p>
@@ -136,7 +130,7 @@ const HomePage=(props)=>{
                             <NavLink to=""  className="icon"> <FaInstagram/></NavLink>
                             <NavLink to="" className="icon"> <FaFacebookF /> </NavLink> 
                             <NavLink to="" className="icon"> <FaTwitter/> </NavLink> 
-                        </div>
+                        </div>                        
                     </div>
                     <div className="profile">
                         <img src={profile2}></img>

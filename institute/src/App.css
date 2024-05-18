@@ -1,11 +1,73 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1d2634;
+  background-color: #F1F0FF;
   color: #9e9ea4;
   font-family: 'Montserrat', sans-serif;
   height: 96vh;
 }
+
+.custom-multiselect-panel {
+  z-index: 2051 !important; /* z-index  property set for course component to add subject names*/  
+  background-color: #f9f9f9;
+  color: #f9f9f9;
+}
+.custom-floatlabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: #F3F8FF !important;        
+}
+
+
+.custom-multiselect-panel .p-multiselect-item .p-checkbox .p-checkbox-box {
+  border: 2px solid #007ad9; /* Change the border color */
+  border-radius: 3px; /* Adjust border radius */
+  width: 18px; /* Adjust size */
+  height: 18px; /* Adjust size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F3F8FF;
+  border-color: #B5C0D0;   
+}
+/* Custom style for the MultiSelect label */
+.custom-floatlabel label {
+  color: #F3F8FF !important; /* Change this to your desired color */
+  font-weight: bold; /* Optional: Change font weight */
+  
+}
+
+/* Custom style for the MultiSelect input field */
+.custom-multiselect .p-multiselect {
+  background-color: #f0f0f0 ; /* Background color of the input field */
+  color:#F3F8FF; /* Text color of the input field */
+  border: 1px solid #ccc; /* Border color of the input field */  
+  }
+
+.custom-multiselect .p-multiselect:focus {
+  border-color: #B5C0D0; /* Border color when the input field is focused */
+}
+
+.custom-multiselect .p-multiselect .p-multiselect-label {
+  color: #fff; /* Text color of the label */
+  background-color: red !important;
+}
+.custom-multiselect .p-multiselect .p-multiselect-label:hover {
+  color: #B5C0D0; /* Text color of the label */
+  background-color: #263043;
+}
+
+.custom-multiselect-panel .p-multiselect-item:hover .p-checkbox .p-checkbox-box {
+  background-color: #e6f7ff; /* Change background on hover */
+  border-color: #B5C0D0;  /* Change border color on hover */
+  
+}
+.custom-multiselect {
+  width: 100% !important;
+  background-color: red !important;
+}
+
 .user-profile img{
   width: 40px;
   height: 40px;
@@ -40,7 +102,6 @@ body {
   font-size: medium;
   font-weight: bold;
 }
-
 
 .user-profile-modals .change-password-button{
   text-decoration: none;

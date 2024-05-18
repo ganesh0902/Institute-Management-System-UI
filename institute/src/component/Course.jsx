@@ -7,6 +7,10 @@ import e from 'cors';
 import DataTable from 'react-data-table-component';
 import { BsPencil, BsTrash, BsEye } from 'react-icons/bs';
 import Swal from 'sweetalert2'
+import { InputText } from 'primereact/inputtext';
+import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
+import { MultiSelect } from 'primereact/multiselect';
+import { FloatLabel } from 'primereact/floatlabel';                
 
 const CourseSchema =Yup.object().shape({
     courseName:Yup.string().required("course Name is Mandatory"),
@@ -27,12 +31,22 @@ const Course =()=>{
     const[description,setDescription]=useState("");
     const[skills,setSkills]=useState("");
     const[fees,setFees]=useState(0);
-        
+    const[updateToggle,setUpdateToggle]=useState(false);        
    const[allCourses,setAllCourses]=useState([]);
     const API_SAVE_COURSE="http://localhost:9001/course/";
     const[apiError,setApiError]=useState("");    
+    const [value, setValue] = useState('');
 
     const[courseNames,setCourseNames]=useState("");
+    const [selectedCities, setSelectedCities] = useState(null);
+    const cities = [
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+    ];
+
 
     const initialValues = {
         courseName: '',
@@ -160,18 +174,20 @@ const Course =()=>{
             name: 'Action',
             cell: row =>(
                 <div className='courseButtons' >
-                    <BsPencil className="courseUpdate" onClick={() => handleButtonClick(row)} />
+                    <BsPencil className="courseUpdate" onClick={() => updateCourse(row)} />
                     <BsTrash className="courseDelete" onClick={() => deleteRecord(row)} />
-                    <BsEye className="courseView" onClick={() => handleButtonClick(row)} />
+                    <BsEye className="courseView" onClick={() => updateCourse(row)} />
                 </div>
             ),            
             button: true,
             width:'280px'
           },
       ]
-      const handleButtonClick = (row) => {
+      const updateCourse = (row) => {
         console.log('Button clicked for row:', row);
-        setNewCourse(!addCourse);        
+
+        setUpdateToggle(!updateToggle);
+        //setNewCourse(!addCourse);        
       };
 
      const deleteRecord=(row)=>{
@@ -1012,8 +1028,7 @@ const Course =()=>{
             return row.courseName.toLowerCase().includes(event.target.value.toLowerCase());
         })
         setRecords(newData);
-      }
-
+      }      
 
     return(
         <main className='main-container-course'>
@@ -1022,12 +1037,12 @@ const Course =()=>{
                 <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
                 <div style={{float:"right"}}> <button className="btn btn-primary p-2 pl-3 mt-1" onClick={()=>setNewCourse(!addCourse)}> Add new Course </button></div>          
                 <DataTable className='course-pagination' columns={column }
-                            data={data}
+                            data={allCourses}
                             selectableRows                            
                             fixedHeader   
                             pagination
                             paginationPerPage={5} // items per page
-                            paginationRowsPerPageOptions={[5,8,10,15,18]} // available per page options                                                                                                                         
+                            paginationRowsPerPageOptions={[5,8,10,15,18,25,30]} // available per page options                                                                                                                         
                             ></DataTable>                      
             </div>                                
             </div>
@@ -1083,7 +1098,36 @@ const Course =()=>{
                 </form>
                 </ModalBody>
             </Modal> 
-                                       
+
+        <Modal size='lg' isOpen={updateToggle} toggle={()=>setUpdateToggle(!updateToggle)} className="batchModal">
+            <ModalHeader toggle={()=>setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
+            <Row className='m-1'>
+                <Col lg={6} md={12} className="mb-sm-2">
+                    <label> Enter First Name </label>
+                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                </Col>
+                <Col lg={6} md={12} className="mb-sm-2">
+                    <label className='text-2'> Enter First Name </label>
+                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                </Col>
+                <Col lg={6} md={12} className="mb-sm-2 mt-2">
+                    <label className='text-2'> Skills </label>
+                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                </Col>                
+                <Col lg={6} md={12} className="mb-sm-2 mt-2">
+                    <label className='text-2'> Fees </label>
+                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                </Col>
+                <Col lg={12} md={12} className="mb-sm-2 mt-4">               
+                    <FloatLabel className="w-full md:w-26rem custom-floatlabel">
+                    <MultiSelect value={selectedCities} onChange={(e) => setSelectedCities(e.value)} 
+                        options={cities} optionLabel="name" maxSelectedLabels={3} 
+                        panelClassName="custom-multiselect-panel" className="w-full" />
+                    <label htmlFor="ms-cities text-white">MultiSelect</label>
+                    </FloatLabel>
+                </Col>
+            </Row>
+        </Modal>                                       
         </main>
     )
 }
