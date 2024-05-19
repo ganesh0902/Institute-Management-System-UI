@@ -36,14 +36,10 @@ const Course =()=>{
     const[updateToggle,setUpdateToggle]=useState(false);        
    const[allCourses,setAllCourses]=useState([]);
     const API_SAVE_COURSE="http://localhost:9001/course/";
-    const[apiError,setApiError]=useState("");    
-    const [value, setValue] = useState('');
-    const[courseNames,setCourseNames]=useState("");
-    const [selectedCities, setSelectedCities] = useState(null);
+    const[apiError,setApiError]=useState("");        
+    const[courseNames,setCourseNames]=useState("");    
     const [selectedSkill, setSelectedSkills] = useState(null);
-    const[updatedCourse,setUpdatedCourse]=useState(null);
-    const[courseId,setCourseId]=useState(0);
-
+    const[updatedCourse,setUpdatedCourse]=useState(null);    
     
     const skillSet = [
         { name: 'Java', id: 'NY' },

@@ -2,6 +2,16 @@ import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { InputText } from "primereact/inputtext";
+import { FloatLabel } from "primereact/floatlabel";
+import 'primereact/resources/themes/saga-blue/theme.css'; // or any other theme you prefer
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import { MultiSelect } from 'primereact/multiselect';
+import {Button} from 'primereact/button'
+import { MdMarkEmailRead } from "react-icons/md";
+import { Avatar } from 'primereact/avatar';
+import { FaUserNurse } from "react-icons/fa";
 
 const BatchDisplay=()=>{
     
@@ -11,6 +21,7 @@ const BatchDisplay=()=>{
     const[batch,setBatch]=useState([]);   
     const[course,setCourse]=useState([]);
     const[teacher,setTeacher]=useState([]);
+    const [selectedSkill, setSelectedSkills] = useState(null);
     useEffect(()=>{
         
         fetch(`http://localhost:9002/batch/`+bId).then(async (result)=>{
@@ -21,6 +32,14 @@ const BatchDisplay=()=>{
         })
 
     },[bId]);
+
+    const skillSet = [
+        { name: 'Java', id: 'NY' },
+        { name: 'Spring boot', id: 'RM' },
+        { name: 'Hibernate', id: 'LDN' },
+        { name: 'Microservices', id: 'IST' },
+        { name: 'Reactjs', id: 'PRS' }
+    ];
 
     useEffect(()=>{        
         const {course}=batch;
@@ -33,106 +52,75 @@ const BatchDisplay=()=>{
         return <div>Loading...</div>; // Return loading indicator if course is not available yet
       }
     
-    return(
-        <div className='batchDisplay'>
-            <div className='row teacher_data'>
-                <div className='col-12 col-md-6 col-sm-12'>
-                    <div>
-                    <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../teacher/${teacher.image}`}/>                  
-                    </div> 
-                </div>            
-                <div className='col-12 col-md-6 col-sm-12'>
-                    <div className='row'>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data'>
-                          <label> First Name </label> <be/>
-                          <small className='mt-2'> {teacher.firstName}  </small>
-                        </div>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data'>
-                            <label> Last Name </label><be/>
-                            <small className='mt-2'> {teacher.lastName} </small>
-                        </div>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data'>
-                            <label> Education </label><be/>
-                            <small className='mt-2'> {teacher.education} </small>
-                        </div>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data mt-3'>
-                            <label> Contact </label><be/>
-                            <small className='mt-2'> {teacher.contact} </small>
-                        </div>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data mt-3'>
-                            <label> Email </label><be/>
-                            <small className='mt-2'> {teacher.email} </small>
-                        </div>
-                        <div className='col-4 col-md-4 col-sm-12 batchCourse_data mt-3'>
-                            <label> Status </label><be/>
-                            <small className='mt-2'> Working </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-            <div className='row m-2'>
-                <div className='col-12 col-md-6 col-sm-12'>
-                    <div className=''>
-                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>                  
-                    </div>                    
-                </div>
-                <div className='col-12 col-md-6 col-sm-12'>
-                    <div className='batchTitle text-center mt-4'>
-                         <h2> {batch.batchTitle} </h2>
-                    </div>                    
-                    <div className='row mt-4'>
-                        <div className='col-4'>
-                            <label> Start Date </label><br/>
-                            <small className='mt-2'>{batch.startDate}</small>
-                        </div>
-                        <div className='col-4'>
-                            <label> End Date </label><br/>
-                            <small className='mt-2'>{batch.endDate}</small>
-                        </div>
-                        <div className='col-4'>
-                            <label> Duration </label><br/>
-                            <small className='mt-2'> {batch.duration} Months </small>
+    return(        
+        <section className='batchDisplay'>
+            <div className='container p-4'>
+                <div className='row'>
+                    <div className='col-12 col-md-6 col-sm-12 shadow py-5'>                        
+                        <div className='row'>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <img className='w-100' src="https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"></img>
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label><MdMarkEmailRead/> </label> &nbsp;
+                                <small> ganeshs2987@gmail.com </small> <br/>
+                                <label><FaUserNurse/></label> &nbsp;
+                                <small>Ganesh Sakhare</small> <br/>                                                               
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">Course Name</label>
+                                <InputText id="username" className='form-control' readOnly="true" value='Java Development'/>                                                                           
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username"> Description </label>
+                                <InputText id="username" className='form-control' readOnly="true" value='This course is for Java Developer'/> 
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username"> Fees </label>
+                                <InputText id="fees" variant="filled" className='form-control' readOnly="true" value='Rs 2000'/> 
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="ms-cities">Select The Skills </label>
+                                <FloatLabel className="w-full md:w-26rem custom-floatlabel-batch mt-1 form-control">                                
+                                <MultiSelect value={selectedSkill} onChange={(e) => setSelectedSkills(e.value)} 
+                                    options={skillSet} optionLabel="name" maxSelectedLabels={3} 
+                                    panelClassName="custom-multiselect-panel-batch" style={{width:"auto"}} />                                
+                                </FloatLabel>
+                            </div>
                         </div>                        
-                        <div className='col-4 mt-3'>
-                            <label> Status </label><br/>
-                            <small className='mt-2'> {batch.duration} </small>
-                        </div> 
-                        <div className='col-4 mt-3'>
-                            <label> Location </label><br/>
-                            <small className='mt-2'> {batch.location} </small>
-                        </div> 
-                        <div className='col-4 mt-3'>
-                            <label> Time </label><br/>
-                            <small className='mt-2'> {batch.time} </small>
-                        </div> 
-                    </div>
-                    <div className='row'>
-                        <div className='card batchCourseContainer'>
-                            <div className='card-body'>
-                        
-                                <div className='col-12 batchCourse_data'>
-                                    <label> course Name </label>    
-                                    <small> {course.courseName} </small>
-                                </div>
-                                <div className='col-12 batchCourse_data mt-2'>
-                                    <label> course Description  </label>    
-                                    <small> {course.description} </small>
-                                </div>
-                                <div className='col-12 batchCourse_data mt-2'>
-                                    <label> Skills </label>    
-                                    <small> {course.skills} </small>
-                                </div>
-                                <div className='col-12 batchCourse_data mt-2'>
-                                    <label> Fees  </label>    
-                                    <small> {course.fees} Rupees </small>
-                                </div>
+                    </div>                    
+                    <div className='col-12 col-md-6 col-sm-12 mt-2 shadow py-5'>
+                        <div className='row'>                            
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <img className='w-100' src="https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"></img>
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label><MdMarkEmailRead/> </label> &nbsp;
+                                <small> ganeshs2987@gmail.com </small> <br/>
+                                <label><FaUserNurse/></label> &nbsp;
+                                <small>Ganesh Sakhare</small> <br/>                                                               
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">First Name</label>
+                                <InputText id="username" readOnly="true" value='Ganesh' className='form-control'/>                                                                           
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">Last Name</label>
+                                <InputText id="username" className='form-control' readOnly="true" value='Sakhare'/>                                                                           
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">Email</label>
+                                <InputText id="username" className='form-control' readOnly="true" value='ganeshs2987@gmail.com'/>                                                                           
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">Contact</label>
+                                <InputText id="username" className='form-control' readOnly="true" value='9595956150'/>                                                                           
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>                        
-        </div>
+                </div>                    
+            </div>
+        </section>                                     
     )
 }
 export default BatchDisplay
