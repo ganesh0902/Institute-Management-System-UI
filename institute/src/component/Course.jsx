@@ -11,6 +11,7 @@ import { InputText } from 'primereact/inputtext';
 import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
 import { MultiSelect } from 'primereact/multiselect';
 import { FloatLabel } from 'primereact/floatlabel';                
+import {Button} from 'primereact/button'
 
 const CourseSchema =Yup.object().shape({
     courseName:Yup.string().required("course Name is Mandatory"),
@@ -21,6 +22,7 @@ const CourseSchema =Yup.object().shape({
 
 const Course =()=>{
 
+    const [loading, setLoading] = useState(false);
     const[fDate,setFDate]=useState("");
     const[tDate,setToDate]=useState("");
     const[course,setCourse]=useState("");
@@ -30,23 +32,26 @@ const Course =()=>{
     const[courseName,setCourseName]=useState("");
     const[description,setDescription]=useState("");
     const[skills,setSkills]=useState("");
-    const[fees,setFees]=useState(0);
+    const[fees,setFees]=useState(0);    
     const[updateToggle,setUpdateToggle]=useState(false);        
    const[allCourses,setAllCourses]=useState([]);
     const API_SAVE_COURSE="http://localhost:9001/course/";
     const[apiError,setApiError]=useState("");    
     const [value, setValue] = useState('');
-
     const[courseNames,setCourseNames]=useState("");
     const [selectedCities, setSelectedCities] = useState(null);
-    const cities = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+    const [selectedSkill, setSelectedSkills] = useState(null);
+    const[updatedCourse,setUpdatedCourse]=useState(null);
+    const[courseId,setCourseId]=useState(0);
 
+    
+    const skillSet = [
+        { name: 'Java', id: 'NY' },
+        { name: 'Spring boot', id: 'RM' },
+        { name: 'Hibernate', id: 'LDN' },
+        { name: 'Microservices', id: 'IST' },
+        { name: 'Reactjs', id: 'PRS' }
+    ];
 
     const initialValues = {
         courseName: '',
@@ -70,12 +75,11 @@ const Course =()=>{
         }
         getAllCourse();
     },[]);
-
+        
     useEffect(() => {
         const getAllCourse=()=>{
                       
             fetch(`http://localhost:9001/course/`).then((result)=>{
-
             result.json().then((resp)=>{
                 console.log("Course response is ",resp);
                 setAllCourses(resp);
@@ -88,7 +92,7 @@ const Course =()=>{
 
       const submit = () => {
         
-        setClick(click+1);
+        
     };
     const saveCourse=async (course)=>{        
       
@@ -96,7 +100,8 @@ const Course =()=>{
             const response= await axios.post(`${API_SAVE_COURSE}`,course);            
             console.log("Course Save Successfully");
             alert("Course Save Successfully");
-            setNewCourse(!addCourse);
+            setNewCourse(false);
+            setUpdatedCourse(false);
         }
         catch(error)
         {
@@ -183,11 +188,9 @@ const Course =()=>{
             width:'280px'
           },
       ]
-      const updateCourse = (row) => {
-        console.log('Button clicked for row:', row);
-
-        setUpdateToggle(!updateToggle);
-        //setNewCourse(!addCourse);        
+      const updateCourse = (json) => {                               
+            setUpdatedCourse(json);                
+            setUpdateToggle(!updateToggle);               
       };
 
      const deleteRecord=(row)=>{
@@ -1029,7 +1032,22 @@ const Course =()=>{
         })
         setRecords(newData);
       }      
-
+    
+      const load = () => {  //   load method will be call when submit button is click
+        setLoading(true);        
+        var allSkills=selectedSkill.map(skills=> skills.name);
+        const skills=allSkills.join(",");                
+        const cid=updatedCourse.cid;
+        var course={cid, courseName, description, fees, skills};                                        
+        saveCourse(course);
+        setNewCourse(!addCourse);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    };
+    
+    
+    //   }
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
@@ -1097,34 +1115,36 @@ const Course =()=>{
                     </Row>
                 </form>
                 </ModalBody>
-            </Modal> 
-
+            </Modal>         
         <Modal size='lg' isOpen={updateToggle} toggle={()=>setUpdateToggle(!updateToggle)} className="batchModal">
             <ModalHeader toggle={()=>setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
             <Row className='m-1'>
                 <Col lg={6} md={12} className="mb-sm-2">
-                    <label> Enter First Name </label>
-                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                    <label> Enter Course Name  </label>                                        
+                    <InputText type="text" variant="filled" name="courseName" placeholder="Course" defaultValue={updatedCourse && updatedCourse.courseName} onChange={(even)=>setCourseName(even.target.value)} className='p-inputtext-xl text-dark'/>                    
                 </Col>
                 <Col lg={6} md={12} className="mb-sm-2">
-                    <label className='text-2'> Enter First Name </label>
-                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                    <label className='text-2'> Enter Course Description  </label>
+                    <InputText type="text" variant="filled"  placeholder="First Name" defaultValue={updatedCourse && updatedCourse.description} onChange={(even)=>setDescription(even.target.value)} className='p-inputtext-xl text-dark'/>                    
                 </Col>
                 <Col lg={6} md={12} className="mb-sm-2 mt-2">
                     <label className='text-2'> Skills </label>
-                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                    <InputText type="text" variant="filled"  placeholder="Select Skills"  defaultValue={updatedCourse && updatedCourse.skills} onChange={(even)=>setSkills(even.target.value)} className='p-inputtext-xl text-dark'/>                    
                 </Col>                
                 <Col lg={6} md={12} className="mb-sm-2 mt-2">
                     <label className='text-2'> Fees </label>
-                    <InputText type="text" variant="filled"  placeholder="Normal" className='p-inputtext-xl text-dark'/>                    
+                    <InputText type="text" variant="filled"  placeholder="Enter Fees" defaultValue={updatedCourse && updatedCourse.fees} onChange={(even)=>setFees(even.target.value)} className='p-inputtext-xl text-dark'/>                    
                 </Col>
                 <Col lg={12} md={12} className="mb-sm-2 mt-4">               
                     <FloatLabel className="w-full md:w-26rem custom-floatlabel">
-                    <MultiSelect value={selectedCities} onChange={(e) => setSelectedCities(e.value)} 
-                        options={cities} optionLabel="name" maxSelectedLabels={3} 
+                    <MultiSelect value={selectedSkill} onChange={(e) => setSelectedSkills(e.value)} 
+                        options={skillSet} optionLabel="name" maxSelectedLabels={3} 
                         panelClassName="custom-multiselect-panel" className="w-full" />
-                    <label htmlFor="ms-cities text-white">MultiSelect</label>
+                    <label htmlFor="ms-cities">Select Skills</label>
                     </FloatLabel>
+                </Col>
+                <Col lg={12} md={12} className="mb-sm-2 mt-4">               
+                    <Button label="Submit" className='primeButton' icon="pi pi-check"  loading={loading} onClick={load} />
                 </Col>
             </Row>
         </Modal>                                       
