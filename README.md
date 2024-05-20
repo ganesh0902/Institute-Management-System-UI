@@ -3,4 +3,5 @@
 * Swagger 3.0
 * Eureka Client 3.0.2
 * react 10.7.0
-* STS 4.18.0 
+* STS 4.18.0
+* Visual Studion Code 1.73.0
