@@ -13,7 +13,6 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import {Button} from 'primereact/button'
 import { MdMarkEmailRead } from "react-icons/md";
 import { Dropdown } from 'primereact/dropdown';
-import { Avatar } from 'primereact/avatar';
 import { FileUpload } from 'primereact/fileupload';
 import { FaUserNurse } from "react-icons/fa";
 import 'primereact/resources/themes/saga-blue/theme.css';  // Import PrimeReact themes
@@ -31,6 +30,18 @@ const BatchDisplay=()=>{
     const [selectedSkill, setSelectedSkills] = useState(null);
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
+    const [isReadOnly, setIsReadOnly] = useState(false);
+
+    const[batchTitle,setBatchTitle]=useState("");
+    const[duration,setDuration]=useState("");
+    const[startDate,setStartDate]=useState("");
+    const[endDate,setEndDate]=useState("");
+    const[status,setStatus]=useState("");
+    const[location,setLocation]=useState("");
+    const[courseId,setCourserId]=useState(0);
+    const[teacherId,setTeacherId]=useState(0);     
+    const[time,setTime]=useState("10:30 PM");  
+    
     useEffect(()=>{
         
         fetch(`http://localhost:9002/batch/`+bId).then(async (result)=>{
@@ -74,6 +85,11 @@ const BatchDisplay=()=>{
         toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
     };    
 
+    const makeReadOnly = () => {
+        setIsReadOnly(!isReadOnly);
+        alert("");
+    };
+
     const load = () => {
         setLoading(true);
 
@@ -91,33 +107,30 @@ const BatchDisplay=()=>{
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
                             </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2 text-center'>
                                 <label><MdMarkEmailRead/> </label> &nbsp;
-                                <small> {batch.batchTitle} </small> <br/>
-                                <label><FaUserNurse/></label> &nbsp; 
-                                <small>{batch.time} </small> &nbsp;&nbsp;&nbsp;
-                                <label><FaUserNurse/></label> &nbsp;
-                                <small>02:50 </small> <br/>                                                                
+                                <small> {batch.batchTitle} </small>  &nbsp;&nbsp;
+                                <i className="pi pi-pencil" onClick={()=>makeReadOnly()} style={{ fontSize: '1em',cursor:"pointer" }}></i>                                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username">Batch Name</label>
-                                <InputText id="username" readOnly="true" value={batch.batchTitle} className='form-control'/>                                                                           
+                                <InputText id="username" readOnly={isReadOnly} defaultValue={batch.batchTitle} onChange={(even)=>setBatchTitle(even.target.value)} className='form-control'/>                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username"> Duration </label>
-                                <InputText id="username" className='form-control' readOnly="true" value={batch.duration}/>                                                                           
+                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.duration} onChange={(event)=>setDuration(event.target.value)}/>                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">STart Date</label>
-                                <InputText id="username" className='form-control' readOnly="true" value={batch.time}/>                                                                           
+                                <label htmlFor="username">Start Date</label>
+                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.startDate} onChange={(even)=>setStartDate(even.target.value)}/>                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username">End Date</label>
-                                <InputText id="username" className='form-control' readOnly="true" value='02:30'/>                                                                           
+                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.endDate} onChange={(event)=>setEndDate(event.target.value)}/>                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username">Location</label>
-                                <InputText id="username" className='form-control' readOnly="true" value={batch.location}/>                                                                           
+                                <InputText id="username" className='form-control' readOnly={isReadOnly} value={batch.location}/>                                                                           
                             </div>                                                        
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username">Update File </label>
@@ -125,49 +138,50 @@ const BatchDisplay=()=>{
                                 onUpload={onUpload}                                                                                           
                                 className='fileUploaderBatch'                                 
                                 />
+                            </div>                            
+                            <div className='col-12 col-md-6 col-sm-12 mt-2 mb-4'>
+                                <label htmlFor="username">Select Teacher</label><br/>
+                                <Dropdown value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.value)} options={teachers} optionLabel="name" 
+                                    placeholder="Select a City" style={{width:"100%"}} className="p-2"/>
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-4'>
+                                {   !isReadOnly &&
+                                    <Button label="Submit" className='btn px-2 form-control updateBatchBtn'  icon="pi pi-check" loading={loading} onClick={load} />                            
+                                }
                             </div>
                         </div>
                     </div>
                     <div className='col-12 col-md-6 col-sm-12 shadow pt-1'>                        
                         <div className='row'>                            
                             <div className='col-12 col-md-6 col-sm-12 mt-3'>
-                                <img className='w-100' src="https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"></img>
+                                <img className='w-100 batch-card card-img-top' src="https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg"></img>
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label><MdMarkEmailRead/> </label> &nbsp;
-                                <small> ganeshs2987@gmail.com </small> <br/>
+                                <small> {teacher.email} </small> <br/>
                                 <label><FaUserNurse/></label> &nbsp;
-                                <small>Ganesh Sakhare</small>                                                                                              
+                                <small>{teacher.firstName} &nbsp; {teacher.lastName}</small>                                                                                              
                             </div>                            
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Course Name</label>
-                                <InputText id="username" className='form-control' readOnly="true" value='Java Development'/>                                                                           
+                                <label htmlFor="username">Education</label>
+                                <InputText id="username" className='form-control' readOnly="true" value={teacher.education}/>                                                                           
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username"> Description </label>
-                                <InputText id="username" className='form-control' readOnly="true" value='This course is for Java Developer'/> 
+                                <label htmlFor="username"> Contact </label>
+                                <InputText id="username" className='form-control' readOnly="true" value={teacher.contact}/> 
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username"> Fees </label>
-                                <InputText id="fees" variant="filled" className='form-control' readOnly="true" value='Rs 2000'/> 
-                            </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Select Teacher</label><br/>
-                                <Dropdown value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.value)} options={teachers} optionLabel="name" 
-                                    placeholder="Select a City" style={{width:"100%"}} className="p-2"/>
-                            </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username"> Email </label>
+                                <InputText id="fees" variant="filled" className='form-control' readOnly="true" value={teacher.email}/> 
+                            </div>                           
+                            {/* <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="ms-cities">Select The Skills </label>
                                 <FloatLabel className="w-full md:w-26rem custom-floatlabel-batch mt-1 form-control">                                
                                 <MultiSelect value={selectedSkill} onChange={(e) => setSelectedSkills(e.value)} 
                                     options={skillSet} optionLabel="name" maxSelectedLabels={3} 
                                     panelClassName="custom-multiselect-panel-batch" style={{width:"auto"}} />                                
                                 </FloatLabel>
-                            </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-4'>
-                                <Button label="Submit" className='btn px-2 form-control updateBatchBtn'  icon="pi pi-check" loading={loading} onClick={load} 
-                                />
-                            </div>
+                            </div>                             */}
                         </div>                        
                     </div>                    
                 </div>                    
