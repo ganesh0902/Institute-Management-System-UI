@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
-import { TiLocation } from "react-icons/ti";
-import { GiDuration } from "react-icons/gi";
-import { BsCalendar2DateFill } from "react-icons/bs";
-import { MdOutlineWatchLater } from "react-icons/md";
+import { FaInstagram,FaGithub  } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
-import { MdMarkEmailRead } from "react-icons/md";
-import { MdOutlineCastForEducation } from "react-icons/md";
-import { FaUserNurse } from "react-icons/fa";
+import { CiTwitter } from "react-icons/ci";
+import { IoMdTime } from 'react-icons/io';
+import { TabView, TabPanel } from 'primereact/tabview';        
 import { getStudentDetails } from "../../apis/studentApis";
 const StudentDetails=()=>{
     const param=useParams();
@@ -55,25 +52,7 @@ const StudentDetails=()=>{
     if (loading) return <div>Loading...</div>;
     if (!studentDetails) return <div>Loading1...</div>;
     if (error) return <div>Error: {error.message}</div>;
-
-        // const getBatch=async ()=>{            
-        //     await fetch(`http://localhost:9002/batch/single/`+stdId).then((result)=>{
-        //     result.json().then((response)=>{
-        //         setBatches(response);
-        //         setTeacherId(response.teacherId);
-        //         getTeacher();
-        //     })
-        //     })
-        // }           
-        // const getTeacher=async ()=>{            
-        //     await fetch(`http://localhost:9003/teacher/`+teacherId).then((result)=>{
-        //     result.json().then((response)=>{
-        //         setTeacherList(response);
-        //         console.log("Teacher List is ",response); 
-        //     })
-        //     })
-        // }           
-
+       
         if(batches==null || student ==null)
         {
             return(
@@ -87,100 +66,213 @@ const StudentDetails=()=>{
         <div className="stdDetailsContainer">
             <div className="stdInfo m-3">
                 <div className="row m-2">
-                    {/* <div className="col-12 col-sm-12 col-md-4 shadow">                        
-                        <img class="card-img-top rounded teacher-image-in-teacher-list" src={`../student/${student.image}`} alt="Card image cap" />
-                    </div>
-                    <div className="col-12 col-sm-12 col-md-8">
-                        <div className="username">
-                            <small>{studentDetails.firstName} &nbsp; {studentDetails.lastName}</small>                            
-                        </div>
-                        <div className="stdDetails">                 
-                            <label> Course Name :</label><small> {studentDetails.courseName}</small><br/>
-                            <label> Last Education :</label><small> {studentDetails.lastEducation}</small><br/>     
-                            <label>Pass Out Year :</label><small> {studentDetails.passoutYear}</small><br/>                                      
-                        </div>
-                    </div> */}
-
-                    <div className="col-12 col-sm-12 col-md-4 stdDetails shadow p-5">                        
-                        <div className="student-profile">
-                            <img class="text-center shadow-4-strong" alt="avatar2" src={`../student/${studentDetails.image}`} />
-                        </div>
-                        <div className="student-content">
-                            <h4 className="student-username"> {studentDetails.firstName} &nbsp; {studentDetails.lastName}</h4>
-                            <span className="student-courseName">{studentDetails.courseName}</span><br/>
-                            <div className="btn-group mt-2">
-                                <button className="btn btn-primary"> Follow</button> &nbsp;
-                                <button className="btn btn-secondary hover"> Message </button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-md-6 col-12 mt-4">
-                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Facebook</label>
-                        </div>
-                        <hr/>
-                        <div className="col-12 col-md-6 col-12 mt-4">
-                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Whatsapp</label>
-                        </div>
-                        <hr/>
-                        <div className="col-12 col-md-6 col-12 mt-4">
-                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Instagram </label>
-                        </div>
-                        <hr/>
-                        <div className="col-12 col-md-6 col-12 mt-4">
-                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Twitter</label>
-                        </div>
-                        <hr/>
-                    </div>
-                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
-                        <div className="">
-                            <b>Std Id</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.stdId} </span>
-                        </div>
-                        <hr/>
-                        <div className="stdItem">
-                            <b>First Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.firstName}  </span>
-                        </div>
-                        <hr/>
-                        <div className="stdItem">
-                            <b>Last Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.lastName} </span>
-                        </div>
-                        <hr/>
-                        <div className="stdItem">
-                            <b>Pass Out</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.passoutYear} </span>
-                        </div>
-                        <hr/>
-                        <div className="stdItem">
-                            <b>Last Education</b>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.lastEducation} </span>
-                        </div>
-                        <hr/>
-                        <div className="stdItem">
-                            <b>Course Name</b>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span> {studentDetails.courseName} </span>
-                        </div>                   
-                        <hr/>
-                        <div className="stdItem">
-                            <button className="btn btn-info px-5">Edit</button>
-                        </div>                                                     
-                    </div>                    
-                </div>
-                {/* <div className="row stdInformation m-2 justify-content-center mt-4 mb-2 shadow p-3">
-                    <div className="col-12 col-sm-12 col-md-4 mt-3 shadow">                       
-                        <div className="">
-                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../teacher/${teacherList.image}`}/>
-                        </div> 
-                        <div>
-                            <h5 className="batchTitleInStudent"><FaUserNurse/> {teacherList.firstName} &nbsp; {teacherList.lastName}   </h5>
-                            <div className="teacherInfoInBatch">
-                                <label className="field"> <MdOutlineCastForEducation className="icon"/> {teacherList.education} </label><br/>
-                                <label className="field"><FaPhone className="icon"/> {teacherList.contact} </label><br/>
-                                <label className="field"><MdMarkEmailRead className="icon"/> {teacherList.email} </label><br/>
-                            </div>
-                        </div>                       
-                    </div>                                                                                                                                                                             
-                </div> */}
+                    <div className="col-12 col-sm-12 col-md-12 ">
+                    <TabView>
+                        <TabPanel header="Student" className="student-text-in-header px-4 py-2 text-5" leftIcon="pi pi-user mr-2">
+                            <p className="m-0">
+                                <div className="row">
+                                    <div className="col-12 col-sm-12 col-md-4 stdDetails shadow p-5">                        
+                                        <div className="student-profile">
+                                            <img class="text-center shadow-4-strong" alt="avatar2" src={`../student/${studentDetails.image}`} />
+                                        </div>
+                                        <div className="student-content">
+                                            <h4 className="student-username"> {studentDetails.firstName} &nbsp; {studentDetails.lastName}</h4>
+                                            <span className="student-courseName">{studentDetails.courseName}</span><br/>
+                                            <div className="btn-group mt-2">
+                                                <button className="btn btn-primary"> Follow</button> &nbsp;
+                                                <button className="btn btn-secondary hover"> Message </button>
+                                            </div>
+                                        </div>                        
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="whatsapp"><FaPhone/></label>&nbsp;&nbsp; <label> Whatsapp</label>
+                                        </div>
+                                        <hr/>
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="instagram"><FaInstagram/></label>&nbsp;&nbsp; <label> Instagram </label>
+                                        </div>
+                                        <hr/> 
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="twitter"><CiTwitter/></label>&nbsp;&nbsp; <label> Twitter</label>
+                                        </div>
+                                        <hr/>
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="github"><FaGithub/></label>&nbsp;&nbsp; <label> Github</label>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
+                                    <div className="">
+                                        <b>Std Id</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.stdId} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>First Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.firstName}  </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Last Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.lastName} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Pass Out</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.passoutYear} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Last Education</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.lastEducation} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Course Name</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span> {studentDetails.courseName} </span>
+                                    </div>                   
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <button className="btn btn-info px-5">Edit</button>
+                                    </div>                                                     
+                                </div>                    
+                                </div>
+                            </p>
+                        </TabPanel>
+                        <TabPanel header="Teacher" className="px-4 py-2" rightIcon="pi pi-user ml-2">
+                        <p className="m-0">
+                                <div className="row">
+                                    <div className="col-12 col-sm-12 col-md-4 stdDetails shadow p-5">                        
+                                        <div className="student-profile">
+                                            <img class="text-center shadow-4-strong" alt="avatar2" src={`../teacher/${studentDetails.teacherDto.image}`} />
+                                        </div>
+                                        <div className="student-content">
+                                            <h4 className="student-username"> {studentDetails.teacherDto.firstName} &nbsp; {studentDetails.teacherDto.lastName}</h4>
+                                            <span className="student-courseName">{studentDetails.courseName}</span><br/>
+                                            <div className="btn-group mt-2">
+                                                <button className="btn btn-primary"> Follow</button> &nbsp;
+                                                <button className="btn btn-secondary hover"> Message </button>
+                                            </div>
+                                        </div>                        
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="whatsapp"><FaPhone/></label>&nbsp;&nbsp; <label> Whatsapp</label>
+                                        </div>
+                                        <hr/>
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="instagram"><FaInstagram/></label>&nbsp;&nbsp; <label> Instagram </label>
+                                        </div>
+                                        <hr/> 
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="twitter"><CiTwitter/></label>&nbsp;&nbsp; <label> Twitter</label>
+                                        </div>
+                                        <hr/>
+                                        <div className="col-12 col-md-6 col-12 mt-4">
+                                            <label className="github"><FaGithub/></label>&nbsp;&nbsp; <label> Github</label>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
+                                    <div className="">
+                                        <b>Std Id</b>
+                                        <span> {studentDetails.teacherDto.tid} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>First Name</b>
+                                        <span> {studentDetails.teacherDto.firstName}  </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Last Name</b>
+                                        <span> {studentDetails.teacherDto.lastName} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Last Education </b>
+                                        <span> {studentDetails.teacherDto.education} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Contact Number</b>
+                                        <span> {studentDetails.teacherDto.contact} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Email</b>
+                                        <span> {studentDetails.teacherDto.email} </span>
+                                    </div>                   
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <button className="btn btn-info px-5">Edit</button>
+                                    </div>                                                     
+                                </div>                    
+                                </div>
+                            </p>
+                        </TabPanel>
+                        <TabPanel header="Batch" className="px-4 py-2" rightIcon="pi pi-cog ml-2">
+                        <p className="m-0">
+                                <div className="row">
+                                    <div className="col-12 col-sm-12 col-md-4 stdDetails shadow p-5">                        
+                                        <div className="student-profile">
+                                            <img class="text-center shadow-4-strong" alt="avatar2" src={`../batch/${studentDetails.batchDto.image}`} />
+                                        </div>
+                                        <div className="student-content">
+                                            <h4 className="student-username"> {studentDetails.batchDto.batchTitle}</h4>
+                                            <span className="student-courseName">{studentDetails.batchDto.duration}</span><br/>
+                                            <span className="student-courseName"><IoMdTime/> {studentDetails.batchDto.time}</span><br/>
+                                            <div className="btn-group mt-2">
+                                                <button className="btn btn-primary"> Follow</button> &nbsp;
+                                                <button className="btn btn-secondary hover"> Message </button>
+                                            </div>
+                                        </div>                        
+                                        <hr/>
+                                    </div>
+                                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
+                                    <div className="">
+                                        <b>Batch Id</b>
+                                        <span> {studentDetails.batchDto.bid} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Duration </b>
+                                        <span> {studentDetails.batchDto.duration}  </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Start Date </b>
+                                        <span> {studentDetails.batchDto.startDate} </span>
+                                    </div>
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>End Date </b>
+                                        <span> {studentDetails.batchDto.endDate} </span>
+                                    </div>
+                                    <hr/>                                   
+                                    <div className="stdItem">
+                                        <b>Status</b>
+                                        <span> {studentDetails.batchDto.status} </span>
+                                    </div>                   
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Location</b>
+                                        <span> {studentDetails.batchDto.location} </span>
+                                    </div>                   
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <b>Batch Time</b>
+                                        <span> {studentDetails.batchDto.time} </span>
+                                    </div>                   
+                                    <hr/>
+                                    <div className="stdItem">
+                                        <button className="btn btn-info px-5">Edit</button>
+                                    </div>                                                     
+                                </div>                    
+                                </div>
+                            </p>
+                        
+                        </TabPanel>
+                    </TabView>  
+                    </div>                                       
+                </div>                
             </div>
         </div>
     )
