@@ -867,15 +867,7 @@ width: 100%;
 .stdDetailsContainer .stdInfo .stdInfoImage{
     width: 100%;
 }
-.stdDetailsContainer .stdInfo .username
-{
-  text-align: center;
-  font-size: 2.4rem;  
-  color: rgb(50,70, 87);    
-  font-weight: 600;   
-  padding: 0px 0px 10px 0px;
-  color: #B8985F;
-}
+
 .stdInformation .batchImage{
   width: 100%;
 }
@@ -883,11 +875,43 @@ width: 100%;
 
   gap: 50px;
 }
-
+/* 
 .stdDetailsContainer .stdInfo .stdDetails{
     
   text-align: center;
   font-size: 1.1rem; 
+} */
+
+.stdDetailsContainer .stdDetails img{
+  height:150px;     
+  border: 2px solid #ccc; 
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+.stdDetailsContainer .stdDetails .student-username
+{
+  padding-top: 10px;
+  text-align: center;
+  font-size: 1.1rem; 
+}
+.stdDetailsContainer .stdDetails .student-content
+{
+  text-align: center;
+  font-size: 1.1rem; 
+  justify-content: center;  
+}
+.stdDetailsContainer .stdDetails .student-profile
+{  
+  text-align: center;          
+}
+
+.stdDetailsContainer .stdDetails .student-profile img
+{  
+  clip-path: circle();
+}
+
+.stdDetailsContainer .stdItem{
+  margin-top:20px;
 }
  .batchTitleInStudent {  
   width: 100%;

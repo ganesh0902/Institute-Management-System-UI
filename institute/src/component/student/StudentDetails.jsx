@@ -19,7 +19,7 @@ const StudentDetails=()=>{
     const[teacherId,setTeacherId]=useState(0);
     const stdId=param ? param.stdId :null;    
     
-    const [studentDetails, setStudentDetails] = useState(null);
+    const [studentDetails, setStudentDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -37,21 +37,23 @@ const StudentDetails=()=>{
     },[])
                        
     useEffect(()=>{
-
-        try{
-                const data=  getStudentDetails();
-                setStudentDetails(data);
-        }
-        catch(error)
-        {
-            setError(error);
-        }
-        finally{
+       
+        const  fetchStudentDetails=async ()=>{
+            const data= await getStudentDetails(stdId);
+            setStudentDetails(data);                             
             setLoading(false);
-        }
+        }        
+        fetchStudentDetails();
     },[]);
 
+    useEffect(()=>{
+
+        console.log("Student Details");
+        console.log(studentDetails);
+    },[studentDetails]);
+
     if (loading) return <div>Loading...</div>;
+    if (!studentDetails) return <div>Loading1...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
         // const getBatch=async ()=>{            
@@ -78,24 +80,91 @@ const StudentDetails=()=>{
                 <div> <p> Loading </p> </div>
             )
         }
+
+        if (!studentDetails) return <p>No data to display</p>;
+
     return(
         <div className="stdDetailsContainer">
             <div className="stdInfo m-3">
                 <div className="row m-2">
-                    <div className="col-12 col-sm-12 col-md-4 shadow">                        
+                    {/* <div className="col-12 col-sm-12 col-md-4 shadow">                        
                         <img class="card-img-top rounded teacher-image-in-teacher-list" src={`../student/${student.image}`} alt="Card image cap" />
                     </div>
                     <div className="col-12 col-sm-12 col-md-8">
                         <div className="username">
-                            <small>{studentDetails.firstName}</small>
-                            <small> {student.firstName} &nbsp; {student.lastName} </small>
+                            <small>{studentDetails.firstName} &nbsp; {studentDetails.lastName}</small>                            
                         </div>
                         <div className="stdDetails">                 
-                            <label> Course Name :</label><small> {student.courseName}</small><br/>
-                            <label> Last Education :</label><small> {student.lastEducation}</small><br/>     
-                            <label>Pass Out Year :</label><small> {student.passoutYear}</small><br/>                                      
+                            <label> Course Name :</label><small> {studentDetails.courseName}</small><br/>
+                            <label> Last Education :</label><small> {studentDetails.lastEducation}</small><br/>     
+                            <label>Pass Out Year :</label><small> {studentDetails.passoutYear}</small><br/>                                      
                         </div>
+                    </div> */}
+
+                    <div className="col-12 col-sm-12 col-md-4 stdDetails shadow p-5">                        
+                        <div className="student-profile">
+                            <img class="text-center shadow-4-strong" alt="avatar2" src={`../student/${studentDetails.image}`} />
+                        </div>
+                        <div className="student-content">
+                            <h4 className="student-username"> {studentDetails.firstName} &nbsp; {studentDetails.lastName}</h4>
+                            <span className="student-courseName">{studentDetails.courseName}</span><br/>
+                            <div className="btn-group mt-2">
+                                <button className="btn btn-primary"> Follow</button> &nbsp;
+                                <button className="btn btn-secondary hover"> Message </button>
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6 col-12 mt-4">
+                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Facebook</label>
+                        </div>
+                        <hr/>
+                        <div className="col-12 col-md-6 col-12 mt-4">
+                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Whatsapp</label>
+                        </div>
+                        <hr/>
+                        <div className="col-12 col-md-6 col-12 mt-4">
+                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Instagram </label>
+                        </div>
+                        <hr/>
+                        <div className="col-12 col-md-6 col-12 mt-4">
+                            <label><FaPhone/></label>&nbsp;&nbsp; <label> Twitter</label>
+                        </div>
+                        <hr/>
                     </div>
+                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
+                        <div className="">
+                            <b>Std Id</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.stdId} </span>
+                        </div>
+                        <hr/>
+                        <div className="stdItem">
+                            <b>First Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.firstName}  </span>
+                        </div>
+                        <hr/>
+                        <div className="stdItem">
+                            <b>Last Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.lastName} </span>
+                        </div>
+                        <hr/>
+                        <div className="stdItem">
+                            <b>Pass Out</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.passoutYear} </span>
+                        </div>
+                        <hr/>
+                        <div className="stdItem">
+                            <b>Last Education</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.lastEducation} </span>
+                        </div>
+                        <hr/>
+                        <div className="stdItem">
+                            <b>Course Name</b>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span> {studentDetails.courseName} </span>
+                        </div>                   
+                        <hr/>
+                        <div className="stdItem">
+                            <button className="btn btn-info px-5">Edit</button>
+                        </div>                                                     
+                    </div>                    
                 </div>
                 {/* <div className="row stdInformation m-2 justify-content-center mt-4 mb-2 shadow p-3">
                     <div className="col-12 col-sm-12 col-md-4 mt-3 shadow">                       
