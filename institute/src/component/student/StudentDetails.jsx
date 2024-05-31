@@ -7,6 +7,7 @@ import { CiTwitter } from "react-icons/ci";
 import { IoMdTime } from 'react-icons/io';
 import { TabView, TabPanel } from 'primereact/tabview';        
 import { getStudentDetails } from "../../apis/studentApis";
+import Loader from "../Loader";
 const StudentDetails=()=>{
     const param=useParams();
     const[batchId,setBatchId]=useState(0);
@@ -56,7 +57,7 @@ const StudentDetails=()=>{
         if(batches==null || student ==null)
         {
             return(
-                <div> <p> Loading </p> </div>
+                <div> <p> <Loader/> </p> </div>
             )
         }
 
@@ -226,14 +227,14 @@ const StudentDetails=()=>{
                                         </div>                        
                                         <hr/>
                                     </div>
-                                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-subDetails">
+                                    <div className="col-12 col-sm-12 col-md-7 shadow p-5 std-batch">
                                     <div className="">
-                                        <b>Batch Id</b>
+                                        <b>Batch Id</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span> {studentDetails.batchDto.bid} </span>
                                     </div>
                                     <hr/>
                                     <div className="stdItem">
-                                        <b>Duration </b>
+                                        <b>Duration </b>&nbsp;&nbsp;
                                         <span> {studentDetails.batchDto.duration}  </span>
                                     </div>
                                     <hr/>
@@ -243,17 +244,17 @@ const StudentDetails=()=>{
                                     </div>
                                     <hr/>
                                     <div className="stdItem">
-                                        <b>End Date </b>
+                                        <b>End Date </b>&nbsp;&nbsp;
                                         <span> {studentDetails.batchDto.endDate} </span>
                                     </div>
                                     <hr/>                                   
                                     <div className="stdItem">
-                                        <b>Status</b>
+                                        <b>Status</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span> {studentDetails.batchDto.status} </span>
                                     </div>                   
                                     <hr/>
                                     <div className="stdItem">
-                                        <b>Location</b>
+                                        <b>Location</b>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <span> {studentDetails.batchDto.location} </span>
                                     </div>                   
                                     <hr/>

@@ -933,6 +933,11 @@ width: 100%;
   padding: 5px;
   clip-path: circle();
 }
+.std-batch b{
+
+  width: 50px !important;
+  padding-right: 20px;
+}
 
 /* HeaderIconDemo.css */
 .p-tabview-nav .p-tabview-nav-link {
