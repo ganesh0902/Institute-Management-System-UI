@@ -7,61 +7,66 @@ import { CiTwitter } from "react-icons/ci";
 import { IoMdTime } from 'react-icons/io';
 import { TabView, TabPanel } from 'primereact/tabview';        
 import { getStudentDetails } from "../../apis/studentApis";
+import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
 import Loader from "../Loader";
+import { updateStudent } from "../../apis/studentApis";
 const StudentDetails=()=>{
     const param=useParams();
-    const[batchId,setBatchId]=useState(0);
+    
     const[batches,setBatches]=useState([]);
     const[student,setStudent]=useState([]);
-    const[teacherList,setTeacherList]=useState([]);
-    const[teacherId,setTeacherId]=useState(0);
-    const stdId=param ? param.stdId :null;    
     
+    const stdId=param ? param.stdId :null;        
     const [studentDetails, setStudentDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(()=>{          
-        const getStudent=async ()=>{
-            await fetch(`http://localhost:9004/student/`+stdId).then((result)=>{
+    const[studentDialog,setStudentDialog]=useState(false);
+    const[teacherDialog,setTeacherDialog]=useState(false);
 
-            result.json().then((response)=>{                                
-                  setBatchId(response.batchId);
-                  setStudent(response);  
-                //   getBatch();                             
-            })
-        })}
-        getStudent();
-    },[])
-                       
+    const[firstName,setFirstName]=useState("");
+    const[lastName,setLastName]=useState("");
+    const[passoutYear,setPassoutYear]=useState("");
+    const[lastEducation,setLastEducation]=useState("");
+    const[courseName,setCourseName]=useState("");  
+    const[updateComponent,setUpdateComponent] = useState(false);
+             
     useEffect(()=>{
        
         const  fetchStudentDetails=async ()=>{
             const data= await getStudentDetails(stdId);
             setStudentDetails(data);                             
             setLoading(false);
+                     
         }        
         fetchStudentDetails();
-    },[]);
+    },[]);       
+   
+    const studentUpdate=async ()=>{
 
-    useEffect(()=>{
+        const studentObject={stdId,studentDetails ,firstName, lastName, passoutYear, lastEducation,courseName};
+        
+        if(firstName==="" || lastName ==="" || passoutYear=="" || lastEducation=="")
+        {
+            alert("All Field are mandatory");
+        }
+        else
+        {   const response = await updateStudent(stdId,studentObject);
+            setStudentDialog(!studentDialog);
+            alert("Student Update Successfully"); 
+            setUpdateComponent(!updateComponent);               
+        }
+    };    
 
-        console.log("Student Details");
+    useEffect(()=>{        
         console.log(studentDetails);
     },[studentDetails]);
-
+    
     if (loading) return <div>Loading...</div>;
     if (!studentDetails) return <div>Loading1...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-       
-        if(batches==null || student ==null)
-        {
-            return(
-                <div> <p> <Loader/> </p> </div>
-            )
-        }
+    if (error) return <div>Error: {error.message}</div>;              
 
-        if (!studentDetails) return <p>No data to display</p>;
+    if (!studentDetails) return <p>No data to display</p>;
 
     return(
         <div className="stdDetailsContainer">
@@ -133,7 +138,7 @@ const StudentDetails=()=>{
                                     </div>                   
                                     <hr/>
                                     <div className="stdItem">
-                                        <button className="btn btn-info px-5">Edit</button>
+                                        <button className="btn btn-info px-5" onClick={()=>setStudentDialog(!studentDialog)}>Edit</button>
                                     </div>                                                     
                                 </div>                    
                                 </div>
@@ -275,6 +280,37 @@ const StudentDetails=()=>{
                     </div>                                       
                 </div>                
             </div>
+            <Modal size="lg" isOpen={studentDialog} toggle={()=>setStudentDialog(!studentDetails)} className="batchModal">
+            <ModalHeader toggle={()=>setStudentDialog(!studentDialog)} className="addBatchTitle"> Update Student </ModalHeader>
+            <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
+
+                <Row>
+                    <Col lg={6} md={12}>
+                        <label htmlFor="firstName">Enter First Name </label>
+                        <input type="text" name="firstName" defaultValue={studentDetails.firstName} onChange={(event)=>setFirstName(event.target.value)} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <label htmlFor="firstName">Enter Last Name </label>
+                        <input type="text" name="firstName" defaultValue={studentDetails.lastName} onChange={(event)=>setLastName(event.target.value)} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <label htmlFor="firstName">Enter PassOut Year</label>
+                        <input type="text" name="firstName" defaultValue={studentDetails.passoutYear} onChange={(event)=>setPassoutYear(event.target.value)} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <label htmlFor="firstName">Enter Course Name</label>
+                        <input type="text" name="firstName" defaultValue={studentDetails.courseName} onChange={(event)=>setCourseName(event.target.value)} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <label htmlFor="firstName">Enter Last Education</label>
+                        <input type="text" name="firstName" defaultValue={studentDetails.lastEducation} onChange={(event)=>setLastEducation(event.target.value)} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <button className="btn btn-info px-5" onClick={()=>studentUpdate()}>Edit</button>
+                    </Col>
+                </Row> 
+            </ModalBody>
+          </Modal>          
         </div>
     )
 }
