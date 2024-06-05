@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom"
 import { FaInstagram,FaGithub  } from "react-icons/fa";
@@ -6,23 +6,25 @@ import { FaPhone } from "react-icons/fa6";
 import { CiTwitter } from "react-icons/ci";
 import { IoMdTime } from 'react-icons/io';
 import { TabView, TabPanel } from 'primereact/tabview';        
-import { getStudentDetails } from "../../apis/studentApis";
+import { getStudentDetails, updateStudent } from "../../apis/studentApis";
+import {updateTeacherDto} from '../../apis/teacherApis'
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
 import Loader from "../Loader";
-import { updateStudent } from "../../apis/studentApis";
+import TeacherUpdate from "../teachers/TeacherUpdate";
+
 const StudentDetails=()=>{
     const param=useParams();
     
     const[batches,setBatches]=useState([]);
     const[student,setStudent]=useState([]);
+    const[teacherDialog,setTeacherDialog]=useState(false);
     
     const stdId=param ? param.stdId :null;        
     const [studentDetails, setStudentDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const[studentDialog,setStudentDialog]=useState(false);
-    const[teacherDialog,setTeacherDialog]=useState(false);
+    const[studentDialog,setStudentDialog]=useState(false);    
 
     const[firstName,setFirstName]=useState("");
     const[lastName,setLastName]=useState("");
@@ -30,7 +32,8 @@ const StudentDetails=()=>{
     const[lastEducation,setLastEducation]=useState("");
     const[courseName,setCourseName]=useState("");  
     const[updateComponent,setUpdateComponent] = useState(false);
-             
+    const childRef = useRef();
+
     useEffect(()=>{
        
         const  fetchStudentDetails=async ()=>{
@@ -57,7 +60,8 @@ const StudentDetails=()=>{
             setUpdateComponent(!updateComponent);               
         }
     };    
-
+  
+    
     useEffect(()=>{        
         console.log(studentDetails);
     },[studentDetails]);
@@ -305,12 +309,13 @@ const StudentDetails=()=>{
                         <label htmlFor="firstName">Enter Last Education</label>
                         <input type="text" name="firstName" defaultValue={studentDetails.lastEducation} onChange={(event)=>setLastEducation(event.target.value)} />
                     </Col>
-                    <Col lg={6} md={12}>
+                    <Col lg={6} md={12} className="mt-4">
                         <button className="btn btn-info px-5" onClick={()=>studentUpdate()}>Edit</button>
                     </Col>
                 </Row> 
             </ModalBody>
-          </Modal>          
+          </Modal>  
+        
         </div>
     )
 }
