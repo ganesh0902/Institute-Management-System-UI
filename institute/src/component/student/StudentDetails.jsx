@@ -10,6 +10,7 @@ import { getStudentDetails, updateStudent } from "../../apis/studentApis";
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
 import Loader from "../Loader";
 import TeacherUpdate from "../teachers/TeacherUpdate";
+import {getBatchTitleAndDate} from '../../apis/batchApis';
 
 const StudentDetails=()=>{
     const param=useParams();
@@ -23,7 +24,8 @@ const StudentDetails=()=>{
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const[studentDialog,setStudentDialog]=useState(false);    
+    const[studentDialog,setStudentDialog]=useState(false);   
+    const[batchDialog,setBatchDialog]=useState(false); 
 
     const[firstName,setFirstName]=useState("");
     const[lastName,setLastName]=useState("");
@@ -31,7 +33,8 @@ const StudentDetails=()=>{
     const[lastEducation,setLastEducation]=useState("");
     const[courseName,setCourseName]=useState("");  
     const[updateComponent,setUpdateComponent] = useState(false);
-    const childRef = useRef();
+    const[batchId,setBatchId]=useState(0);
+    const[batchTitleAndDate,setBatchTitleAndDate]=useState([]);
 
     const  fetchStudentDetails=async ()=>{
         const data= await getStudentDetails(stdId);
@@ -45,13 +48,20 @@ const StudentDetails=()=>{
             const data= await getStudentDetails(stdId);
             setStudentDetails(data);                             
             setLoading(false);                     
-        }        
+        }    
+        
+        const fetchBatchTitleAndDate=async ()=>{
+
+            const response = await getBatchTitleAndDate();
+            setBatchTitleAndDate(response);                        
+        }
+        fetchBatchTitleAndDate();
         fetchStudentDetails();
     },[]);       
    
     const studentUpdate=async ()=>{
 
-        const studentObject={stdId,studentDetails ,firstName, lastName, passoutYear, lastEducation,courseName};
+        const studentObject={stdId,studentDetails ,firstName, lastName, passoutYear, lastEducation,courseName,batchId};
         
         if(firstName==="" || lastName ==="" || passoutYear=="" || lastEducation=="")
         {
@@ -67,7 +77,9 @@ const StudentDetails=()=>{
       
     useEffect(()=>{        
         console.log(studentDetails);
-    },[studentDetails]);
+        console.log("Batch title And Date")
+        console.log(batchTitleAndDate);
+    },[studentDetails,batchTitleAndDate]);
 
     useEffect(()=>{
 
@@ -283,10 +295,7 @@ const StudentDetails=()=>{
                                         <b>Batch Time</b>
                                         <span> {studentDetails.batchDto.time} </span>
                                     </div>                   
-                                    <hr/>
-                                    <div className="stdItem">
-                                        <button className="btn btn-info px-5">Edit</button>
-                                    </div>                                                     
+                                    <hr/>                                                                                       
                                 </div>                    
                                 </div>
                             </p>
@@ -309,27 +318,40 @@ const StudentDetails=()=>{
                         <label htmlFor="firstName">Enter Last Name </label>
                         <input type="text" name="firstName" defaultValue={studentDetails.lastName} onChange={(event)=>setLastName(event.target.value)} />
                     </Col>
-                    <Col lg={6} md={12}>
+                    <Col lg={6} md={12} className="mt-3">
                         <label htmlFor="firstName">Enter PassOut Year</label>
                         <input type="text" name="firstName" defaultValue={studentDetails.passoutYear} onChange={(event)=>setPassoutYear(event.target.value)} />
                     </Col>
-                    <Col lg={6} md={12}>
+                    <Col lg={6} md={12} className="mt-3">
                         <label htmlFor="firstName">Enter Course Name</label>
                         <input type="text" name="firstName" defaultValue={studentDetails.courseName} onChange={(event)=>setCourseName(event.target.value)} />
                     </Col>
-                    <Col lg={6} md={12}>
+                    <Col lg={6} md={12} className="mt-3">
                         <label htmlFor="firstName">Enter Last Education</label>
                         <input type="text" name="firstName" defaultValue={studentDetails.lastEducation} onChange={(event)=>setLastEducation(event.target.value)} />
                     </Col>
+                    <Col lg={6} md={12} className="mt-3">
+                            <label  htmlFor="status">Select  Batch</label><br/>
+                            { <select name='batchId'                                
+                                onChange={(event)=>setBatchId(event.target.value)} 
+                                 className='batchStatus form-control pt-2 pb-2' >
+                                <option value=''> Select Batch </option>
+                                {
+                                  batchTitleAndDate.map((batch,index)=>(
+                                    <option key={index} value={batch.bid}> {batch.batchTitle} {batch.startDate} </option>
+                                  ))
+                                }                                                                
+                            </select>                             }
+                  </Col>      
                     <Col lg={6} md={12} className="mt-4">
                         <button className="btn btn-info px-5" onClick={()=>studentUpdate()}>Edit</button>
-                    </Col>
+                    </Col>                    
                 </Row> 
             </ModalBody>
           </Modal>          
         {
             teacherDialog && <TeacherUpdate componentUpdate={componentUpdate} tId={studentDetails.teacherDto.tid} status={teacherDialog} firstName={studentDetails.teacherDto.firstName} lastName={studentDetails.teacherDto.lastName} education={studentDetails.teacherDto.education} contact={studentDetails.teacherDto.contact} email={studentDetails.teacherDto.email}/>
-        }
+        }        
         </div>
     )
 }
