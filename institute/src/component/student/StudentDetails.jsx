@@ -7,7 +7,6 @@ import { CiTwitter } from "react-icons/ci";
 import { IoMdTime } from 'react-icons/io';
 import { TabView, TabPanel } from 'primereact/tabview';        
 import { getStudentDetails, updateStudent } from "../../apis/studentApis";
-import {updateTeacherDto} from '../../apis/teacherApis'
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
 import Loader from "../Loader";
 import TeacherUpdate from "../teachers/TeacherUpdate";
@@ -34,13 +33,18 @@ const StudentDetails=()=>{
     const[updateComponent,setUpdateComponent] = useState(false);
     const childRef = useRef();
 
+    const  fetchStudentDetails=async ()=>{
+        const data= await getStudentDetails(stdId);
+        setStudentDetails(data);                             
+        setLoading(false);                     
+    }        
+
     useEffect(()=>{
        
         const  fetchStudentDetails=async ()=>{
             const data= await getStudentDetails(stdId);
             setStudentDetails(data);                             
-            setLoading(false);
-                     
+            setLoading(false);                     
         }        
         fetchStudentDetails();
     },[]);       
@@ -57,15 +61,23 @@ const StudentDetails=()=>{
         {   const response = await updateStudent(stdId,studentObject);
             setStudentDialog(!studentDialog);
             alert("Student Update Successfully"); 
-            setUpdateComponent(!updateComponent);               
+            fetchStudentDetails();             
         }
     };    
-  
-    
+      
     useEffect(()=>{        
         console.log(studentDetails);
     },[studentDetails]);
-    
+
+    useEffect(()=>{
+
+
+    },[updateComponent]);
+    const componentUpdate=()=>
+    {
+        fetchStudentDetails()
+    }
+       
     if (loading) return <div>Loading...</div>;
     if (!studentDetails) return <div>Loading1...</div>;
     if (error) return <div>Error: {error.message}</div>;              
@@ -212,7 +224,7 @@ const StudentDetails=()=>{
                                     </div>                   
                                     <hr/>
                                     <div className="stdItem">
-                                        <button className="btn btn-info px-5">Edit</button>
+                                        <button className="btn btn-info px-5" onClick={()=>setTeacherDialog(!teacherDialog)}>Edit</button>
                                     </div>                                                     
                                 </div>                    
                                 </div>
@@ -314,8 +326,10 @@ const StudentDetails=()=>{
                     </Col>
                 </Row> 
             </ModalBody>
-          </Modal>  
-        
+          </Modal>          
+        {
+            teacherDialog && <TeacherUpdate componentUpdate={componentUpdate} tId={studentDetails.teacherDto.tid} status={teacherDialog} firstName={studentDetails.teacherDto.firstName} lastName={studentDetails.teacherDto.lastName} education={studentDetails.teacherDto.education} contact={studentDetails.teacherDto.contact} email={studentDetails.teacherDto.email}/>
+        }
         </div>
     )
 }

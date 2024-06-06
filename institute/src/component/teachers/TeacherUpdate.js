@@ -1,4 +1,5 @@
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
+import {updateTeacher} from '../../apis/teacherApis'
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 const TeacherUpdate=(props)=>{
@@ -8,8 +9,24 @@ const TeacherUpdate=(props)=>{
     const[education,setEducation]=useState("");
     const[contact,setContact]=useState("");
     const[email,setEmail]=useState("");
+    const[tId,setTid]=useState("");
     const[teacherDialog,setTeacherDialog]=useState(false);
  
+    useEffect(()=>{
+
+        setTeacherDialog(!teacherDialog);
+        setTid(props.tId);
+    },[props.status]);
+
+
+    const updateTeacherDto=async ()=>{
+        const teacher={tId,firstName, lastName, education, contact, email};
+
+        await updateTeacher(tId,teacher);
+        alert("Record Updated Successfully");
+        setTeacherDialog(false);
+        props.componentUpdate();
+    };
 
     return(
         <div>
@@ -40,7 +57,7 @@ const TeacherUpdate=(props)=>{
                     </Col>
                     <Col lg={6} md={12} className="mt-3">
                     <label htmlFor="firstName"></label> <br/>
-                        <button className="btn btn-info px-5">Edit</button>
+                        <button className="btn btn-info px-5" onClick={()=>updateTeacherDto()}>Edit</button>
                     </Col>
                 </Row> 
             </ModalBody>
