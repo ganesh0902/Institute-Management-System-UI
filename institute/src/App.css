@@ -640,8 +640,7 @@ body {
   text-decoration: none;
 }
 .batchDisplay{    
-  color: #334f6c;
-  background-color: #B7C9F2;
+  color: #334f6c;  
   height: 92vh;
   overflow: scroll;
 }
@@ -664,6 +663,27 @@ body {
   color: #fff !important;
   background-color: #F1F0FF;
   margin-top: 7px;
+}
+.batchDisplay .batch-profile-in-batchDisplay{
+  text-align: center;
+}
+
+.batchDisplay .batch-profile-in-batchDisplay img{
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;      
+}
+
+.batchDisplay .teacher-profile-in-batchDisplay{  
+  text-align: center;
+}
+
+.batchDisplay .teacher-profile-in-batchDisplay img{
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;      
 }
 
 .batchDisplay .batchCourseContainer{

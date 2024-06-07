@@ -8,8 +8,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import 'primereact/resources/themes/saga-blue/theme.css'; // or any other theme you prefer
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import { MultiSelect } from 'primereact/multiselect';
-import { RiLockPasswordFill } from "react-icons/ri";
+import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
 import {Button} from 'primereact/button'
 import { MdMarkEmailRead } from "react-icons/md";
 import { Dropdown } from 'primereact/dropdown';
@@ -42,6 +41,7 @@ const BatchDisplay=()=>{
     const[courseId,setCourserId]=useState(0);
     const[teacherId,setTeacherId]=useState(0);     
     const[time,setTime]=useState("10:30 PM");  
+    const[updateDialog,setUpdateDialog]=useState(false);
     
     useEffect(()=>{        
         fetch(`http://localhost:9002/batch/`+bId).then(async (result)=>{
@@ -58,7 +58,9 @@ const BatchDisplay=()=>{
 
     },[bId]);
 
+    useEffect(()=>{
 
+    },[batch]);
 
     const skillSet = [
         { name: 'Java', id: 'NY' },
@@ -110,13 +112,7 @@ const BatchDisplay=()=>{
         const batchDto={bId,batchTitle, duration, startDate, endDate, status, location, teacherId, courseId};
 
         console.log(batchDto);
-
-        // const save_batch="http://localhost:9002/batch/";
-        //       const response=axios.post(`${save_batch}`,batchDto);              
-        //       alert("Batch Updated Successfully");
-        //       console.log(response.data);
-        //       console.log(batch);           
-    }
+    }   
 
     return(        
         <section className='batchDisplay'>
@@ -124,88 +120,132 @@ const BatchDisplay=()=>{
                 <div className='row'>                    
                     <div className='col-12 col-md-6 col-sm-12 mt-2 shadow pt-1'>
                         <div className='row'>                                                    
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                            <div className='col-12 col-md-12 col-sm-12 mt-2 batch-profile-in-batchDisplay'>
                                 <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
                             </div>                           
-                            <div className='col-12 col-md-6 col-sm-12 mt-2 text-center'>
+                            <div className='col-12 col-md-12 col-sm-12 mt-2 mb-3 text-center'>
                                 <label><MdMarkEmailRead/> </label> &nbsp;
                                 <small> {batch.batchTitle} </small>  &nbsp;&nbsp;
-                                <i className="pi pi-pencil" onClick={()=>makeReadOnly()} style={{ fontSize: '1em',cursor:"pointer" }}></i>                                                                                           
+                                <i className="pi pi-pencil" onClick={()=>setUpdateDialog(!updateDialog)} style={{ fontSize: '1em',cursor:"pointer" }}></i>                                                                                           
                             </div>                            
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Batch Name</label>
-                                <InputText id="username" readOnly={isReadOnly} value={batch.batchTitle}  onChange={(even)=>setBatchTitle(even.target.value)} className='form-control'/>                                                                           
+                                <label htmlFor="username">Batch Name : </label> &nbsp;
+                                <small>{batch.batchTitle}</small>
+                                <hr/>                                
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username"> Duration </label>
-                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.duration} onChange={(event)=>setDuration(event.target.value)}/>                                                                           
+                                <label htmlFor="username"> Duration :</label> &nbsp;
+                                <small>{batch.duration}</small>
+                                <hr/>                                
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Start Date</label>
-                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.startDate} onChange={(even)=>setStartDate(even.target.value)}/>                                                                           
+                                <label htmlFor="username">Start Date :</label> &nbsp;
+                                <small>{batch.startDate}</small>
+                                <hr/>                                
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">End Date</label>
-                                <InputText id="username" className='form-control' readOnly={isReadOnly} defaultValue={batch.endDate} onChange={(event)=>setEndDate(event.target.value)}/>                                                                           
+                                <label htmlFor="username">End Date :</label>&nbsp;
+                                <small>{batch.endDate}</small>
+                                <hr/>
+                                
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Location</label>
-                                <InputText id="username" className='form-control' readOnly={isReadOnly} value={batch.location}/>                                                                           
-                            </div>                                                        
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username">Location :</label> &nbsp;
+                                <small>{batch.location}</small>
+                                <hr/>                                
+                            </div>                                                                                
+                            {/* <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username">Update File </label>
                                 <FileUpload   
                                 onUpload={onUpload}                                                                                           
                                 className='fileUploaderBatch'                                 
                                 />
-                            </div>                            
-                            <div className='col-12 col-md-6 col-sm-12 mt-2 mb-4'>
+                            </div>                             */}
+                            {/* <div className='col-12 col-md-6 col-sm-12 mt-2 mb-4'>
                                 <label htmlFor="username">Select Teacher</label><br/>
                                 <Dropdown value={selectedTeacher} onChange={(e) => setSelectedTeacher(e.value)} options={teachers} optionLabel="name" 
                                     placeholder="Select a City" style={{width:"100%"}} className="p-2"/>
-                            </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-4'>
+                            </div> */}
+                            {/* <div className='col-12 col-md-6 col-sm-12 mt-4'>
                                 {   !isReadOnly &&
                                     <Button label="Submit" className='btn px-2 form-control updateBatchBtn'  icon="pi pi-check" loading={loading} onClick={()=>updateBatch()} />                            
                                 }
-                            </div>
+                            </div> */}
                         </div>
                     </div>
-                    <div className='col-12 col-md-6 col-sm-12 shadow pt-1'>                        
-                        <div className='row'>                            
-                            <div className='col-12 col-md-6 col-sm-12 mt-3'>
+                    <div className='col-12 col-md-6 col-sm-12 shadow '>                        
+                        <div className='row m-3'>                            
+                            <div className='col-12 col-md-12 col-sm-12 justify-content-center teacher-profile-in-batchDisplay'>
                                 <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../teacher/${teacher.image}`}/>                                
-                            </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label><MdMarkEmailRead/> </label> &nbsp;
-                                <small> {teacher.email} </small> <br/>
-                                <label><FaUserNurse/></label> &nbsp;
-                                <small>{teacher.firstName} &nbsp; {teacher.lastName}</small>                                                                                              
                             </div>                            
+                             <div className='col-12 col-md-12 col-sm-12 text-center'>
+                                <label className='mt-2 mb-1'><MdMarkEmailRead/> </label> &nbsp;
+                                <small className='text-bold'> {teacher.email} </small>                                
+                            </div>  
+                            <div className='col-12 col-md-6 col-sm-12 mt-4'>
+                                <label htmlFor="username">First Name :</label> &nbsp;
+                                <small>{teacher.firstName}</small>
+                                <hr/>
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-4'>
+                                <label htmlFor="username">First Name : </label> &nbsp;
+                                <small>{teacher.lastName}</small>
+                                <hr/>
+                            </div>                          
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username">Education</label>
-                                <InputText id="username" className='form-control' readOnly="true" value={teacher.education}/>                                                                           
+                                <label htmlFor="username">Education : </label>&nbsp;
+                                <small>{teacher.education}</small>
+                                <hr/>
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username"> Contact </label>
-                                <InputText id="username" className='form-control' readOnly="true" value={teacher.contact}/> 
+                                <label htmlFor="username">Contact : </label>&nbsp;
+                                <small>{teacher.contact}</small>
+                                <hr/>
                             </div>
-                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="username"> Email </label>
-                                <InputText id="fees" variant="filled" className='form-control' readOnly="true" value={teacher.email}/> 
-                            </div>                           
-                            {/* <div className='col-12 col-md-6 col-sm-12 mt-2'>
-                                <label htmlFor="ms-cities">Select The Skills </label>
-                                <FloatLabel className="w-full md:w-26rem custom-floatlabel-batch mt-1 form-control">                                
-                                <MultiSelect value={selectedSkill} onChange={(e) => setSelectedSkills(e.value)} 
-                                    options={skillSet} optionLabel="name" maxSelectedLabels={3} 
-                                    panelClassName="custom-multiselect-panel-batch" style={{width:"auto"}} />                                
-                                </FloatLabel>
-                            </div>                             */}
+                            <div className='col-12 col-md-8 col-sm-12 mt-2'>
+                                <label htmlFor="username"> Email :</label>&nbsp;
+                                <small>{teacher.email}</small>
+                                <hr/>
+                            </div>                                                       
                         </div>                        
                     </div>                    
                 </div>                    
             </div>
+
+            <Modal size="lg" isOpen={updateDialog} toggle={()=>setUpdateDialog(!updateDialog)} className="batchModal">
+                <ModalHeader toggle={()=>setUpdateDialog(!updateDialog)} className="addBatchTitle"> Update Batch </ModalHeader>
+                <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
+                <Row>
+                    <Col lg={6} md={12}>
+                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Title Name </label>
+                        <input type="text" name="firstName" defaultValue={batch.batchTitle} />
+                    </Col>
+                    <Col lg={6} md={12}>
+                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Duration </label>
+                        <input type="text" name="firstName" defaultValue={batch.duration} />
+                    </Col>
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Start Date </label>
+                        <input type="date" name="firstName" className='form-control' defaultValue={batch.startDate} />
+                    </Col>
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch End Date </label>
+                        <input type="date" name="firstName" className='form-control' defaultValue={batch.endDate} />
+                    </Col>
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="batchTitle"> Enter Location </label>
+                        <input type="text" name="firstName" defaultValue={batch.location} />
+                    </Col>
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="batchTitle"> Select Teacher </label>
+                        <input type="text" name="firstName" defaultValue={batch.location} />
+                    </Col>
+                    <Col lg={6} md={12} className="mt-4">
+                        <button className='btn btn-primary form-control'> Submit </button>
+                    </Col>
+                </Row>                                    
+                </ModalBody>
+            </Modal>    
         </section>                                     
     )
 }

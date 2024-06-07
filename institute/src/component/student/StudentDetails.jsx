@@ -166,6 +166,11 @@ const StudentDetails=()=>{
                                     </div>                   
                                     <hr/>
                                     <div className="stdItem">
+                                        <b>Batch Title</b>
+                                        <span> {studentDetails.batchDto.batchTitle} </span>
+                                    </div>  
+                                    <hr/>
+                                    <div className="stdItem">
                                         <button className="btn btn-info px-5" onClick={()=>setStudentDialog(!studentDialog)}>Edit</button>
                                     </div>                                                     
                                 </div>                    
@@ -233,8 +238,8 @@ const StudentDetails=()=>{
                                     <div className="stdItem">
                                         <b>Email</b>
                                         <span> {studentDetails.teacherDto.email} </span>
-                                    </div>                   
-                                    <hr/>
+                                    </div>                                                       
+                                    <hr/>                                    
                                     <div className="stdItem">
                                         <button className="btn btn-info px-5" onClick={()=>setTeacherDialog(!teacherDialog)}>Edit</button>
                                     </div>                                                     
