@@ -3,22 +3,20 @@ import { Toast } from 'primereact/toast';
 import { useState,useRef } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { InputText } from "primereact/inputtext";
-import { FloatLabel } from "primereact/floatlabel";
 import 'primereact/resources/themes/saga-blue/theme.css'; // or any other theme you prefer
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
-import {Button} from 'primereact/button'
 import { MdMarkEmailRead } from "react-icons/md";
-import { Dropdown } from 'primereact/dropdown';
-import { FileUpload } from 'primereact/fileupload';
-import { FaUserNurse } from "react-icons/fa";
 import 'primereact/resources/themes/saga-blue/theme.css';  // Import PrimeReact themes
 import 'primereact/resources/primereact.min.css';          // Import PrimeReact CSS
 import 'primeicons/primeicons.css';  
-import axios from 'axios';
+import {getTeachersNameAndIds} from '../../apis/teacherApis'
+import {updateBatch} from '../../apis/batchApis'
+import {getCourserNameAndId} from '../../apis/courseApis'
 
+import { Dropdown } from 'primereact/dropdown';
+import Loader from '../Loader';
 const BatchDisplay=()=>{
     
     const params = useParams();
@@ -31,6 +29,7 @@ const BatchDisplay=()=>{
     const toast = useRef(null);
     const [loading, setLoading] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
+    const [loadingTeacher, setLoadingTeacher] = useState(true);
 
     const[batchTitle,setBatchTitle]=useState("");
     const[duration,setDuration]=useState("");
@@ -42,78 +41,76 @@ const BatchDisplay=()=>{
     const[teacherId,setTeacherId]=useState(0);     
     const[time,setTime]=useState("10:30 PM");  
     const[updateDialog,setUpdateDialog]=useState(false);
-    
+    const[teachersName,setTeachersName]=useState([]);
+    const[updateComponent,setUpdateComponent]=useState(false);
+
     useEffect(()=>{        
         fetch(`http://localhost:9002/batch/`+bId).then(async (result)=>{
 
             await result.json().then((response)=>{
-                setBatch(response);    
-                
-                batch.map((result)=>{
-                    setBatch(result.teacherId);
-                    setCourserId(result.courseId);
-                })
+                setBatch(response);                                   
             })
         })
-
-    },[bId]);
-
-    useEffect(()=>{
-
-    },[batch]);
-
-    const skillSet = [
-        { name: 'Java', id: 'NY' },
-        { name: 'Spring boot', id: 'RM' },
-        { name: 'Hibernate', id: 'LDN' },
-        { name: 'Microservices', id: 'IST' },
-        { name: 'Reactjs', id: 'PRS' }
-    ];
-
-    const [selectedTeacher, setSelectedTeacher] = useState(null);
-    const teachers = [
-        { name: 'New York', code: 'NY' },
-        { name: 'Rome', code: 'RM' },
-        { name: 'London', code: 'LDN' },
-        { name: 'Istanbul', code: 'IST' },
-        { name: 'Paris', code: 'PRS' }
-    ];
+        teacherName();        
+    },[bId,updateComponent]);
 
     useEffect(()=>{        
         const {course}=batch;
         setCourse(course);
         const {teacherDto}=batch;
-        setTeacher(teacherDto);        
-              
-    },[batch]);
-    if (!course) {
-        return <div>Loading...</div>; // Return loading indicator if course is not available yet
-      }
+        setTeacher(teacherDto);                              
+    },[batch,teachersName]);  
+   
+       
+    const teacherName=async ()=>{
 
-      const onUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
-    };    
+        setLoadingTeacher(true);
+        try
+        {
+        const response = await getTeachersNameAndIds();        
+        setTeachersName(response);        
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+        finally{
+            setLoadingTeacher(false);
+        }
+    }
 
-    const makeReadOnly = () => {
-        setIsReadOnly(!isReadOnly);        
-    };
+    const getCourserName=async ()=>{
 
-    const load = () => {
-        setLoading(true);
-        //updateBatch();
-        setTimeout(() => {
-            setLoading(false);
-            
-        }, 2000);
-    };
+        const response  = await getCourserNameAndId();
+        console.log(response);
+        setCourse(response);
+    }
+    
+    const batchUpdate=async ()=>{              
 
-    const updateBatch=()=>{              
-
-        const batchDto={bId,batchTitle, duration, startDate, endDate, status, location, teacherId, courseId};
-
-        console.log(batchDto);
+        try
+        {
+            const batchDto={bId,batchTitle, duration,time, startDate, endDate, status, location, teacherId, courseId};
+            console.log(batchDto);
+            await updateBatch(bId,batchDto);
+            alert("batch Updated Successfully");
+            setUpdateDialog(!updateDialog);            
+            setUpdateComponent(!updateComponent);
+            // getBatch();
+        }
+        catch(error)
+        {
+            console.log("Something went wrong");
+        }
     }   
 
+    if(loadingTeacher)
+    {
+        return(<Loader/>)
+    }
+    if (!course) {
+        return <Loader/>; // Return loading indicator if course is not available yet
+      }
     return(        
         <section className='batchDisplay'>
             <div className='container p-4'>
@@ -136,6 +133,11 @@ const BatchDisplay=()=>{
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
                                 <label htmlFor="username"> Duration :</label> &nbsp;
                                 <small>{batch.duration}</small>
+                                <hr/>                                
+                            </div>
+                            <div className='col-12 col-md-6 col-sm-12 mt-2'>
+                                <label htmlFor="username"> Time :</label> &nbsp;
+                                <small>{batch.time}</small>
                                 <hr/>                                
                             </div>
                             <div className='col-12 col-md-6 col-sm-12 mt-2'>
@@ -218,30 +220,45 @@ const BatchDisplay=()=>{
                 <Row>
                     <Col lg={6} md={12}>
                         <label className='batchCl' htmlFor="batchTitle"> Enter Batch Title Name </label>
-                        <input type="text" name="firstName" defaultValue={batch.batchTitle} />
+                        <input type="text" name="batchTitle" defaultValue={batch.batchTitle} onChange={(event)=>setBatchTitle(event.target.value)}/>
                     </Col>
                     <Col lg={6} md={12}>
-                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Duration </label>
-                        <input type="text" name="firstName" defaultValue={batch.duration} />
+                        <label className='batchCl' htmlFor="batchDuration"> Enter Batch Duration </label>
+                        <input type="text" name="firstName" defaultValue={batch.duration} onChange={(event)=>setDuration(event.target.value)}/>
                     </Col>
                     <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Start Date </label>
-                        <input type="date" name="firstName" className='form-control' defaultValue={batch.startDate} />
+                        <label className='batchCl' htmlFor="batchEndDate"> Enter Batch Start Date </label>
+                        <input type="date" name="firstName" className='form-control' defaultValue={batch.startDate} onChange={(event)=>setStartDate(event.target.value)}/>
                     </Col>
                     <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch End Date </label>
-                        <input type="date" name="firstName" className='form-control' defaultValue={batch.endDate} />
+                        <label className='batchCl' htmlFor="batchStartDate"> Enter Batch End Date </label>
+                        <input type="date" name="firstName" className='form-control' defaultValue={batch.endDate} onChange={(event)=>setEndDate(event.target.value)}/>
                     </Col>
                     <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchTitle"> Enter Location </label>
-                        <input type="text" name="firstName" defaultValue={batch.location} />
-                    </Col>
+                        <label className='batchCl' htmlFor="batchLocation"> Enter Location </label>
+                        <input type="text" name="firstName" defaultValue={batch.location}  onChange={(event)=>setLocation(event.target.value)}/>
+                    </Col>       
                     <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchTitle"> Select Teacher </label>
-                        <input type="text" name="firstName" defaultValue={batch.location} />
+                        <label className='batchCl' htmlFor="batchTime"> Select Time </label>
+                        <input type="time" name="time" defaultChecked={batch.time}  onChange={(event)=>setTime(event.target.value)} className='form-control'/>                            
+                    </Col>            
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="batchStatus"> Enter Batch Status </label>
+                        <input type="text" name="firstName" readOnly defaultValue={batch.status} onChange={(event)=>setStatus(event.target.value)}/>
+                    </Col>                    
+                    <Col lg={6} md={12} className="mt-2">
+                        <label className='batchCl' htmlFor="teacherName"> Select Teacher </label>
+                        <select className='form-control pt-2 pb-2' onChange={(event)=>setTeacherId(event.target.value)}>
+                          <option value={batch.teacherId}>{batch.teacherDto.firstName}</option>  
+                       {
+                            teachersName.map((result)=>(
+                                <option value={result.teacherId}>{result.teacherName} </option>
+                            ))
+                       }
+                       </select>                                
                     </Col>
                     <Col lg={6} md={12} className="mt-4">
-                        <button className='btn btn-primary form-control'> Submit </button>
+                        <button className='btn btn-primary form-control' onClick={()=>batchUpdate()}> Submit </button>
                     </Col>
                 </Row>                                    
                 </ModalBody>
