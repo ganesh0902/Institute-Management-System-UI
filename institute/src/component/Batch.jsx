@@ -168,11 +168,13 @@ const Batch=()=>{
                 {
                         allBatches.map((batch,index)=>(
                             <div className='col-12 col-md-4 col-sm-12 mb-2 mt-1'>                    
-                            <NavLink to={`/bDetails/${batch.bid}`} className="batchCardLink"> 
+                            
                                 <div className='card bg-white batchSubContainer'>
                                     <div className='card-body'>
                                         <div className=''>
+                                        <NavLink to={`/bDetails/${batch.bid}`} className="batchCardLink"> 
                                             <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
+                                            </NavLink>
                                         </div>
                                         <div className=''>
                                             <p className='bold mt-2 text-center'> {batch.batchTitle} </p>
@@ -209,8 +211,7 @@ const Batch=()=>{
                                             </div>
                                         </div>
                                     </div>
-                                </div>                        
-                                </NavLink>
+                                </div>                                                        
                             </div>                         
                         ))
                     }     

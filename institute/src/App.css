@@ -735,10 +735,50 @@ body {
   overflow: auto;
   max-height: 680px;
 }
+.teacherDetails .teacher-profile-in-teacher-details{
+
+  text-align: center;
+}
+.teacherDetails .teacher-profile-in-teacher-details img{
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover; 
+}
 .teacherDetails{
-  background-color: #aeb7e0;
+  background-color: #EEF7FF;
   width: 100%;
 }
+.teacherDetails .content small{
+  color: #C7C8CC;  
+}
+.teacherDetails .social-media-icon .icon{
+  font-size: 19px;
+  padding-right: 3px;
+}
+.teacherDetails .social-media-icon .whatsapp{
+  background-color: 	#075E54;
+  color: white;
+  padding: 5px;
+  font-size: 25px;
+  border-radius: 5px;
+}
+
+.teacherDetails .social-media-icon .instagram{
+  background: linear-gradient(45deg, #FEDA77, #F58529, #DD2A7B, #8134AF, #515BD4);
+  color: white;
+  padding: 5px;
+  clip-path: circle();
+  font-size: 28px;
+}
+.teacherDetails .social-media-icon .github{
+  font-size: 28px;
+} 
+
+.teacherDetails .social-media-icon .twitter{
+  font-size: 28px;
+} 
+
 .teacherDetails .dropdown{
   width: 100%;  
   margin-top: 12px;  

@@ -36,3 +36,13 @@ export const getTeachersNameAndIds=async ()=>{
         throw new Error("Response is not okay "+error);
     }
 }
+
+export const getTeacherById=async (tId)=>{
+      
+    await fetch(`http://localhost:9003/teacher/`+tId).then((result)=>{
+        result.json().then((response)=>{
+            
+            return response;
+        })
+    })
+}

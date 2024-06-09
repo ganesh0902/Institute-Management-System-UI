@@ -37,3 +37,9 @@ export const updateBatch=async (bId, batch)=>{
         console.log(error);
     }
 }
+
+export const getBatchesByTeacherId=async (tId)=>{
+
+    const response = await axios.get(`http://localhost:9002/batch/teacherId/`+tId);
+    return response.data;
+}

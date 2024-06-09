@@ -111,7 +111,7 @@ const StudentDetails=()=>{
                                         </div>
                                         <div className="student-content">
                                             <h4 className="student-username"> {studentDetails.firstName} &nbsp; {studentDetails.lastName}</h4>
-                                            <span className="student-courseName">{studentDetails.courseName}</span><br/>
+                                            <span className="student-courseName">{studentDetails.batchDto.batchTitle}</span><br/>
                                             <div className="btn-group mt-2">
                                                 <button className="btn btn-primary"> Follow</button> &nbsp;
                                                 <button className="btn btn-secondary hover"> Message </button>
