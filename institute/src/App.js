@@ -33,6 +33,7 @@ const openSidebar=()=>{
     <div >
   <Router>
       {
+        // if user is not login show the navigationBar and HomePage
         !login && 
         <div className='home-page'>
           <NavigationBar/>
@@ -41,10 +42,12 @@ const openSidebar=()=>{
       }
       <div className="grid-container">                  
       {
+        // if admin is login show  side bar
         login &&
         <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar}/>                    
       }
       {
+        // if admin is login show the header
         login &&
         <Header openSidebar={openSidebar}/>
       }     
@@ -62,7 +65,7 @@ const openSidebar=()=>{
               <Route path='/tDetails/:tId' element={<TeacherDetails/>} />
               <Route path='/stdDetails/:stdId' element={<StudentDetails/>}/>                        
           </Routes>
-              }                                   
+      }                                   
 
           </div>       
         </Router>                     

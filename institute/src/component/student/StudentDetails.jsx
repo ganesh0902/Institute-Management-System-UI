@@ -90,8 +90,8 @@ const StudentDetails=()=>{
         fetchStudentDetails()
     }
        
-    if (loading) return <div>Loading...</div>;
-    if (!studentDetails) return <div>Loading1...</div>;
+    if (loading) return <div><Loader/></div>;
+    if (!studentDetails) return <div><Loader/></div>;
     if (error) return <div>Error: {error.message}</div>;              
 
     if (!studentDetails) return <p>No data to display</p>;
