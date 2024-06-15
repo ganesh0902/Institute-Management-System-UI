@@ -42,8 +42,18 @@ const NavigationBar=(props)=>{
       };
     return(
        <nav>
-            <img src={logo} alt="image"></img>
-            <div className='navigation'>
+            <img src={logo} alt="image"></img> 
+            <div className='navigationForDesktop'>
+                <ul className='nav-list'>                    
+                    <li><NavLink className="NavLink" onClick={() => modalHandle()}> Login </NavLink></li>
+                    <li><NavLink className="NavLink"> Home </NavLink></li>
+                    <li><NavLink className="NavLink"> About </NavLink></li>
+                    <li><NavLink className="NavLink"> Blog </NavLink></li>
+                    <li><NavLink className="NavLink"> Courses </NavLink></li>
+                    <li><NavLink className="NavLink"> Contact </NavLink></li>
+                </ul>
+            </div>                                              
+            <div className='navigation'>                                                        
                 <ul style={toggle ? show : open}>
                     <li> <FaTimes id='menu-close' onClick={()=>addToggle(0)}/> </li>
                     <li><NavLink className="NavLink" onClick={()=>modalHandle()}> Login </NavLink> </li>

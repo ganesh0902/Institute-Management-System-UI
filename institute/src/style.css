@@ -50,7 +50,6 @@ nav img{
 nav .navigation{
   display: flex;
 }
-
 nav .navigation .menu-btn{
 
   width: 30px;
@@ -68,6 +67,7 @@ nav .navigation ul{
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  display: none;
 }
 
 nav .navigation ul li{
@@ -89,6 +89,42 @@ nav .navigation ul li .NavLink:hover{
 
   color: #fdc93d;
 }
+nav .navigationForDesktop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1vw 8vh;
+  align-items: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  z-index: 20; 
+}
+
+
+/* CSS for Flexbox layout */
+.navigationForDesktop .nav-list {
+  display: flex; /* Make the <ul> a flex container */
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.navigationForDesktop .nav-list li {
+  margin-right: 20px; /* Space between list items */
+}
+
+.navigationForDesktop .nav-list li:last-child {
+  margin-right: 0; /* Remove the right margin from the last item */
+}
+
+.navigationForDesktop .NavLink {
+  text-decoration: none; /* Remove underline from links */
+  color: #000; /* Text color, customize as needed */
+}
+
+
 
 /* end Navigation */
 
@@ -540,6 +576,11 @@ footer .copyright .pro-links .icon:hover{
     #expert{
       padding: 8vw 8vw 1vw 8vw;
       text-align: center;
+    }
+
+    nav .navigationForDesktop{
+    
+      display: none;
     }
     
 }

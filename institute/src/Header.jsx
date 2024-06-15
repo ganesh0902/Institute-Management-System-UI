@@ -51,7 +51,7 @@ function Header({openSidebar}) {
     </ModalBody>
     </Modal>    
 
-    <Modal size='xl' isOpen={profileToggle} toggle={()=>setUserProfileToggle(!profileToggle)} className="batchModal">
+    <Modal size='xl' isOpen={profileToggle} toggle={()=>setUserProfileToggle(!profileToggle)} className="user=profile-modal">
       <ModalHeader toggle={()=>setUserProfileToggle(!profileToggle)} className="user-profile-header"> User Profile </ModalHeader>
         <ModalBody className="user-profile-modals">
           <Row className='m-3 shadow pt-3 pb-5 border-rounder'>

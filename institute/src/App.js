@@ -53,8 +53,7 @@ const openSidebar=()=>{
       }     
       {
         login &&                   
-          <Routes>            
-            
+          <Routes>                        
               <Route path='/' element={<Home/>} />        
               <Route path='/student' element={<Student/>}/> 
               <Route path='/course' element={<Course/>}/> 
