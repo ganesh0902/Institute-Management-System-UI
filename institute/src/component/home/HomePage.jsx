@@ -9,56 +9,90 @@ import { MdStarRate } from "react-icons/md";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 import { useState } from "react"
 import CourseCarousel from './CourseCarousel'
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import {registration, getToken} from '../../apis/authenticationApi'
+import Loader from "../Loader"
+
 const HomePage=(props)=>{
 
     const[modalLogin,setModalLogin]=useState(false);
     const[modalSignUp,setModalSignUp]=useState(false);
-    const[username,setUsername]=useState("");
-    const[password,setPassword]=useState("");
-
-    const[firstName,setFirstName]=useState("");
-    const[lastName,setLastName]=useState("");
-    const[email,setEmail]=useState("");
-    const[rPassword,setRPassword]=useState("");
+    const[loaderToggle,setLoaderToggle]=useState(false);
 
     const {loginStatus}=props;
+
+    // formik for sign in
+    const initialValueForSignIn={
+        username:"",
+        password:""
+    }
+    const formValidationSchemForSignIn= Yup.object().shape({
+        username:Yup.string().required("Username is mandatory"),
+        password:Yup.string().required("Password must not be empty")
+    })
+    const handFormSubmitForSignIn=async (value)=>{
+        console.log(value);
+        //loginStatus();
+
+        const response = await getToken(value);
+        console.log(response);
+
+        if(response=="")
+        {
+            alert("Invalid Credential");
+        }
+    };
+
+    //formik for sign up
+    const formInitialSchema={
+        name:'',        
+        email:'',
+        password:'',
+        role:'STUDENT'
+    }    
+    const formValidationSchema =Yup.object().shape({
+        name:Yup.string().required("Name is mandatory"),
+        email:Yup.string().required("Email is mandatory").email("Please Enter valid email"),
+        password:Yup.string().required("Password is mandatory"),
+        role:Yup.string().required("Role is not valid")        
+    });
+
+    const handleFormSubmit =async (value)=>{
+        setLoaderToggle(true);
+        console.log("Value",value);
+        const response  = await registration(value); //call registration api to store registration information
+        console.log("Response",response);
+        setLoaderToggle(false);
+        setModalSignUp(!modalSignUp);
+    }
 
     const modalAction=(status)=>{
 
         setModalLogin(!modalLogin);
     }
-
+    
     const modelSignUp=()=>
     {
         setModalLogin(!modalLogin);
         setModalSignUp(!modalSignUp);
         console.log("Modal signUp");
-    }
-    const submit=()=>{
-        console.log(username);
-        console.log(password);  
-        loginStatus();
-    }
-
-    const submitRegistration=()=>{
-        console.log("Registration Save");
-    }
+    }    
     return(
-        <div>
-             <NavigationBar modalAction={()=>modalAction()}/> 
-            <section id="home">
+        <div>            
+             <NavigationBar modalAction={()=>modalAction()}/>              
+            <section id="home">                
                 <h2> Enhance Your Future With Tech Education</h2>
                 <p>
                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                </p>
+                </p>                
                 <div className="btn">
                     <NavLink to="#" className="blue"> Learn More </NavLink>
                     <NavLink to="#" className="yellow"> Visits Courses  </NavLink>
                 </div>
-            </section>
-
+            </section>            
             {/* features */}
             <div id="features">
                 <h1> Awesome Features </h1>
@@ -86,7 +120,7 @@ const HomePage=(props)=>{
             <br/>
             <CourseCarousel/>
             <br/>
-            {/* registration section */}
+            {/* registration section */}            
 
             <section id="registration" className="mt-4">
                 <div className="reminder">
@@ -222,89 +256,104 @@ const HomePage=(props)=>{
                     </ModalHeader>
                     <ModalBody>
                         <h3 className="text-center"> Sign In </h3>
+                    <Formik validationSchema={formValidationSchemForSignIn} 
+                            initialValues={initialValueForSignIn} onSubmit={(value)=>handFormSubmitForSignIn(value)}>
+                    <Form>
                     <Row>
                         <Col lg={12}>
                             <div>
-                                <label htmlFor="Email"> </label>
+                                <label htmlFor="Username">Enter Username </label>
                             </div>
-                            <input type="text"
+                            <Field type="text"
                                 className="form-control username"
-                                name="email"
-                                onChange={(event)=>setUsername(event.target.value)}
-                                placeholder="Enter Email"></input>
+                                name="username"                                
+                                placeholder="Enter Username" />
+                            <span className="text-danger">
+                                <ErrorMessage name="username" />
+                            </span>
                         </Col>
-                        <Col lg={12}>
+                        <Col lg={12} className="mt-3">
                             <div>
-                                <label htmlFor="Password"> </label>
+                                <label htmlFor="Password">Enter Password </label>
                             </div>
-                            <input type="password"
+                            <Field type="password"
                                 name="password"
-                                className="form-control w-4"
-                                onChange={(event)=>setPassword(event.target.value)}
-                                placeholder="Enter Password"></input>
+                                className="form-control w-4"                                
+                                placeholder="Enter Password" />
+                                <span className="text-danger">
+                                    <ErrorMessage name="password"/>
+                                </span>
                         </Col>
                         <Col lg={12} className="mt-3">
                             <span> Lost Password :</span> <NavLink to="" className="ml-3"> Click Here</NavLink>
                         </Col>
                         <Col lg={12} className="mt-5 text-center mb-2">
-                            <button className="btn btn-primary" id="btnSubmit" onClick={()=>submit()}> Submit </button>
+                            <button type="submit" className="btn btn-primary" id="btnSubmit"> Submit </button>
                             <NavLink to="" className="icon" id="btnSignUp" onClick={()=>modelSignUp(!modalSignUp)}>Sign Up </NavLink>                         
                         </Col>                       
                         </Row>
+                        </Form>                                
+                        </Formik>
                     </ModalBody>
                 </Modal>
                 {/* sign up modal */}
                 <Modal size="lg" isOpen={modalSignUp} toggle={()=>setModalSignUp(!modalSignUp)} style={{ width: '500px' }}>
                     <ModalHeader toggle={()=>setModalSignUp(!modalSignUp)}>
                         Sign Up
-                    </ModalHeader>
+                    </ModalHeader>                    
                     <ModalBody className="modals">
+                        <Formik initialValues={formInitialSchema} 
+                            validationSchema={formValidationSchema}
+                            onSubmit={(value)=>handleFormSubmit(value)}>
+                        <Form>
                         <Row>
-                            <Col lg={12}>
+                            <Col lg={12} md={6}>
                                 <div>
-                                    <label htmlFor="First Name"> </label>
+                                    <label htmlFor="Full Name"> </label>
                                 </div>
-                                <input 
+                                <Field 
                                 type="text"
+                                name="name"
                                 className="form-control"
-                                placeholder="Enter First Name"
-                                onChange={(event)=>setFirstName(event.target.value)}
+                                placeholder="Enter Full Name"                                
                                 />
-                            </Col>
-                            <Col lg={12}>
-                                <div>
-                                    <label htmlFor="Last Name"> </label>
-                                </div>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    onChange={(event)=>setLastName(event.target.value)}
-                                    placeholder="Enter Last Name"></input>
-                            </Col>
-                            <Col lg={12}>
+                                <span className="text-danger">
+                                    <ErrorMessage name="name" className="text-danger"/>
+                                </span>
+                            </Col>                            
+                            <Col lg={12} md={6}>
                                 <div>
                                     <label htmlFor="Email"> </label>
                                 </div>
-                                <input type="text"
+                                <Field type="text"
                                     className="form-control"
-                                    onChange={(event)=>setEmail(event.target.value)}
+                                    name="email"                                    
                                     placeholder="Enter Email"/>
+                                <span className="text-danger">
+                                    <ErrorMessage name="email"/>
+                                </span>
                             </Col>
-                            <Col lg={12}>
+                            <Col lg={12} md={6}>
                                 <div>
                                     <label htmlFor="Password"> </label>
                                 </div>
-                                <input type="password"
+                                <Field type="password"
                                     className="form-control"
-                                    placeholder="Enter Password"
-                                    onChange={(event)=>setRPassword(event.target.value)}
+                                    name="password"
+                                    placeholder="Enter Password"                                    
                                     />
-                            </Col>
-                            <Col lg={12} className="mt-5 mb-3 text-center">
-                                <button className="btn btn-primary" id="btnSubmit" onClick={()=>submitRegistration()}> Submit </button>
+                                <span className="text-danger">
+                                    <ErrorMessage name="password"/>
+                                </span>    
+                            </Col>                           
+                            <Col lg={12} md={6} className="mt-5 mb-3 text-center">
+                                <button type="submit" className="btn btn-primary" id="btnSubmit" > Submit </button>
                                 <NavLink to="" className="icon" id="btnSignUp" onClick={()=>modelSignUp()}>Sign In </NavLink>                         
-                            </Col>                            
+                            </Col>  
+                            {   loaderToggle && <Loader/>  }
                         </Row>
+                        </Form>   
+                        </Formik>
                     </ModalBody>
                 </Modal>                
             </div>
