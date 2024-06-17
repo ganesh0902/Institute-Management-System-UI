@@ -32,17 +32,15 @@ const HomePage=(props)=>{
         password:Yup.string().required("Password must not be empty")
     })
     const handFormSubmitForSignIn=async (value)=>{
-        console.log(value);
-        //loginStatus();
-
-        const response = await getToken(value);
-        console.log(response);
-
-        if(response=="")
+          
+        const token = await getToken(value);
+        console.log("Token is ",token);
+        if(token=="")
         {
             alert("Invalid Credential");
         }
         else{
+            localStorage.setItem("authToken",token);
             loginStatus();
         }
     };

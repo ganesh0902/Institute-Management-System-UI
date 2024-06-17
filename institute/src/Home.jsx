@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-
 import {AreaChart, BarChart, Bar,Area, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
 import {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
     BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
    from 'react-icons/bs'
 import { useEffect } from 'react';
+import {getStudentCount, getTeacherCount, getCourseCount, getBatchCount} from './apis/adminHomeApi'
 
 function Home() {
 
@@ -13,12 +12,6 @@ function Home() {
   const[teacher,setTeacher]=useState(0);
   const[course,setCourse]=useState(0);
   const[batch,setBatch]=useState(0);
-
-  const get_total_student="http://localhost:9004/student/studentCount";
-  const get_total_teacher="http://localhost:9003/teacher/teacherCount";
-  const get_total_course="http://localhost:9001/course/courseCount";
-  const get_total_batch="http://localhost:9002/batch/countBatch";
-
 
 const data = [  
 
@@ -77,35 +70,28 @@ const data = [
   },[])
 
   const getStudent=async ()=>{
-    await fetch(get_total_student).then((result)=>{
-      result.json().then((response)=>{
-        setStudent(response);
-      })
-    })
+    const response = await getStudentCount();         
+    setStudent(response);   
   }
 
   const getTeacher=async ()=>{  
-    await fetch(get_total_teacher).then((result)=>{
-      result.json().then((response)=>{
-       setTeacher(response);
-      })
-    })
+    const response =  await getTeacherCount();    
+    setTeacher(response);  
   }
 
   const getCourse=async ()=>{
-    await fetch(get_total_course).then((result)=>{
-      result.json().then((response)=>{
-        setCourse(response);
-      })
-    })
+    const response  = await getCourseCount();
+    setCourse(response);      
   }
 
   const getBatch=async ()=>{
-    await fetch(get_total_batch).then((result)=>{
-      result.json().then((response)=>{
-        setBatch(response);
-      })
-    })
+    const response = await getBatchCount();
+    setBatch(response);      
+  }
+
+  if(student ==0)
+  {
+    return(<div> Loading....</div>)
   }
   return (
     <main className='main-container'>
