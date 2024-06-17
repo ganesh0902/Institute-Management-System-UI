@@ -42,6 +42,9 @@ const HomePage=(props)=>{
         {
             alert("Invalid Credential");
         }
+        else{
+            loginStatus();
+        }
     };
 
     //formik for sign up
@@ -307,7 +310,7 @@ const HomePage=(props)=>{
                             onSubmit={(value)=>handleFormSubmit(value)}>
                         <Form>
                         <Row>
-                            <Col lg={12} md={6}>
+                            <Col lg={12} md={12}>
                                 <div>
                                     <label htmlFor="Full Name"> </label>
                                 </div>
@@ -321,7 +324,7 @@ const HomePage=(props)=>{
                                     <ErrorMessage name="name" className="text-danger"/>
                                 </span>
                             </Col>                            
-                            <Col lg={12} md={6}>
+                            <Col lg={12} md={12}>
                                 <div>
                                     <label htmlFor="Email"> </label>
                                 </div>
@@ -333,7 +336,7 @@ const HomePage=(props)=>{
                                     <ErrorMessage name="email"/>
                                 </span>
                             </Col>
-                            <Col lg={12} md={6}>
+                            <Col lg={12} md={12}>
                                 <div>
                                     <label htmlFor="Password"> </label>
                                 </div>
@@ -346,7 +349,7 @@ const HomePage=(props)=>{
                                     <ErrorMessage name="password"/>
                                 </span>    
                             </Col>                           
-                            <Col lg={12} md={6} className="mt-5 mb-3 text-center">
+                            <Col lg={12} md={12} className="mt-5 mb-3 text-center">
                                 <button type="submit" className="btn btn-primary" id="btnSubmit" > Submit </button>
                                 <NavLink to="" className="icon" id="btnSignUp" onClick={()=>modelSignUp()}>Sign In </NavLink>                         
                             </Col>  
