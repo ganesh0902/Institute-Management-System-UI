@@ -6,6 +6,9 @@ import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import {useFormik} from 'formik'
 import axios from 'axios';
 import * as Yup from 'yup';
+import Loader from "../component/Loader"
+
+import {searchStudent,getBatchTileAndDateRecord} from '../apis/studentApis'
 const Student=() =>{
 
   const [formData, setFormData] = useState({
@@ -26,7 +29,8 @@ const Student=() =>{
   const[batchTitleAndDate,setBatchTitleAndDate]=useState([]);
   const[image,setImage]=useState("");
 
-  const save_student="http://localhost:9004/student/";  
+  const save_student="http://localhost:8999/student/";  
+  const token = localStorage.getItem('authToken');
 
   const studentSchema=Yup.object().shape({    
     firstName:Yup.string().required("First Name is mandatory"),
@@ -60,15 +64,11 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
   }),
 });
 
-  const search = () => {        
+  const search = async () => {        
     if(formData.studentName!="")
     {
-      fetch(`http://localhost:9004/student/filter/`+formData.studentName).then((result)=>{
-        result.json().then((response)=>{
-          setStudent([]);
-          setStudent(response);
-        })        
-      },[])    
+      const filterResult = await searchStudent(formData);
+      setStudent(filterResult);
     }
   };
   
@@ -82,30 +82,63 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
 
   useEffect(()=>{    
     getBatchTitleAndDate();
-    fetch("http://localhost:9004/student/").then((result)=>{
-      result.json().then((response)=>{
-        setStudent(response);
-      })
-    })    
+    fetch("http://localhost:8999/student/",{
+
+      method:"GET",
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization': `Bearer ${token}`, 
+      }
+    }).then(response=>{
+        
+        if(!response.ok)
+        {
+          throw new Error("Network Response was not okay ",response.statusText);
+        }
+        return response.json();
+
+    }).then(data=>{
+      console.log("Student record is data",data);
+      setStudent(data);      
+    }).catch(errors=>{
+      console.log("Error Fetching student ",errors);
+    })        
   },[]);
+
+  useEffect(()=>{
+
+    console.log("Student Record is sttt",student);
+  },[student]);
 
   useEffect(()=>{    
     getBatchTitleAndDate();
-    fetch("http://localhost:9004/student/").then((result)=>{
-      result.json().then((response)=>{
-        setStudent(response);
-      })
-    })    
+    fetch("http://localhost:8999/student/",{
+      method:"GET",
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization': `Bearer ${token}`, 
+      }
+    }).then(response=>{
+
+      if(!response.ok)
+      {
+        throw new Error("Network response was not okay ",response.statusText);
+      }
+      return response.json();
+    }).then(data=>{
+      setBatchTitleAndDate(data);
+    })
+    .catch(error=>{
+
+      console.log("Error Fetching student ",error);
+    })
   },[addStudent]);
 
-  const getBatchTitleAndDate=(()=>{    
-    fetch("http://localhost:9002/batch/batchTitleAndDate").then((result)=>{
-    result.json().then((response)=>{
+  const getBatchTitleAndDate=(async ()=>{    
+    
+    const response = await getBatchTileAndDateRecord();
 
-      console.log(response);
-      setBatchTitleAndDate(response);
-    })
-    })
+    setBatchTitleAndDate(response);
   })
 
   const saveImage=async (event)=>{
@@ -116,7 +149,8 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
     try{
       const response= await axios.post(`http://localhost:9004/student/image`, formData ,{
           headers:{
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`, 
           }
       });
       alert('File uploaded successfully.'); 
@@ -127,7 +161,11 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
     alert('Failed to upload file.');
     console.error(e);   
   }
+  }
 
+  if(student.length <=0)
+  {
+    return<div> <Loader/> </div>
   }
   return (
     <div className='container mt-2'>
@@ -212,7 +250,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                     <label  htmlFor="image"> Upload Image </label>                                                                                
                     <input type="file" className='form-control py-2' name="image" placeholder='add Image' onChange={saveImage}/>
                   </Col>
-                  <Col lg={6} md={12} className="batchCl mb-sm-2">
+                  {/* <Col lg={6} md={12} className="batchCl mb-sm-2">
                             <label  htmlFor="status">Select  Batch</label><br/>
                             <select name='batchId'                                
                                 onChange={(event)=>setBatchId(event.target.value)} 
@@ -225,7 +263,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                                 }                                                                
                             </select>
                             <small>{errors.batchId && errors.batchId}</small>
-                  </Col>      
+                  </Col>       */}
                   <Col lg={6} md={12} className="batchCl mt-4 mb-sm-2">                        
                             <button type="submit" className='form-control btn btn-primary' onClick={studentSave}> Submit </button>
                   </Col>   

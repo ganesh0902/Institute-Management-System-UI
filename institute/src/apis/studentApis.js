@@ -98,44 +98,31 @@ export const searchStudent=async (formData)=>{
     });
 }
 
-export const getStudent=async ()=>{
-
-     await fetch(get_Student,{
-        method:"GET",
-        headers:{
-            'Content-Type':"application/json",
-            'Authorization': `Bearer ${token}`,
-        }
-    }).then(response=>{
-
-        if(!response.ok)
-        {
-            throw new Error("Apis response was not okay",response.statusText);
-        }
-    }).then(data=>{
-        return data;
-    }).catch(error=>{
-        console.log("Error getting Student ",error);
-    })
-}
-
 export const getBatchTileAndDateRecord=async ()=>{
 
-    await fetch(getBatchTitleAndDate,{
-        method:"GET",
-        headers:{
-            "Content-Type":"application/json",
-            'Authorization': `Bearer ${token}`,
-        }
-    }).then(response=>{
-        
-        if(!response.ok){
-            throw new Error("Response was not okay",response.statusText);
-        }
-    }).then(data=>{
+    try
+    {
+        await fetch(getBatchTitleAndDate,{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        }).then(response=>{
+            
+            if(!response.ok)
+            {
+                throw new Error("Network response was not okay",response.statusText);
+            }
+        }).then(data=>{
 
-        return data;
-    }).catch(error=>{
-        console.log("Error Fetching batch title and date");
-    })    
+            return data;
+        }).catch(error=>{
+            console.log("Error Fetching batch title and date",error);
+        })
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
 }
