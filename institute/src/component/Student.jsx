@@ -137,9 +137,10 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
   const getBatchTitleAndDate=(async ()=>{    
     
     const response = await getBatchTileAndDateRecord();
-
+    console.log("Batch title and date ");
+    console.log(response);
     setBatchTitleAndDate(response);
-  })
+  });
 
   const saveImage=async (event)=>{
 
@@ -250,7 +251,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                     <label  htmlFor="image"> Upload Image </label>                                                                                
                     <input type="file" className='form-control py-2' name="image" placeholder='add Image' onChange={saveImage}/>
                   </Col>
-                  {/* <Col lg={6} md={12} className="batchCl mb-sm-2">
+                  <Col lg={6} md={12} className="batchCl mb-sm-2">
                             <label  htmlFor="status">Select  Batch</label><br/>
                             <select name='batchId'                                
                                 onChange={(event)=>setBatchId(event.target.value)} 
@@ -263,7 +264,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                                 }                                                                
                             </select>
                             <small>{errors.batchId && errors.batchId}</small>
-                  </Col>       */}
+                  </Col>      
                   <Col lg={6} md={12} className="batchCl mt-4 mb-sm-2">                        
                             <button type="submit" className='form-control btn btn-primary' onClick={studentSave}> Submit </button>
                   </Col>   

@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const getCourseNameAPIS="http://localhost:9001/course/getCourseIdAndName";
+const getCourseIdAndNameApis="http://localhost:8999/course/getCourseIdAndName";
+                              
 
+const token = localStorage.getItem('authToken');
 export const getCourserNameAndId=async ()=>{
 
     try
@@ -13,4 +16,23 @@ export const getCourserNameAndId=async ()=>{
     {
         throw new Error("Something went wrong");
     }
+}
+
+export const getCourseIdAndNameRecord=async ()=>{
+
+    const response  =await fetch(getCourseIdAndNameApis,{
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`, 
+        }
+    });
+
+    if(!response.ok)
+    {
+        throw new Error("apis response was not okay ",response.statusText);
+    }
+
+    const data = await response.json();
+        return data;
 }

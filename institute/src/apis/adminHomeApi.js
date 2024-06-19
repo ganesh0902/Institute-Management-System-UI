@@ -1,7 +1,7 @@
 const get_total_student="http://localhost:8999/student/studentCount";
-const get_total_teacher="http://localhost:9003/teacher/teacherCount";
-const get_total_course="http://localhost:9001/course/courseCount";
-const get_total_batch="http://localhost:9002/batch/countBatch";
+const get_total_teacher="http://localhost:8999/teacher/teacherCount";
+const get_total_course="http://localhost:8999/course/courseCount";
+const get_total_batch="http://localhost:8999/batch/countBatch";
 
 const token = localStorage.getItem('authToken');    
 
@@ -50,7 +50,7 @@ export const getTeacherCount=async ()=>{
 
         return data;
     }).catch(error=>{
-        console.log("Error Fetching total Teacher ");
+        console.log("Error Fetching total Teacher ",error);
     })
 }
 

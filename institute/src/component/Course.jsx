@@ -35,7 +35,7 @@ const Course =()=>{
     const[fees,setFees]=useState(0);    
     const[updateToggle,setUpdateToggle]=useState(false);        
    const[allCourses,setAllCourses]=useState([]);
-    const API_SAVE_COURSE="http://localhost:9001/course/";
+    const API_SAVE_COURSE="http://localhost:8999/course/";
     const[apiError,setApiError]=useState("");        
     const[courseNames,setCourseNames]=useState("");    
     const [selectedSkill, setSelectedSkills] = useState(null);
@@ -60,7 +60,7 @@ const Course =()=>{
  
         const getAllCourse=()=>{
                       
-            fetch(`http://localhost:9001/course/`).then((result)=>{
+            fetch(`http://localhost:8999/course/`).then((result)=>{
 
             result.json().then((resp)=>{
                 console.log("Course response is ",resp);
@@ -75,7 +75,7 @@ const Course =()=>{
     useEffect(() => {
         const getAllCourse=()=>{
                       
-            fetch(`http://localhost:9001/course/`).then((result)=>{
+            fetch(`http://localhost:8999/course/`).then((result)=>{
             result.json().then((resp)=>{
                 console.log("Course response is ",resp);
                 setAllCourses(resp);
@@ -129,7 +129,7 @@ const Course =()=>{
       const search=()=>{     
          if(courseNames!="")
          {
-        fetch(`http://localhost:9001/course/getCourseByName/`+courseNames).then((result)=>{
+        fetch(`http://localhost:8999/course/getCourseByName/`+courseNames).then((result)=>{
 
         result.json().then((response)=>{
 

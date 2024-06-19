@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 
 const Teacher=()=>{
 
+    const token = localStorage.getItem('authToken');
     const[addTeacher,setAddTeacher]=useState(false);    
     const[firstName,setFirstName]=useState('');
     const[lastName,setLastName]=useState('');
@@ -21,21 +22,57 @@ const Teacher=()=>{
     const[image,setImage]=useState("");
 
     const API_SAVE_TEACHER="http://localhost:9003/teacher/";
+    const API_GET_TEACHER="http://localhost:8999/teacher/"
 
     useEffect(()=>{
-        fetch("http://localhost:9003/teacher/").then((result)=>{
-            result.json().then((response)=>{                 
-                setTeacher(response)
-            })
+        
+        fetch(API_GET_TEACHER,{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                'Authorization': `Bearer ${token}`,
+            }
+        }).then(response=>{
+
+            if(!response.ok)
+            {
+                console.log("Response is not okay ",response.statusText);
+            }
+
+            return response.json();
+        }).then(data=>{
+
+            setTeacher(data);
+        }).catch(error=>{
+            console.log(error);
         })
+            
     },[])
 
     useEffect(()=>{
-        fetch("http://localhost:9003/teacher/").then((result)=>{
-            result.json().then((response)=>{                 
-                setTeacher(response)
-            })
+        
+        fetch(API_GET_TEACHER,{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        }).then(response=>{
+
+            if(!response.ok)
+            {
+                throw new Error("API Response is not okay ",response.statusText);
+            }
+
+            return response.json();
+        }).then(data=>{
+
+            setTeacher(data);
+        }).catch(error=>{
+
+            console.log("Error Fetching teacher",error);
         })
+
     },[addTeacher])
 
     const submit=async  ()=>{
@@ -51,7 +88,7 @@ const Teacher=()=>{
        formData.append("file",event.target.files[0]);
        
        try{
-            const response= await axios.post(`http://localhost:9003/teacher/image`, formData ,{
+            const response= await axios.post(`http://localhost:8999/teacher/image`, formData ,{
                 headers:{
                     'Content-Type': 'multipart/form-data'
                 }

@@ -45,7 +45,7 @@ const BatchDisplay=()=>{
     const[updateComponent,setUpdateComponent]=useState(false);
 
     useEffect(()=>{        
-        fetch(`http://localhost:9002/batch/`+bId).then(async (result)=>{
+        fetch(`http://localhost:8999/batch/`+bId).then(async (result)=>{
 
             await result.json().then((response)=>{
                 setBatch(response);                                   

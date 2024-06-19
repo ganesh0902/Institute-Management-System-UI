@@ -5,7 +5,7 @@ const UPDATE_STUDENT_API='http://localhost:8999/student/';
 const save_student="http://localhost:8999/student/";  
 const search_student="http://localhost:8999/student/filter/";
 const get_Student="http://localhost:8999/student/"
-const getBatchTitleAndDate="http://localhost:9002/batch/batchTitleAndDate";
+const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate";
 const token = localStorage.getItem('authToken');
     
 export const getStudentDetails=async (stdId)=>{
@@ -91,6 +91,8 @@ export const searchStudent=async (formData)=>{
         {
             throw new Error("Response was not okay",response.statusText);
         }
+
+        return response.json();
     }).then(data=>{
         return data;
     }).catch(error=>{
@@ -99,30 +101,27 @@ export const searchStudent=async (formData)=>{
 }
 
 export const getBatchTileAndDateRecord=async ()=>{
-
-    try
-    {
-        await fetch(getBatchTitleAndDate,{
-            method:"GET",
-            headers:{
-                'Content-Type':'application/json',
+    try {
+        const response = await fetch(getBatchTitleAndDate, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             }
-        }).then(response=>{
-            
-            if(!response.ok)
-            {
-                throw new Error("Network response was not okay",response.statusText);
-            }
-        }).then(data=>{
+        });
 
-            return data;
-        }).catch(error=>{
-            console.log("Error Fetching batch title and date",error);
-        })
+        if (!response.ok) {
+            
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        // Parse the JSON response
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        // Log the error and re-throw to be caught by the caller
+        console.log("Error fetching batch title and date", error);
+        throw error;
     }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+}  

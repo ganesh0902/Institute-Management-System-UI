@@ -21,17 +21,34 @@ const TeacherDetails=()=>{
     const[contact,setContact]=useState("");
     const[education,setEducation]=useState("");
     
+    const API_GET_TEACHER ="http://localhost:8999/teacher/";
+
+    const token=localStorage.getItem("authToken");
     useEffect(()=>{
         
-        fetch(`http://localhost:9003/teacher/`+tId).then((result)=>{
-        result.json().then((response)=>{
-            
-            console.log(response);
+        fetch(API_GET_TEACHER+tId,{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                'Authorization': `Bearer ${token}`, 
+            }
+        }).then(response=>{
 
-            setTeacher(response);
-            getBatches();            
+            if(!response.ok)
+            {
+                throw new Error("Response was not okay",response.statusText);
+            }
+
+            return response.json();
+        }).then(data=>{
+
+            setTeacher(data);
+        }).catch(error=>{
+
+            console.log("Error Fetching Teacher",error);
         })
-        })
+        
+        getBatches();            
     },[tId,batches])
 
     const getBatches=async ()=>{

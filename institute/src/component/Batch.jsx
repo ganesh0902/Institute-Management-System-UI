@@ -5,8 +5,10 @@ import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
 import Loader from './Loader';
+import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord} from '../apis/batchApis'
+import {getCourseIdAndNameRecord} from '../apis/courseApis';
 
-
+const token = localStorage.getItem('authToken');
 const Batch=()=>{
 
     const[fDate,setFDate]=useState("");
@@ -34,15 +36,11 @@ const Batch=()=>{
     const[loader,setLoader]=useState(false);  
     const url="aa705deb-c2ee-4d94-8dd2-6f63ca822826_6B67A32A75D604B2B8D57A7C72D947DF.1920_120_120.jpg";       
 
-    const saveBatch=(batch)=>{        
+    const saveBatch=async (batch)=>{        
                   
-            const save_batch="http://localhost:9002/batch/";
-              const response=axios.post(`${save_batch}`,batch);              
-              alert("Batch Added Successfully");
-              console.log(response.data);
-              console.log(batch);
-              setToggle(!toggle)
-              setPageLoad(!pageLoad);
+        await saveBatchRecord(batch);
+        setToggle(!toggle)
+        setPageLoad(!pageLoad);
           
     }
         
@@ -53,9 +51,10 @@ const Batch=()=>{
         formData.append('file', e.target.files[0]);
 
     try {
-        const response =await axios.post('http://localhost:9002/batch/image', formData, {
+        const response = await axios.post('http://localhost:8999/batch/image', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`, 
         }
       });
       alert('File uploaded successfully.');      
@@ -74,7 +73,7 @@ const Batch=()=>{
                       
             allCourseIdAndName();
             allTeacherIdAndName();
-            fetch(`http://localhost:9002/batch/`).then((result)=>{
+            fetch(`http://localhost:8999/batch/`).then((result)=>{
 
             result.json().then((resp)=>{                
                 setAllBatches(resp);
@@ -90,7 +89,7 @@ const Batch=()=>{
                       
             allCourseIdAndName();
             allTeacherIdAndName();
-            fetch(`http://localhost:9002/batch/`).then((result)=>{
+            fetch(`http://localhost:8999/batch/`).then((result)=>{
 
             result.json().then((resp)=>{                
                 setAllBatches(resp);
@@ -100,43 +99,27 @@ const Batch=()=>{
         getAllBatch();
     },[pageLoad])
 
-    const allCourseIdAndName=()=>{
+    const allCourseIdAndName=async ()=>{
 
-        fetch(`http://localhost:9001/course/getCourseIdAndName`).then((result)=>{
-
-            result.json().then((response)=>{
-              setCoursesIdAndName(response);
-            })
-        })
+        const response = await getCourseIdAndNameRecord();        
+        setCoursesIdAndName(response);
     }
 
-    const allTeacherIdAndName=()=>{
+    const allTeacherIdAndName=async ()=>{
 
-        fetch(`http://localhost:9003/teacher/getTeachers`).then((result)=>{
-
-            result.json().then((response)=>{
-
-                setTeacherIdAndName(response);                
-            })
-        })
+        const response  = await getTeacherIdAndNameRecord();
+        setTeacherIdAndName(response);
     }
 
-    const findByBatch=()=>{
+    const findByBatch=async ()=>{
         if(searchByBatchTitle!="")
-        {
-        fetch(`http://localhost:9002/batch/batchTitle/`+searchByBatchTitle).then((result)=>{
-            
-            result.json().then((response)=>{
-                setAllBatches([]);
-                setAllBatches(response);                
-            })
-        })
-        }
-        else{
-            alert("Batch Title is mandatory");
-        }       
+        {            
+            const response  = await get_findByBatchTitleRecord();
+            setAllBatches([]);
+            setAllBatches(response);                
+       
     }
-
+}
     const submit=()=>{
 
         const batch={batchTitle, duration, startDate, endDate, status, location,image, courseId, teacherId,time};
