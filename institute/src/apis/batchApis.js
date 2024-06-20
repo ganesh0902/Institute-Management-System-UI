@@ -1,8 +1,8 @@
 import axios from "axios"
 import { json } from "react-router-dom";
 
-const getBatchTitleAndDateAPIS="http://localhost:9002/batch/batchTitleAndDate";
-const updateBatchAPI="http://localhost:9002/batch/";
+const getBatchTitleAndDateAPIS="http://localhost:8999/batch/batchTitleAndDate";
+const updateBatchAPI="http://localhost:8999/batch/";
 const save_batch="http://localhost:8999/batch/";
 const getTeacherIdAndNameApis="http://localhost:9003/teacher/getTeachers";
 const get_TeacherIdAndName="http://localhost:8999/teacher/getTeachers"
@@ -13,9 +13,22 @@ const token = localStorage.getItem('authToken');
 export const getBatchTitleAndDate=(async ()=>{         
         try
         {
-            const response = await axios.get(getBatchTitleAndDateAPIS);  
-            console.log("batch Title And Date is ",response.data);
-            return response.data;
+          
+           const response = await fetch(getBatchTitleAndDateAPIS,{
+                method:"GET",
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${token}`
+                }
+            });
+
+            if(!response.ok)
+            {
+                throw new Error("API response was not okay",response.statusText);
+            }
+
+            const data= await response.json();
+            return data;
         }
         catch(error)
         {
@@ -29,7 +42,8 @@ export const updateBatch=async (bId, batch)=>{
         const response = await fetch(updateBatchAPI+bId,{
             method:"PUT",
             headers:{
-                'Content-type':'application/json'
+                'Content-type':'application/json',
+                'Authorization':`Bearer ${token}`
             },
             body:JSON.stringify(batch)
         });

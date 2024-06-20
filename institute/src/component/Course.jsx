@@ -12,6 +12,7 @@ import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
 import { MultiSelect } from 'primereact/multiselect';
 import { FloatLabel } from 'primereact/floatlabel';                
 import {Button} from 'primereact/button'
+import {getAllCoursesRecord, saveCourseRecord} from '../apis//courseApis';
 
 const CourseSchema =Yup.object().shape({
     courseName:Yup.string().required("course Name is Mandatory"),
@@ -58,30 +59,19 @@ const Course =()=>{
 
     useEffect(()=>{
  
-        const getAllCourse=()=>{
+        const getAllCourse=async ()=>{
                       
-            fetch(`http://localhost:8999/course/`).then((result)=>{
-
-            result.json().then((resp)=>{
-                console.log("Course response is ",resp);
-                setAllCourses(resp);
-                
-            })
-            })
+            const response  = await getAllCoursesRecord();
+            setAllCourses(response);
         }
         getAllCourse();
     },[]);
         
     useEffect(() => {
-        const getAllCourse=()=>{
+        const getAllCourse=async ()=>{
                       
-            fetch(`http://localhost:8999/course/`).then((result)=>{
-            result.json().then((resp)=>{
-                console.log("Course response is ",resp);
-                setAllCourses(resp);
-                
-            })
-            })
+            const response  = await getAllCoursesRecord();
+            setAllCourses(response);
         }
         getAllCourse();
       }, [addCourse]);
@@ -93,11 +83,12 @@ const Course =()=>{
     const saveCourse=async (course)=>{        
       
         try{
-            const response= await axios.post(`${API_SAVE_COURSE}`,course);            
+            const response= await saveCourseRecord(course);            
             console.log("Course Save Successfully");
             alert("Course Save Successfully");
             setNewCourse(false);
             setUpdatedCourse(false);
+            setNewCourse(!addCourse);
         }
         catch(error)
         {
@@ -1036,7 +1027,8 @@ const Course =()=>{
         const cid=updatedCourse.cid;
         var course={cid, courseName, description, fees, skills};                                        
         saveCourse(course);
-        setNewCourse(!addCourse);
+        setNewCourse(false);
+        setUpdateToggle(false);
         setTimeout(() => {
             setLoading(false);
         }, 2000);

@@ -56,25 +56,21 @@ export const getTeacherCount=async ()=>{
 
 export const getCourseCount=async ()=>{
 
-     return await fetch(get_total_course,{
+     const response =  await fetch(get_total_course,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
             'Authorization': `Bearer ${token}`,   
         }
-    }).then(response=>{
+    });
 
-        if(!response.ok)
-        {
-            throw new Error("Network response was not Okay",response.statusText);
-        }
-        return response.json();
-    }).then(data=>{
+    if(!response.ok)
+    {
+        throw new Error("API response was not okay",response.statusText);
+    }
 
-        return data;
-    }).catch(error=>{
-        console.log("Error fetching total teacher",error);
-    })
+    const data = await response.json();
+    return data;
 }
 
 export const getBatchCount=async ()=>{

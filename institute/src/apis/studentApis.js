@@ -11,28 +11,22 @@ const token = localStorage.getItem('authToken');
 export const getStudentDetails=async (stdId)=>{
     
     try{
-        const response = await axios.get(GET_STUDENT_DETAILS_API+stdId);
-
-        fetch(GET_STUDENT_DETAILS_API,{
+        
+        const response  = await fetch(GET_STUDENT_DETAILS_API+stdId,{
             method:"GET",
             headers:{
                 'Content-Type':'application/json',
                 'Authorization': `Bearer ${token}`, 
             }
-        }).then(response=>{
+        });
+        
+        if(!response.ok)
+        {
+            throw new Error("API response was not okay",response.statusText);
+        }
 
-            if(!response.ok)
-            {
-                throw new Error("Network response was not Okay",response.statusText);
-            }
-        }).then(data=>{
-
-            return data;
-        })
-        .catch(error=>{
-
-            console.log("Error Fetching Student Details",error);
-        })        
+        const data = response.json();
+        return data;
     }
     catch(error)
     {
