@@ -3,6 +3,9 @@ import { json } from "react-router-dom";
 
 const updateTeacherAPI="http://localhost:9003/teacher/";
 const getTeacherIdAndTimeAPIS="http://localhost:9003/teacher/getTeachers";
+const API_SAVE_TEACHER="http://localhost:8999/teacher/";
+
+    const token = localStorage.getItem("authToken");
 
 export const updateTeacher=async (tId,teacher)=>{
 
@@ -45,4 +48,22 @@ export const getTeacherById=async (tId)=>{
             return response;
         })
     })
+}
+
+export const saveTeacherRecord=async (teacher)=>{
+
+    const response  =  await fetch(API_SAVE_TEACHER,{
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify(teacher)
+    });
+
+    if(!response.ok)
+    {
+        throw new Error("Response was not okay ",response.statusText);
+    }
+    
 }

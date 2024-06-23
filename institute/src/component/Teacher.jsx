@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { ModalTitle } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect } from 'react';
+import {saveTeacherRecord} from '../apis/teacherApis'
 
 const Teacher=()=>{
 
@@ -77,8 +78,10 @@ const Teacher=()=>{
 
     const submit=async  ()=>{
         const teacher={firstName,lastName,contact,email,education,image};       
-        const response= await axios.post(`${API_SAVE_TEACHER}`,teacher);  
-        console.log(response);
+       
+        await saveTeacherRecord(teacher);
+
+        alert("Teacher Added Successfully");
         setAddTeacher(!addTeacher)        
     }    
 
@@ -90,7 +93,8 @@ const Teacher=()=>{
        try{
             const response= await axios.post(`http://localhost:8999/teacher/image`, formData ,{
                 headers:{
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization':`Bearer ${token}`
                 }
             });
             alert('File uploaded successfully.'); 
