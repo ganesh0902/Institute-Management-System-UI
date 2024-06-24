@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import {updateTeacher, getTeacherById} from '../../apis/teacherApis'
 import {getBatchesByTeacherId} from '../../apis/batchApis'
+import userEvent from '@testing-library/user-event';
 
 const TeacherDetails=()=>{
 
@@ -20,36 +21,23 @@ const TeacherDetails=()=>{
     const[lastName,setLastName]=useState("");
     const[contact,setContact]=useState("");
     const[education,setEducation]=useState("");
+    const[reloadPage,setReloadPage]=useState(false);
     
     const API_GET_TEACHER ="http://localhost:8999/teacher/";
 
     const token=localStorage.getItem("authToken");
     useEffect(()=>{
         
-        fetch(API_GET_TEACHER+tId,{
-            method:"GET",
-            headers:{
-                'Content-Type':"application/json",
-                'Authorization': `Bearer ${token}`, 
-            }
-        }).then(response=>{
-
-            if(!response.ok)
-            {
-                throw new Error("Response was not okay",response.statusText);
-            }
-
-            return response.json();
-        }).then(data=>{
-
-            setTeacher(data);
-        }).catch(error=>{
-
-            console.log("Error Fetching Teacher",error);
-        })
+        getTeacher();
         
-        getBatches();            
-    },[tId,batches])
+         getBatches();            
+    },[tId,batches]);
+
+    const getTeacher=async ()=>{
+        const response  = await getTeacherById(tId);
+        
+        setTeacher(response);
+    }
 
     const getBatches=async ()=>{
        
@@ -62,8 +50,8 @@ const TeacherDetails=()=>{
         const teacher={tId,firstName,lastName,contact,education};
         console.log("Teacher record ",teacher);
          await updateTeacher(tId,teacher);         
-         alert("Teacher Updated Successfully");
-         getBatches();
+         alert("Teacher Updated Successfully");         
+         setReloadPage(!reloadPage);
     }
 
     if(batches==null)

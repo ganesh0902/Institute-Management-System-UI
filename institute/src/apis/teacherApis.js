@@ -1,9 +1,10 @@
 import axios from "axios";
 import { json } from "react-router-dom";
 
-const updateTeacherAPI="http://localhost:9003/teacher/";
+const updateTeacherAPI="http://localhost:8999/teacher/";
 const getTeacherIdAndTimeAPIS="http://localhost:9003/teacher/getTeachers";
 const API_SAVE_TEACHER="http://localhost:8999/teacher/";
+const getTeacherByIdAPI='http://localhost:8999/teacher/'
 
     const token = localStorage.getItem("authToken");
 
@@ -13,7 +14,8 @@ export const updateTeacher=async (tId,teacher)=>{
         const response = await fetch(updateTeacherAPI+tId,{
             method:"PUT",
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
             },
             body:JSON.stringify(teacher)
         });
@@ -41,13 +43,22 @@ export const getTeachersNameAndIds=async ()=>{
 }
 
 export const getTeacherById=async (tId)=>{
-      
-    await fetch(`http://localhost:9003/teacher/`+tId).then((result)=>{
-        result.json().then((response)=>{
-            
-            return response;
-        })
-    })
+    
+    
+    const response  = await fetch(getTeacherByIdAPI+tId,{
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        }
+    });
+
+    if(!response.ok)
+    {
+        throw new Error("Api Response was not okay",response.statusText);
+    }
+    const data= await response.json();
+    return data;
 }
 
 export const saveTeacherRecord=async (teacher)=>{

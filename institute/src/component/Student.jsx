@@ -7,6 +7,7 @@ import {useFormik} from 'formik'
 import axios from 'axios';
 import * as Yup from 'yup';
 import Loader from "../component/Loader"
+import {saveStudent} from '../apis/studentApis'
 
 import {searchStudent,getBatchTileAndDateRecord} from '../apis/studentApis'
 const Student=() =>{
@@ -48,10 +49,12 @@ const initialValues={
   lastEducation:"",  
   batchId:"" 
 }
-const studentSave=()=>{
+const studentSave=async ()=>{
 
   const data={firstName, lastName, passoutYear, lastEducation, batchId, image};
-  const response=axios.post(`${save_student}`,data);   
+  
+  const response = await saveStudent(data);
+
   console.log(data);
   alert("Student Save Successfully");
   setAddStudent(!addStudent);
@@ -126,7 +129,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
       }
       return response.json();
     }).then(data=>{
-      setBatchTitleAndDate(data);
+      setStudent(data);
     })
     .catch(error=>{
 
@@ -148,7 +151,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
     formData.append("file",event.target.files[0]);
 
     try{
-      const response= await axios.post(`http://localhost:9004/student/image`, formData ,{
+      const response= await axios.post(`http://localhost:8999/student/image`, formData ,{
           headers:{
               'Content-Type': 'multipart/form-data',
               'Authorization': `Bearer ${token}`, 
@@ -219,7 +222,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
       </div>
 
       <Modal size="lg" isOpen={addStudent} toggle={()=>setAddStudent(!addStudent)} className="batchModal">
-          <ModalHeader toggle={()=>setAddStudent(!addStudent)} className="addBatchTitle"> Add New Batch </ModalHeader>
+          <ModalHeader toggle={()=>setAddStudent(!addStudent)} className="addBatchTitle"> Add New Student </ModalHeader>
           <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
           
                 <Row>
@@ -255,7 +258,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                             <label  htmlFor="status">Select  Batch</label><br/>
                             <select name='batchId'                                
                                 onChange={(event)=>setBatchId(event.target.value)} 
-                                 className='batchStatus form-control pt-2 pb-2' >
+                                 className='batchStatus form-control pt-2 pb-2 text-black' >
                                 <option value=''> Select Batch </option>
                                 {
                                   batchTitleAndDate.map((batch,index)=>(
