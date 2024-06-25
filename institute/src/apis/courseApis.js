@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getCourseNameAPIS="http://localhost:9001/course/getCourseIdAndName";
+const getCourseNameAPIS="http://localhost:8999/course/getCourseIdAndName";
 const getCourseIdAndNameApis="http://localhost:8999/course/getCourseIdAndName";
 const getAllCoursesAPI="http://localhost:8999/course/";
 const API_SAVE_COURSE="http://localhost:8999/course/";
@@ -11,8 +11,22 @@ export const getCourserNameAndId=async ()=>{
 
     try
     {
-        const response =await axios.get(getCourseNameAPIS);
-        return response.data;
+        const response  = await fetch(getCourseNameAPIS,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+            throw new Error("API response was not okay", response.statusText);
+        }
+
+        const data = await response.json();
+        
+        return data;
     }
     catch(error)
     {
@@ -45,7 +59,7 @@ export const getAllCoursesRecord=async ()=>{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
-            'Authorization':`Bearer ${token}`    
+            'Authorization':`Bearer ${token}`               
         }
     });
 

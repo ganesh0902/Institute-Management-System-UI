@@ -117,10 +117,10 @@ const Course =()=>{
         }),
       });
   
-      const search=()=>{     
+      const search=async ()=>{     
          if(courseNames!="")
          {
-        fetch(`http://localhost:8999/course/getCourseByName/`+courseNames).then((result)=>{
+        await fetch(`http://localhost:8999/course/getCourseByName/`+courseNames).then((result)=>{
 
         result.json().then((response)=>{
 
@@ -174,7 +174,8 @@ const Course =()=>{
             button: true,
             width:'280px'
           },
-      ]
+      ];
+     
       const updateCourse = (json) => {                               
             setUpdatedCourse(json);                
             setUpdateToggle(!updateToggle);               
@@ -1014,10 +1015,10 @@ const Course =()=>{
       const[records,setRecords]=useState(data);
 
       const handleFilter=(event)=>{
-        const newData=data.filter(row=>{
+        const newData=allCourses.filter(row=>{
             return row.courseName.toLowerCase().includes(event.target.value.toLowerCase());
         })
-        setRecords(newData);
+        setAllCourses(newData);
       }      
     
       const load = () => {  //   load method will be call when submit button is click
@@ -1033,8 +1034,7 @@ const Course =()=>{
             setLoading(false);
         }, 2000);
     };
-    
-    
+       
     //   }
     return(
         <main className='main-container-course'>
@@ -1042,14 +1042,12 @@ const Course =()=>{
             <div className='containers' style={{paddingTop:"10px"}}>                
                 <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
                 <div style={{float:"right"}}> <button className="btn btn-primary p-2 pl-3 mt-1" onClick={()=>setNewCourse(!addCourse)}> Add new Course </button></div>          
-                <DataTable className='course-pagination' columns={column }
-                            data={allCourses}
-                            selectableRows                            
-                            fixedHeader   
-                            pagination
-                            paginationPerPage={5} // items per page
-                            paginationRowsPerPageOptions={[5,8,10,15,18,25,30]} // available per page options                                                                                                                         
-                            ></DataTable>                      
+                <DataTable 
+                    columns={column} 
+                    data={allCourses}
+                    fixedHeader
+                    >                    
+                </DataTable>      
             </div>                                
             </div>
             <Modal size="lg" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">
