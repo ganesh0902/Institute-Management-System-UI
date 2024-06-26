@@ -11,7 +11,7 @@ import { useState } from "react"
 import CourseCarousel from './CourseCarousel'
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import {registration, getToken} from '../../apis/authenticationApi'
+import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
 import Loader from "../Loader"
 
 const HomePage=(props)=>{
@@ -33,13 +33,18 @@ const HomePage=(props)=>{
     })
     const handFormSubmitForSignIn=async (value)=>{
           
+        const email="azim2987@gmail.com";
         const token = await getToken(value);
-        console.log("Token is ",token);
+        const validate  = await validateToken();
+        const user =  await getUserInformation(validate.username);
+        console.log(user);
+        console.log("Token is ",validate);
         if(token=="")
         {
             alert("Invalid Credential");
         }
         else{
+            console.log("API response ",token);
             localStorage.setItem("authToken",token);
             loginStatus();
         }
