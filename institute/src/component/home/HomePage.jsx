@@ -35,10 +35,12 @@ const HomePage=(props)=>{
           
         const email="azim2987@gmail.com";
         const token = await getToken(value);
-        const validate  = await validateToken();
+        console.log("Token Is ",token);
+        const validate  = await validateToken(token);
+        console.log("user info is ",validate);
         const user =  await getUserInformation(validate.username);
         console.log(user);
-        console.log("Token is ",validate);
+        
         if(token=="")
         {
             alert("Invalid Credential");
@@ -46,7 +48,7 @@ const HomePage=(props)=>{
         else{
             console.log("API response ",token);
             localStorage.setItem("authToken",token);
-            loginStatus();
+            loginStatus(user.role);
         }
     };
 

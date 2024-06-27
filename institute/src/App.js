@@ -24,8 +24,22 @@ const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
 }
-  const loginStatus=()=>{    
+  const loginStatus=(role)=>{    
     
+    if(role==="TEACHER")
+    {
+      alert("Teacher Login");
+    }
+    else if(role=="STUDENT")
+    {
+      alert("Student Login");
+    }
+    else if(role==="ADMIN"){
+
+      alert("Admin Login");
+
+    }
+
     setLogin(true);
   }
 
