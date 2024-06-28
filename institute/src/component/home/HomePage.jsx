@@ -12,6 +12,7 @@ import CourseCarousel from './CourseCarousel'
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
+import {getInstitute} from '../..//apis/instituteApi'
 import Loader from "../Loader"
 
 const HomePage=(props)=>{
@@ -39,7 +40,9 @@ const HomePage=(props)=>{
         const validate  = await validateToken(token);
         console.log("user info is ",validate);
         const user =  await getUserInformation(validate.username);
-        console.log(user);
+        const instituteDetails = await getInstitute(validate.username);
+
+        console.log("Institute Details ",instituteDetails);
         
         if(token=="")
         {
