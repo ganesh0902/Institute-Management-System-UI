@@ -1,15 +1,13 @@
-const get_total_student="http://localhost:8999/student/studentCount";
-const get_total_teacher="http://localhost:8999/teacher/teacherCount";
-const get_total_course="http://localhost:8999/course/courseCount";
-const get_total_batch="http://localhost:8999/batch/countBatch";
+const get_total_student="http://localhost:8999/student/studentCount/";
+const get_total_teacher="http://localhost:8999/teacher/teacherCount/";
+const get_total_course="http://localhost:8999/course/courseCount/";
+const get_total_batch="http://localhost:8999/batch/countBatch/";
 
 const token = localStorage.getItem('authToken');    
 
 export const getStudentCount=async ()=>{
-    
-    console.log("Token is in API",token);
-
-    return await fetch(get_total_student,{ 
+        
+    return await fetch(get_total_student+1,{ 
         method:"GET",                    
         headers:{
             'Content-Type':'application/json',  
@@ -33,7 +31,7 @@ export const getStudentCount=async ()=>{
 
 export const getTeacherCount=async ()=>{
 
-    return await fetch(get_total_teacher,{
+    return await fetch(get_total_teacher+1,{
         method:'GET',
         headers:{
             'Content-Type':'application/json',
@@ -56,7 +54,7 @@ export const getTeacherCount=async ()=>{
 
 export const getCourseCount=async ()=>{
 
-     const response =  await fetch(get_total_course,{
+     const response =  await fetch(get_total_course+1,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
@@ -75,7 +73,7 @@ export const getCourseCount=async ()=>{
 
 export const getBatchCount=async ()=>{
 
-    return await fetch(get_total_batch,{
+    return await fetch(get_total_batch+1,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',

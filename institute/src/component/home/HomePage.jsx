@@ -48,10 +48,9 @@ const HomePage=(props)=>{
         {
             alert("Invalid Credential");
         }
-        else{
-            console.log("API response ",token);
+        else{            
             localStorage.setItem("authToken",token);
-            loginStatus(user.role);
+            loginStatus("TEACHER");
         }
     };
 
