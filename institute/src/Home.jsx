@@ -89,10 +89,11 @@ const data = [
     setBatch(response);      
   }
 
-  if(student ==0)
-  {
-    return(<div> Loading....</div>)
-  }
+  // if(student ==0)
+  // {
+  //   return(<div> Loading....</div>)
+  // }
+  
   return (
     <main className='main-container'>
         <div className='main-title'>            

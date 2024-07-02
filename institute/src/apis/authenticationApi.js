@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const validateTokenAPI='http://localhost:9096/auth/validate';
 const token=localStorage.getItem("authToken");
+
 export const registration=(async (value)=>{
     try
     {
@@ -49,11 +51,11 @@ export const getToken=async (value)=>{
     }    
 }
 
-export const validateToken=async (nToken)=>{
+export const validateToken=async ()=>{
 
     try
     {
-    const response  = await fetch(`http://localhost:9096/auth/validate?token=${nToken}`,{
+    const response  = await fetch(`http://localhost:9096/auth/validate?token=${token}`,{
             method:"GET",
             headers:{
                 'Content-Type':'application/json'
@@ -64,15 +66,14 @@ export const validateToken=async (nToken)=>{
         {
             throw new Error("API response was not okay ",response);
         }
-        const data = await response.json();
-        return data;
+        const data = await response.json();        
+        return data;        
     }
     catch(error)
     {
         console.log("Error While validating Token",error);
     }
 }
-
 export const getUserInformation=async (email)=>{
 
     try

@@ -33,16 +33,24 @@ const HomePage=(props)=>{
         password:Yup.string().required("Password must not be empty")
     })
     const handFormSubmitForSignIn=async (value)=>{
-          
-        const email="azim2987@gmail.com";
-        const token = await getToken(value);
-        console.log("Token Is ",token);
-        const validate  = await validateToken(token);
-        console.log("user info is ",validate);
-        const user =  await getUserInformation(validate.username);
-        const instituteDetails = await getInstitute(validate.username);
+                  
+        const token = await getToken(value);        
+        console.log("user token is ",token);
 
-        console.log("Institute Details ",instituteDetails);
+        if(token=="")
+        {
+            alert("Invalid Token");
+            return;
+        }
+        
+        setTimeout(async ()=>{
+            const validate  = await validateToken();                
+            const user =  await getUserInformation(validate.username);            
+            const instituteDetails = await getInstitute(validate.username);
+            console.log("Institute Details ",instituteDetails);
+            localStorage.setItem("instituteId",instituteDetails.id);
+            localStorage.setItem("role",user.role);
+        },500);
         
         if(token=="")
         {
@@ -50,7 +58,7 @@ const HomePage=(props)=>{
         }
         else{            
             localStorage.setItem("authToken",token);
-            loginStatus("TEACHER");
+            loginStatus(localStorage.getItem("role"));
         }
     };
 
