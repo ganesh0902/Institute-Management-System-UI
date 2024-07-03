@@ -4,7 +4,7 @@ const get_total_course="http://localhost:8999/course/courseCount/";
 const get_total_batch="http://localhost:8999/batch/countBatch/";
 
 const token = localStorage.getItem('authToken');    
-const instituteId = localStorage.getItem("instituteId");
+const instituteId = localStorage.getItem("INSTITUTED_ID");
 
 console.log("instituteId",instituteId);
 export const getStudentCount=async ()=>{

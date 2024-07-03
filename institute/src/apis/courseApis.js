@@ -1,17 +1,18 @@
 import axios from "axios";
 
-const getCourseNameAPIS="http://localhost:8999/course/getCourseIdAndName";
-const getCourseIdAndNameApis="http://localhost:8999/course/getCourseIdAndName";
-const getAllCoursesAPI="http://localhost:8999/course/";
+const getCourseNameAPIS="http://localhost:8999/course/getCourseIdAndName/";
+const getCourseIdAndNameApis="http://localhost:8999/course/getCourseIdAndName/";
+const getAllCoursesAPI="http://localhost:8999/course/institute/";
 const API_SAVE_COURSE="http://localhost:8999/course/";
                               
 
 const token = localStorage.getItem('authToken');
+const instituteId = localStorage.getItem("INSTITUTED_ID");
 export const getCourserNameAndId=async ()=>{
 
     try
     {
-        const response  = await fetch(getCourseNameAPIS,{
+        const response  = await fetch(getCourseNameAPIS+instituteId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -36,7 +37,7 @@ export const getCourserNameAndId=async ()=>{
 
 export const getCourseIdAndNameRecord=async ()=>{
 
-    const response  = await fetch(getCourseIdAndNameApis,{
+    const response  = await fetch(getCourseIdAndNameApis+instituteId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
@@ -55,7 +56,7 @@ export const getCourseIdAndNameRecord=async ()=>{
 
 export const getAllCoursesRecord=async ()=>{
 
-    const response  =await fetch(getAllCoursesAPI,{
+    const response  =await fetch(getAllCoursesAPI+instituteId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
@@ -69,7 +70,7 @@ export const getAllCoursesRecord=async ()=>{
     }
 
     const data = await response.json();
-
+    console.log("All Courses s",data);
     return data;
 }
 

@@ -48,8 +48,8 @@ const HomePage=(props)=>{
             const user =  await getUserInformation(validate.username);            
             const instituteDetails = await getInstitute(validate.username);
             console.log("Institute Details ",instituteDetails);
-            localStorage.setItem("instituteId",instituteDetails.id);
-            localStorage.setItem("role",user.role);
+            localStorage.setItem("INSTITUTED_ID",instituteDetails.id);
+            localStorage.setItem("ROLE",user.role);
         },500);
         
         if(token=="")
@@ -58,7 +58,7 @@ const HomePage=(props)=>{
         }
         else{            
             localStorage.setItem("authToken",token);
-            loginStatus(localStorage.getItem("role"));
+            loginStatus(localStorage.getItem("ROLE"));
         }
     };
 

@@ -40,7 +40,8 @@ const Course =()=>{
     const[apiError,setApiError]=useState("");        
     const[courseNames,setCourseNames]=useState("");    
     const [selectedSkill, setSelectedSkills] = useState(null);
-    const[updatedCourse,setUpdatedCourse]=useState(null);    
+    const[updatedCourse,setUpdatedCourse]=useState(null);   
+     
     
     const skillSet = [
         { name: 'Java', id: 'NY' },
@@ -56,16 +57,23 @@ const Course =()=>{
         skills: '',
         fees:""
       };
-
+      
     useEffect(()=>{
  
         const getAllCourse=async ()=>{
-                      
+                         
             const response  = await getAllCoursesRecord();
-            setAllCourses(response);
+            console.log("Course Response is ",response);
+            setAllCourses(response);            
         }
         getAllCourse();
     },[]);
+
+    useEffect(()=>{
+
+        setLoading(false);
+
+    },[allCourses])
         
     useEffect(() => {
         const getAllCourse=async ()=>{
@@ -159,6 +167,12 @@ const Course =()=>{
         {
             name:"Last Updated Date",
             selector:row=>row.lastUpdatedDate,
+            sortable:true,
+            width:'110px'
+        },  
+        {
+            name:"Institute Id",
+            selector:row=>row.instituteId,
             sortable:true,
             width:'110px'
         },        
@@ -1033,9 +1047,9 @@ const Course =()=>{
         setTimeout(() => {
             setLoading(false);
         }, 2000);
-    };
-       
-    //   }
+    };   
+
+    
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
@@ -1048,6 +1062,7 @@ const Course =()=>{
                     fixedHeader
                     >                    
                 </DataTable>      
+           
             </div>                                
             </div>
             <Modal size="lg" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">

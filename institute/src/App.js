@@ -28,18 +28,16 @@ const openSidebar=()=>{
     
     if(role==="TEACHER")
     {
-      alert("Teacher Login");
+      alert(role);
     }
     else if(role=="STUDENT")
     {
-      alert("Student Login");
+      alert(role);
     }
     else if(role==="ADMIN"){
 
-      alert("Admin Login");
-
+      alert(role);
     }
-
     setLogin(true);
   }
 
