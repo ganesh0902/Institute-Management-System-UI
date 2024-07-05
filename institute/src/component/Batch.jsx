@@ -5,10 +5,12 @@ import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
 import Loader from './Loader';
-import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord} from '../apis/batchApis'
+import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord,getBatchByInstitute} from '../apis/batchApis'
 import {getCourseIdAndNameRecord} from '../apis/courseApis';
 
 const token = localStorage.getItem('authToken');
+const instituteId =localStorage.getItem("INSTITUTED_ID");
+
 const Batch=()=>{
 
     const[fDate,setFDate]=useState("");
@@ -33,8 +35,7 @@ const Batch=()=>{
     const[time,setTime]=useState("10:30 PM");  
     const[searchByBatchTitle,setSearchByBatchTitle]=useState("");
     const [image, setImage] = useState("");
-    const[loader,setLoader]=useState(false);  
-    const url="aa705deb-c2ee-4d94-8dd2-6f63ca822826_6B67A32A75D604B2B8D57A7C72D947DF.1920_120_120.jpg";       
+    const[loader,setLoader]=useState(false);      
 
     const saveBatch=async (batch)=>{        
                   
@@ -69,32 +70,24 @@ const Batch=()=>{
       };
 
     useEffect(()=>{
-        const getAllBatch=()=>{
+        const getAllBatch=async ()=>{
                       
             allCourseIdAndName();
             allTeacherIdAndName();
-            fetch(`http://localhost:8999/batch/`).then((result)=>{
 
-            result.json().then((resp)=>{                
-                setAllBatches(resp);
-                console.log(resp);
-            })
-            })
+            const response  = await getBatchByInstitute();
+            setAllBatches(response);           
         }
         getAllBatch();
     },[])
 
     useEffect(()=>{
-        const getAllBatch=()=>{
+        const getAllBatch=async ()=>{
                       
             allCourseIdAndName();
             allTeacherIdAndName();
-            fetch(`http://localhost:8999/batch/`).then((result)=>{
-
-            result.json().then((resp)=>{                
-                setAllBatches(resp);
-            })
-            })
+            const response  = await getBatchByInstitute();
+            setAllBatches(response);
         }
         getAllBatch();
     },[pageLoad])
@@ -116,13 +109,12 @@ const Batch=()=>{
         {            
             const response  = await get_findByBatchTitleRecord();
             setAllBatches([]);
-            setAllBatches(response);                
-       
+            setAllBatches(response);                       
     }
 }
     const submit=()=>{
 
-        const batch={batchTitle, duration, startDate, endDate, status, location,image, courseId, teacherId,time};
+        const batch={batchTitle, duration, startDate, endDate, status, location,image, courseId, teacherId,time,instituteId};
         console.log(batch);
 
         saveBatch(batch);

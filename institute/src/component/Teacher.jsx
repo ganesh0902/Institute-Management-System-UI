@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import {saveTeacherRecord} from '../apis/teacherApis'
 
+const instituteId= localStorage.getItem("instituteId");
 const Teacher=()=>{
 
     const token = localStorage.getItem('authToken');
@@ -77,7 +78,7 @@ const Teacher=()=>{
     },[addTeacher])
 
     const submit=async  ()=>{
-        const teacher={firstName,lastName,contact,email,education,image};       
+        const teacher={firstName,lastName,contact,email,education,image,instituteId};       
        
         await saveTeacherRecord(teacher);
 

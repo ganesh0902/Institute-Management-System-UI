@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import Loader from "../component/Loader"
 import {saveStudent} from '../apis/studentApis'
 
-import {searchStudent,getBatchTileAndDateRecord} from '../apis/studentApis'
+import {searchStudent,getBatchTileAndDateRecord,getStudentRecordByInstitute} from '../apis/studentApis'
 const Student=() =>{
 
   const [formData, setFormData] = useState({
@@ -30,7 +30,6 @@ const Student=() =>{
   const[batchTitleAndDate,setBatchTitleAndDate]=useState([]);
   const[image,setImage]=useState("");
 
-  const save_student="http://localhost:8999/student/";  
   const token = localStorage.getItem('authToken');
 
   const studentSchema=Yup.object().shape({    
@@ -49,6 +48,9 @@ const initialValues={
   lastEducation:"",  
   batchId:"" 
 }
+
+const instituteId = localStorage.getItem("instituteId");
+
 const studentSave=async ()=>{
 
   const data={firstName, lastName, passoutYear, lastEducation, batchId, image};
@@ -85,27 +87,13 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
 
   useEffect(()=>{    
     getBatchTitleAndDate();
-    fetch("http://localhost:8999/student/",{
-
-      method:"GET",
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization': `Bearer ${token}`, 
-      }
-    }).then(response=>{
-        
-        if(!response.ok)
-        {
-          throw new Error("Network Response was not okay ",response.statusText);
-        }
-        return response.json();
-
-    }).then(data=>{
-      console.log("Student record is data",data);
-      setStudent(data);      
-    }).catch(errors=>{
-      console.log("Error Fetching student ",errors);
-    })        
+    
+    const getStudent=async ()=>{
+      const response  = await getStudentRecordByInstitute();
+      setStudent(response);
+    }
+    getStudent();
+    
   },[]);
 
   useEffect(()=>{
@@ -115,26 +103,12 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
 
   useEffect(()=>{    
     getBatchTitleAndDate();
-    fetch("http://localhost:8999/student/",{
-      method:"GET",
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization': `Bearer ${token}`, 
-      }
-    }).then(response=>{
-
-      if(!response.ok)
-      {
-        throw new Error("Network response was not okay ",response.statusText);
-      }
-      return response.json();
-    }).then(data=>{
-      setStudent(data);
-    })
-    .catch(error=>{
-
-      console.log("Error Fetching student ",error);
-    })
+    
+    const getStudent=async ()=>{
+      const response  = await getStudentRecordByInstitute();
+      setStudent(response);
+    }
+    getStudent();
   },[addStudent]);
 
   const getBatchTitleAndDate=(async ()=>{    

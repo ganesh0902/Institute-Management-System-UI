@@ -4,10 +4,11 @@ const GET_STUDENT_DETAILS_API = 'http://localhost:8999/student/studentDetails/';
 const UPDATE_STUDENT_API='http://localhost:8999/student/';
 const save_student="http://localhost:8999/student/";  
 const search_student="http://localhost:8999/student/filter/";
-const get_Student="http://localhost:8999/student/"
+const get_Student="http://localhost:8999/student/institute/"
 const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate";
 const token = localStorage.getItem('authToken');
     
+const instituteId= localStorage.getItem("instituteId");
 export const getStudentDetails=async (stdId)=>{
     
     try{
@@ -119,3 +120,20 @@ export const getBatchTileAndDateRecord=async ()=>{
         throw error;
     }
 }  
+
+export const getStudentRecordByInstitute=async ()=>{
+
+    const response = await fetch(get_Student+instituteId,{
+       method:"GET",
+       headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${token}`,
+       }        
+    });
+    if(!response.ok)
+    {
+        throw new Error("Response was not okay");
+    }
+    const data = await response.json();
+    return data;
+}
