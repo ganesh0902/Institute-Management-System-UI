@@ -13,7 +13,10 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
 import {getInstitute} from '../..//apis/instituteApi'
+import {logout} from '../..//apis/authProvider '
 import Loader from "../Loader"
+
+import { useEffect } from "react"
 
 const HomePage=(props)=>{
 
@@ -36,7 +39,8 @@ const HomePage=(props)=>{
                   
         const token = await getToken(value);        
         console.log("user token is ",token);
-
+        localStorage.setItem("INSTITUTED_ID",0);
+        
         if(token=="")
         {
             alert("Invalid Token");
@@ -96,6 +100,11 @@ const HomePage=(props)=>{
         setModalSignUp(!modalSignUp);
         console.log("Modal signUp");
     }    
+
+    useEffect(()=>{
+
+        //logout();
+    },[]);
     return(
         <div>            
              <NavigationBar modalAction={()=>modalAction()}/>              

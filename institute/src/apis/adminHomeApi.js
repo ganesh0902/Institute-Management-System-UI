@@ -7,6 +7,7 @@ const token = localStorage.getItem('authToken');
 const instituteId = localStorage.getItem("INSTITUTED_ID");
 
 console.log("instituteId",instituteId);
+
 export const getStudentCount=async ()=>{
         
     return await fetch(get_total_student+instituteId,{ 

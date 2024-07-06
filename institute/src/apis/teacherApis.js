@@ -5,9 +5,36 @@ const updateTeacherAPI="http://localhost:8999/teacher/";
 const getTeacherIdAndTimeAPIS="http://localhost:9003/teacher/getTeachers";
 const API_SAVE_TEACHER="http://localhost:8999/teacher/";
 const getTeacherByIdAPI='http://localhost:8999/teacher/'
+const API_GET_TEACHER="http://localhost:8999/teacher/institute/"
 
     const token = localStorage.getItem("authToken");
+    const instituteId = localStorage.getItem("INSTITUTED_ID");
+    
+export const getTeacherByInstitute=async ()=>{
 
+    try{
+    const response = await  fetch(API_GET_TEACHER+instituteId,{
+
+            method:"GET",
+            headers:{
+                'Content-Type':'Application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+            throw new Error("Response was not okay",response.statusText);
+        }
+
+        const data = await response.json();
+        return data;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+}    
 export const updateTeacher=async (tId,teacher)=>{
 
     try{

@@ -8,12 +8,13 @@ import { useState } from 'react';
 import { ModalTitle } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect } from 'react';
-import {saveTeacherRecord} from '../apis/teacherApis'
+import {saveTeacherRecord,getTeacherByInstitute} from '../apis/teacherApis'
 
 const instituteId= localStorage.getItem("instituteId");
 const Teacher=()=>{
 
     const token = localStorage.getItem('authToken');
+
     const[addTeacher,setAddTeacher]=useState(false);    
     const[firstName,setFirstName]=useState('');
     const[lastName,setLastName]=useState('');
@@ -24,56 +25,25 @@ const Teacher=()=>{
     const[image,setImage]=useState("");
 
     const API_SAVE_TEACHER="http://localhost:9003/teacher/";
-    const API_GET_TEACHER="http://localhost:8999/teacher/"
+    const API_GET_TEACHER="http://localhost:8999/teacher/institute/"    
 
     useEffect(()=>{
         
-        fetch(API_GET_TEACHER,{
-            method:"GET",
-            headers:{
-                'Content-Type':"application/json",
-                'Authorization': `Bearer ${token}`,
-            }
-        }).then(response=>{
-
-            if(!response.ok)
-            {
-                console.log("Response is not okay ",response.statusText);
-            }
-
-            return response.json();
-        }).then(data=>{
-
-            setTeacher(data);
-        }).catch(error=>{
-            console.log(error);
-        })
-            
+       const getTeacher=async ()=>{
+        const response  = await getTeacherByInstitute();
+        setTeacher(response);
+       }            
+       getTeacher();
+       
     },[])
 
     useEffect(()=>{
         
-        fetch(API_GET_TEACHER,{
-            method:"GET",
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization': `Bearer ${token}`,
-            }
-        }).then(response=>{
-
-            if(!response.ok)
-            {
-                throw new Error("API Response is not okay ",response.statusText);
-            }
-
-            return response.json();
-        }).then(data=>{
-
-            setTeacher(data);
-        }).catch(error=>{
-
-            console.log("Error Fetching teacher",error);
-        })
+        const getTeacher=async ()=>{
+            const response  = await getTeacherByInstitute();
+            setTeacher(response);
+        }
+        getTeacher();
 
     },[addTeacher])
 

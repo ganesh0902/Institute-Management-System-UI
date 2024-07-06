@@ -10,7 +10,7 @@ const get_TeacherIdAndName="http://localhost:8999/teacher/getTeachers/"
 const get_findByBatchTitleAPI="http://localhost:8999/batch/batchTitle/";
 
 const token = localStorage.getItem('authToken');
-const instituteId = localStorage.getItem("instituteId");
+const instituteId = localStorage.getItem("INSTITUTED_ID");
 
 export const getBatchByInstitute=async ()=>{
 

@@ -53,7 +53,7 @@ const instituteId = localStorage.getItem("instituteId");
 
 const studentSave=async ()=>{
 
-  const data={firstName, lastName, passoutYear, lastEducation, batchId, image};
+  const data={firstName, lastName, passoutYear, lastEducation, batchId, image, instituteId};
   
   const response = await saveStudent(data);
 
@@ -89,6 +89,11 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
     getBatchTitleAndDate();
     
     const getStudent=async ()=>{
+      
+      if(instituteId===0)
+      {
+        return"Loading...";
+      }
       const response  = await getStudentRecordByInstitute();
       setStudent(response);
     }
@@ -98,13 +103,17 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
 
   useEffect(()=>{
 
-    console.log("Student Record is sttt",student);
+    console.log("Student Record is ",student);
   },[student]);
 
   useEffect(()=>{    
     getBatchTitleAndDate();
     
     const getStudent=async ()=>{
+      if(instituteId===0)
+      {
+        return"Loading...";
+      }
       const response  = await getStudentRecordByInstitute();
       setStudent(response);
     }

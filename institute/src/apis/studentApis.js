@@ -5,10 +5,10 @@ const UPDATE_STUDENT_API='http://localhost:8999/student/';
 const save_student="http://localhost:8999/student/";  
 const search_student="http://localhost:8999/student/filter/";
 const get_Student="http://localhost:8999/student/institute/"
-const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate";
+const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate/";
 const token = localStorage.getItem('authToken');
     
-const instituteId= localStorage.getItem("instituteId");
+const instituteId= localStorage.getItem("INSTITUTED_ID");
 export const getStudentDetails=async (stdId)=>{
     
     try{
@@ -97,7 +97,7 @@ export const searchStudent=async (formData)=>{
 
 export const getBatchTileAndDateRecord=async ()=>{
     try {
-        const response = await fetch(getBatchTitleAndDate, {
+        const response = await fetch(getBatchTitleAndDate+instituteId, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',

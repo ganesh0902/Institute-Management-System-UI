@@ -74,7 +74,7 @@ const Batch=()=>{
                       
             allCourseIdAndName();
             allTeacherIdAndName();
-
+                                   
             const response  = await getBatchByInstitute();
             setAllBatches(response);           
         }
