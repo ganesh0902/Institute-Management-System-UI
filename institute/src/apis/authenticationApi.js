@@ -51,11 +51,11 @@ export const getToken=async (value)=>{
     }    
 }
 
-export const validateToken=async ()=>{
+export const validateToken=async (nToken)=>{
 
     try
     {
-    const response  = await fetch(`http://localhost:9096/auth/validate?token=${token}`,{
+    const response  = await fetch(`http://localhost:9096/auth/validate?token=${nToken}`,{
             method:"GET",
             headers:{
                 'Content-Type':'application/json'

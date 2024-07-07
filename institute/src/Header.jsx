@@ -55,6 +55,7 @@ function Header({openSidebar,logOutRoute}) {
   },[]);
 
   const userLogOut=()=>{
+    logOut();
     logOutRoute();
   }
   

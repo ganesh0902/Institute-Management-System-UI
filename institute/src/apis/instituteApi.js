@@ -19,5 +19,6 @@ export const getInstitute=async (email)=>{
         throw new Error("Response was not okay ",response);
     }
     const data = await response.json();
+    localStorage.setItem("INSTITUTED_ID", data.id);
     return data;
 }
