@@ -57,7 +57,11 @@ export const getTeacherCount=async ()=>{
 
 export const getCourseCount=async ()=>{
 
-     const response =  await fetch(get_total_course+instituteId,{
+    if(token==null)
+    {
+        alert("TOken issue",token);
+    }
+     const response =  await fetch(`${get_total_course}`+`${instituteId}`,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',

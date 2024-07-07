@@ -99,3 +99,9 @@ export const getUserInformation=async (email)=>{
         throw new Error("Error while fetching User Information",error);
     }
 }
+export const logOut=()=>{
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("ROLE");
+    localStorage.removeItem("INSTITUTED_ID");
+    localStorage.removeItem("userInformation");
+}

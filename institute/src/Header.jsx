@@ -10,8 +10,13 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import UsePasswordToggle from './component/common/UsePasswordToggle';
+import { useEffect } from 'react'
+import {getInstitute} from '../src/apis/instituteApi';
+import Loader from "../src//component/Loader";
+import {logOut} from '../src/apis/authenticationApi'
 
-function Header({openSidebar}) {
+function Header({openSidebar,logOutRoute}) {
+  
 
   const[profileToggle,setUserProfileToggle]=useState(false);
   const[changePasswordToggle,setChangePasswordToggle]=useState(false);
@@ -20,10 +25,43 @@ function Header({openSidebar}) {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);  
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmPassword] = useState(false);
-
+  const [userInformation,setUserInformation]=useState("");
   const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
   };
+  
+  const userId = localStorage.getItem("USER_ID");
+  const getUserInformation=(user)=>{
+
+    setUserInformation(user);
+  }
+
+  useEffect(()=>{
+
+    const getUserDetails=async ()=>{
+      
+      if(userId!==undefined){
+      const details = await getInstitute(userId);
+      setUserInformation(details);
+      console.log("User Details in header ",details); 
+      }
+      else
+      {
+        console.log("User Details is not fetch");
+        alert("User Id is ",userId);
+      }
+    }
+    getUserDetails();
+  },[]);
+
+  const userLogOut=()=>{
+    logOutRoute();
+  }
+  
+  if(!userInformation)
+  {
+    return(<div><Loader/></div>)
+  }
 
   return (
     <header className='header'>
@@ -55,9 +93,15 @@ function Header({openSidebar}) {
       <ModalHeader toggle={()=>setUserProfileToggle(!profileToggle)} className="user-profile-header"> User Profile </ModalHeader>
         <ModalBody className="user-profile-modals">
           <Row className='m-3 shadow pt-3 pb-5 border-rounder'>
-            <Col sm={12}>
+            <Col sm={6} className="mt-2">
                 <h4> Basic Info </h4>
                 <hr/>
+            </Col>
+            <Col sm={6}>
+                <div className=''>
+                  <button className='btn btn-primary mr-3' onClick={()=>userLogOut()}> Log out </button>                  
+                </div>                
+                <hr className=''/>
             </Col>
             <Col xs={12} sm={3} md={1}  className="">
               <div>
@@ -66,8 +110,8 @@ function Header({openSidebar}) {
             </Col>
             <Col sm={11} md={6} className="pl-sm-0 pl-md-4 mt-3 mt-sm-0">
                 <div className='mr-4 information'>
-                  <label> Ganesh Sakhare </label> <br/>
-                  <span> ID : 29</span> <br/>
+                  <label> {userInformation.instituteName} </label> <br/>
+                  <span> ID : {userInformation.id}</span> <br/>
                   <button className='change-password-button shadow' onClick={()=>setChangePasswordToggle(!changePasswordToggle)}> <RiLockPasswordFill /> Change Password </button>
                 </div>
             </Col>
@@ -85,7 +129,7 @@ function Header({openSidebar}) {
                   <Col lg={6} md={12}>
                       <label> Department</label><br/>
                       <select>
-                        <option> Select</option>
+                        <option> {userInformation.department}</option>
                       </select>
                   </Col>
                   <Col lg={6} md={12}>
@@ -110,8 +154,8 @@ function Header({openSidebar}) {
                   </Col>
                   <Col lg={6} md={12} className="mt-3">
                       <div className='drop-down-list'>
-                        <label> Birth Date </label><br/>                        
-                          <input type="date" className='form-control' />                        
+                        <label> Start Date </label><br/>                        
+                          <input type="text" value={userInformation.startDate} disable className='form-control' />                        
                       </div>
                   </Col>
                   </Row>
@@ -132,27 +176,27 @@ function Header({openSidebar}) {
               </Col>
               <Col sm={8} xm={12} md={10} className="pl-sm-4 pl-md-4 mt-3 mt-sm-0">
                 <div className='ml-2'>
-                  <label> 9595956150 </label><br/>
-                  <small> ganeshs2987@gmail.com</small>
+                  <label> {userInformation.address.phoneNumber} </label><br/>
+                  <small> {userInformation.email}</small>
                 </div>
               </Col>
             </Row>
             <Row className='mb-3 mt-1'>
               <Col lg={6} md={12} className="mt-3">
                 <label>Phone:</label>
-                <input type="text" className='form-control' value="9595956150" />
+                <input type="text" className='form-control' value={userInformation.address.phoneNumber}  />
               </Col>
               <Col lg={6} md={12} className="mt-3">
                 <label>Email:</label>
-                <input type="text" className='form-control' value="ganeshs2987@gmail.com"/>
+                <input type="text" className='form-control' value={userInformation.email}/>
               </Col>
               <Col sm={12} className="mt-3">
                 <label>Domain Username:</label>
-                <input type="text" className='form-control' value="Teacher"/>
+                <input type="text" className='form-control' value={userInformation.domainUsername}/>
               </Col>
               <Col sm={12} className="mt-3">
                 <label> Status: </label>
-                <input type="text" className='form-control' value="Working"/>
+                <input type="text" className='form-control' value={userInformation.status}/>
               </Col>
               <Col sm={12} className="mt-3 ">
                 <button type='submit' className='submit-btn btn btn-primary form-control'> Update </button>                
@@ -172,7 +216,7 @@ function Header({openSidebar}) {
               </Col>
               <Col sm={10}>
                 <div className='ml-2'>
-                  <label> Yashwant Nagar Murum, TQ Omerga </label>                  
+                  <label> {userInformation.address.streetName} &nbsp; {userInformation.address.city} &nbsp; {userInformation.address.state} &nbsp; {userInformation.address.country}</label>                  
                 </div>
               </Col>            
             </Row>
@@ -181,10 +225,7 @@ function Header({openSidebar}) {
                 <label className=''>Country:</label>    
                 <div className='drop-down-list'>
                 <select>
-                  <option> India </option>
-                  <option> Chaina </option>
-                  <option> Japan </option>
-                  <option>  America </option>
+                  <option> {userInformation.address.country} </option>              
                 </select>
                 </div>
               </Col>
@@ -192,10 +233,7 @@ function Header({openSidebar}) {
               <div className='drop-down-list'>
                 <label>City:</label>    
                 <select>
-                  <option> Pune </option>
-                  <option> Mumbai </option>
-                  <option> Solapur </option>
-                  <option>  Latur </option>
+                  <option> {userInformation.address.city} </option>                 
                 </select>
               </div>
               </Col>              
@@ -203,10 +241,7 @@ function Header({openSidebar}) {
               <div className='drop-down-list'>
                 <label>State:</label>    
                 <select className='p-1'>
-                  <option> Maharashtra </option>
-                  <option> Punjab </option>
-                  <option> Karnataka </option>
-                  <option>  Hyderabad </option>
+                  <option> {userInformation.address.state} </option>
                 </select>
               </div>
               </Col>

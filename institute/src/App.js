@@ -41,6 +41,11 @@ const openSidebar=()=>{
     setLogin(true);
   }
 
+  const logOut=()=>{
+
+    setLogin(false);
+  }
+
   return (
     <div >
   <Router>
@@ -61,7 +66,7 @@ const openSidebar=()=>{
       {
         // if admin is login show the header
         login &&
-        <Header openSidebar={openSidebar}/>
+        <Header openSidebar={openSidebar}  logOutRoute={logOut}/>
       }     
       {
         login &&                   

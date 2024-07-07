@@ -13,7 +13,7 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
 import {getInstitute} from '../..//apis/instituteApi'
-import {logout} from '../..//apis/authProvider '
+import {useAppContext } from '../common/AppProvider'
 import Loader from "../Loader"
 
 import { useEffect } from "react"
@@ -25,6 +25,8 @@ const HomePage=(props)=>{
     const[loaderToggle,setLoaderToggle]=useState(false);
 
     const {loginStatus}=props;
+
+    //const{getUserInformation} = useAppContext();
 
     // formik for sign in
     const initialValueForSignIn={
@@ -48,12 +50,30 @@ const HomePage=(props)=>{
         }
         
         setTimeout(async ()=>{
-            const validate  = await validateToken();                
-            const user =  await getUserInformation(validate.username);            
+            const validate  = await validateToken();    
+                                           
+            if (!validate) {
+                alert("Token validation failed");
+                return;
+            }
+            localStorage.setItem("USER_ID",validate.username);
+            const user =  await getUserInformation(validate.username);                  
+            localStorage.setItem("ROLE",user.role);   
+                        
             const instituteDetails = await getInstitute(validate.username);
+
+            if (instituteDetails && instituteDetails.id !== undefined) {
+                localStorage.setItem("INSTITUTED_ID", instituteDetails.id);
+                localStorage.setItem("userInformation",instituteDetails);
+                
+            } else {
+                console.error("Failed to get a valid Institute ID");
+                alert("Failed to retrieve Institute details");
+                return;
+            }
+
             console.log("Institute Details ",instituteDetails);
-            localStorage.setItem("INSTITUTED_ID",instituteDetails.id);
-            localStorage.setItem("ROLE",user.role);
+            localStorage.setItem("INSTITUTED_ID",instituteDetails.id);            
         },500);
         
         if(token=="")
