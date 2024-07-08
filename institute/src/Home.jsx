@@ -6,13 +6,13 @@ import {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopl
 import { useEffect } from 'react';
 import {getStudentCount, getTeacherCount, getCourseCount, getBatchCount} from './apis/adminHomeApi'
 
-function Home() {
+function Home({instituteId}) {
 
   const[student,setStudent]=useState(0);
   const[teacher,setTeacher]=useState(0);
   const[course,setCourse]=useState(0);
-  const[batch,setBatch]=useState(0);
-
+  const[batch,setBatch]=useState(0);    
+  
 const data = [  
 
 
@@ -66,26 +66,27 @@ const data = [
     getStudent();
     getCourse();
     getTeacher();
+    console.log("Institute Id Home is ",instituteId);
   
   },[])
 
   const getStudent=async ()=>{
-    const response = await getStudentCount();         
+    const response = await getStudentCount(instituteId);         
     setStudent(response);   
   }
 
   const getTeacher=async ()=>{  
-    const response =  await getTeacherCount();    
+    const response =  await getTeacherCount(instituteId);    
     setTeacher(response);  
   }
 
   const getCourse=async ()=>{
-    const response  = await getCourseCount();
+    const response  = await getCourseCount(instituteId);
     setCourse(response);      
   }
 
   const getBatch=async ()=>{
-    const response = await getBatchCount();
+    const response = await getBatchCount(instituteId);
     setBatch(response);      
   }
 

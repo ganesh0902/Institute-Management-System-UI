@@ -10,7 +10,7 @@ import Loader from "../component/Loader"
 import {saveStudent} from '../apis/studentApis'
 
 import {searchStudent,getBatchTileAndDateRecord,getStudentRecordByInstitute} from '../apis/studentApis'
-const Student=() =>{
+const Student=({instituteId}) =>{
 
   const [formData, setFormData] = useState({
     studentName: '',
@@ -49,7 +49,7 @@ const initialValues={
   batchId:"" 
 }
 
-const instituteId = localStorage.getItem("instituteId");
+//const instituteId = localStorage.getItem("instituteId");
 
 const studentSave=async ()=>{
 
@@ -94,10 +94,12 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
       {
         return"Loading...";
       }
-      const response  = await getStudentRecordByInstitute();
+      const response  = await getStudentRecordByInstitute(instituteId);
       setStudent(response);
     }
     getStudent();
+
+    console.log("Institute Id is in student ",instituteId);
     
   },[]);
 
@@ -114,7 +116,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
       {
         return"Loading...";
       }
-      const response  = await getStudentRecordByInstitute();
+      const response  = await getStudentRecordByInstitute(instituteId);
       setStudent(response);
     }
     getStudent();
@@ -122,7 +124,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
 
   const getBatchTitleAndDate=(async ()=>{    
     
-    const response = await getBatchTileAndDateRecord();
+    const response = await getBatchTileAndDateRecord(instituteId);
     console.log("Batch title and date ");
     console.log(response);
     setBatchTitleAndDate(response);

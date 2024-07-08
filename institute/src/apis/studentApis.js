@@ -95,9 +95,9 @@ export const searchStudent=async (formData)=>{
     });
 }
 
-export const getBatchTileAndDateRecord=async ()=>{
+export const getBatchTileAndDateRecord=async (institutesId)=>{
     try {
-        const response = await fetch(getBatchTitleAndDate+instituteId, {
+        const response = await fetch(getBatchTitleAndDate+institutesId, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -121,9 +121,9 @@ export const getBatchTileAndDateRecord=async ()=>{
     }
 }  
 
-export const getStudentRecordByInstitute=async ()=>{
+export const getStudentRecordByInstitute=async (institutesId)=>{
 
-    const response = await fetch(get_Student+instituteId,{
+    const response = await fetch(get_Student+institutesId,{
        method:"GET",
        headers:{
         'Content-Type':'application/json',

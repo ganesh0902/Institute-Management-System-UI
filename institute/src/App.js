@@ -71,8 +71,8 @@ const openSidebar=()=>{
       {
         login &&                   
           <Routes>                        
-              <Route path='/' element={<Home/>} />        
-              <Route path='/student' element={<Student/>}/> 
+              <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTED_ID")}/>} />        
+              <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTED_ID")}/> }/> 
               <Route path='/course' element={<Course/>}/> 
               <Route path='/batch' element={<Batch/>}/> 
               <Route path='/teacher' element={<Teacher/>} /> 

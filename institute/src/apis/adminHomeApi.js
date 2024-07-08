@@ -4,11 +4,11 @@ const get_total_course="http://localhost:8999/course/courseCount/";
 const get_total_batch="http://localhost:8999/batch/countBatch/";
 
 const token = localStorage.getItem('authToken');    
-const instituteId = localStorage.getItem("INSTITUTED_ID");
+// const instituteId = localStorage.getItem("INSTITUTED_ID");
 
-console.log("instituteId",instituteId);
+// console.log("instituteId",instituteId);
 
-export const getStudentCount=async ()=>{
+export const getStudentCount=async (instituteId)=>{
         
     return await fetch(get_total_student+instituteId,{ 
         method:"GET",                    
@@ -32,7 +32,7 @@ export const getStudentCount=async ()=>{
     })    
 }
 
-export const getTeacherCount=async ()=>{
+export const getTeacherCount=async (instituteId)=>{
 
     return await fetch(get_total_teacher+instituteId,{
         method:'GET',
@@ -55,7 +55,7 @@ export const getTeacherCount=async ()=>{
     })
 }
 
-export const getCourseCount=async ()=>{
+export const getCourseCount=async (instituteId)=>{
 
     if(token==null)
     {
@@ -78,7 +78,7 @@ export const getCourseCount=async ()=>{
     return data;
 }
 
-export const getBatchCount=async ()=>{
+export const getBatchCount=async (instituteId)=>{
 
     return await fetch(get_total_batch+instituteId,{
         method:"GET",

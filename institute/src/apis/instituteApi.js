@@ -4,7 +4,7 @@ const token= localStorage.getItem("authToken");
 const getInstituteAPI=`http://localhost:8999/institute/details/`;
 
 export const getInstitute=async (email)=>{
-
+    
    const response =await fetch(getInstituteAPI+email,{
 
         method:"GET",
@@ -18,7 +18,7 @@ export const getInstitute=async (email)=>{
     {
         throw new Error("Response was not okay ",response);
     }
-    const data = await response.json();
+    const data = await response.json();    
     localStorage.setItem("INSTITUTED_ID", data.id);
     return data;
 }

@@ -104,4 +104,6 @@ export const logOut=()=>{
     localStorage.removeItem("ROLE");
     localStorage.removeItem("INSTITUTED_ID");
     localStorage.removeItem("userInformation");
+    localStorage.clear();
+    alert("Log out");
 }

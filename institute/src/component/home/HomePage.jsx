@@ -24,11 +24,8 @@ const HomePage=(props)=>{
     const[modalSignUp,setModalSignUp]=useState(false);
     const[loaderToggle,setLoaderToggle]=useState(false);
     const[isWorking,setIsWorking]  =useState(false);
-    const {loginStatus}=props;
-
-    //const{getUserInformation} = useAppContext();
-
-    // formik for sign in
+    const {loginStatus}=props;    
+    
     const initialValueForSignIn={
         username:"",
         password:""
@@ -45,60 +42,47 @@ const HomePage=(props)=>{
 
         const token = await getToken(value);        
         console.log("user token is ",token);        
-        
+                
         if(token=="")
         {
             alert("Invalid Token");
             return;
         }
-        
-        const validate  = await validateToken(token);                                              
-        if (!validate) {
-            alert("Token validation failed");
-            return;
-        }
-        localStorage.setItem("USER_ID",validate.username);
-        const user =  await getUserInformation(validate.username);                  
-        localStorage.setItem("ROLE",user.role);   
+        else{
+            localStorage.setItem("authToken",token);
+        }               
 
-        const instituteDetails = await getInstitute(validate.username);
+        setTimeout(async ()=>{
+                                                     
+            const validate  = await validateToken(token);    
 
-        if (instituteDetails && instituteDetails.id !== undefined) {
-            localStorage.setItem("INSTITUTED_ID", instituteDetails.id);
-            localStorage.setItem("userInformation",instituteDetails);
-            setIsWorking(true);
-        } else {
-            console.error("Failed to get a valid Institute ID");
-            alert("Failed to retrieve Institute details");
-            return;
-        }
+            if (!validate) {
+                alert("Token validation failed");
+                return;
+            }
+            localStorage.setItem("USER_ID",validate.username);
+            const user =  await getUserInformation(validate.username);                  
+            localStorage.setItem("ROLE",user.role);   
 
-        // setTimeout(async ()=>{
-            
-            
-                        
-        //     const instituteDetails = await getInstitute(validate.username);
+            const instituteDetails = await getInstitute(validate.username);
 
-        //     if (instituteDetails && instituteDetails.id !== undefined) {
-        //         localStorage.setItem("INSTITUTED_ID", instituteDetails.id);
-        //         localStorage.setItem("userInformation",instituteDetails);
-        //         setIsWorking(true);
-        //     } else {
-        //         console.error("Failed to get a valid Institute ID");
-        //         alert("Failed to retrieve Institute details");
-        //         return;
-        //     }
-        //     console.log("Institute Details ",instituteDetails);            
-        // },500);
+            if (instituteDetails && instituteDetails.id !== undefined) {
+                localStorage.setItem("INSTITUTED_ID", instituteDetails.id);
+                localStorage.setItem("userInformation",instituteDetails);
+                loginStatus(localStorage.getItem("ROLE"));
+
+            } else {
+                console.error("Failed to get a valid Institute ID");
+                alert("Failed to retrieve Institute details");
+                return;
+            }
+
+        },500);
         
         if(token=="")
         {
             alert("Invalid Credential");
-        }
-        else{            
-            localStorage.setItem("authToken",token);
-            loginStatus(localStorage.getItem("ROLE"));
-        }
+        }        
 
         if(!isWorking)
         {
