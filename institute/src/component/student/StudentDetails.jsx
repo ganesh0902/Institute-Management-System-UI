@@ -12,7 +12,7 @@ import Loader from "../Loader";
 import TeacherUpdate from "../teachers/TeacherUpdate";
 import {getBatchTitleAndDate} from '../../apis/batchApis';
 
-const StudentDetails=()=>{
+const StudentDetails=({instituteId})=>{
     const param=useParams();
     
     const[batches,setBatches]=useState([]);
@@ -52,7 +52,7 @@ const StudentDetails=()=>{
         
         const fetchBatchTitleAndDate=async ()=>{
 
-            const response = await getBatchTitleAndDate();
+            const response = await getBatchTitleAndDate(instituteId);
             setBatchTitleAndDate(response);                        
         }
         fetchBatchTitleAndDate();

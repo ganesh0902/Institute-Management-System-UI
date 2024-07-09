@@ -1,7 +1,7 @@
 import axios from "axios"
 import { json } from "react-router-dom";
 
-const getBatchTitleAndDateAPIS="http://localhost:8999/batch/batchTitleAndDate";
+const getBatchTitleAndDateAPIS="http://localhost:8999/batch/batchTitleAndDate/";
 const updateBatchAPI="http://localhost:8999/batch/";
 const save_batch="http://localhost:8999/batch/";
 const getBatchByInstituteAPI='http://localhost:8999/batch/institute/'
@@ -12,9 +12,9 @@ const get_findByBatchTitleAPI="http://localhost:8999/batch/batchTitle/";
 const token = localStorage.getItem('authToken');
 const instituteId = localStorage.getItem("INSTITUTED_ID");
 
-export const getBatchByInstitute=async ()=>{
+export const getBatchByInstitute=async (institutesId)=>{
 
-    const response = await fetch(getBatchByInstituteAPI+instituteId,{
+    const response = await fetch(getBatchByInstituteAPI+institutesId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
@@ -31,11 +31,11 @@ export const getBatchByInstitute=async ()=>{
     return data;
 }
 
-export const getBatchTitleAndDate=(async ()=>{         
+export const getBatchTitleAndDate=(async (instituteId)=>{         
         try
         {
           
-           const response = await fetch(getBatchTitleAndDateAPIS,{
+           const response = await fetch(getBatchTitleAndDateAPIS+instituteId,{
                 method:"GET",
                 headers:{
                     'Content-Type':'application/json',
@@ -120,10 +120,10 @@ export const getTeacherIdAndName=async ()=>{
     return await response.json();
 }
 
-export const getTeacherIdAndNameRecord = async () => {
+export const getTeacherIdAndNameRecord = async (institutesId) => {
     try {
 
-        const response = await fetch(get_TeacherIdAndName+instituteId, {
+        const response = await fetch(get_TeacherIdAndName+institutesId, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',

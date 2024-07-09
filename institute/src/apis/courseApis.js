@@ -35,9 +35,9 @@ export const getCourserNameAndId=async ()=>{
     }
 }
 
-export const getCourseIdAndNameRecord=async ()=>{
+export const getCourseIdAndNameRecord=async (institutesId)=>{
 
-    const response  = await fetch(getCourseIdAndNameApis+instituteId,{
+    const response  = await fetch(getCourseIdAndNameApis+institutesId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
@@ -54,9 +54,9 @@ export const getCourseIdAndNameRecord=async ()=>{
         return data;
 }
 
-export const getAllCoursesRecord=async ()=>{
+export const getAllCoursesRecord=async (institutesId)=>{
 
-    const response  =await fetch(getAllCoursesAPI+instituteId,{
+    const response  =await fetch(getAllCoursesAPI+institutesId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',

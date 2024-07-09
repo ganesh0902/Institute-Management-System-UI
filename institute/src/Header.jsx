@@ -15,7 +15,7 @@ import {getInstitute} from '../src/apis/instituteApi';
 import Loader from "../src//component/Loader";
 import {logOut} from '../src/apis/authenticationApi'
 
-function Header({openSidebar,logOutRoute}) {
+function Header({openSidebar,logOutRoute,instituteId}) {
   
 
   const[profileToggle,setUserProfileToggle]=useState(false);

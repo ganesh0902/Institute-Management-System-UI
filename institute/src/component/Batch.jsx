@@ -11,7 +11,7 @@ import {getCourseIdAndNameRecord} from '../apis/courseApis';
 const token = localStorage.getItem('authToken');
 const instituteId =localStorage.getItem("INSTITUTED_ID");
 
-const Batch=()=>{
+const Batch=({instituteId})=>{
 
     const[fDate,setFDate]=useState("");
     const[tDate,setToDate]=useState("");
@@ -75,18 +75,20 @@ const Batch=()=>{
             allCourseIdAndName();
             allTeacherIdAndName();
                                    
-            const response  = await getBatchByInstitute();
+            const response  = await getBatchByInstitute(instituteId);
             setAllBatches(response);           
         }
         getAllBatch();
+
+        console.log("Institute Id is in Batch ",instituteId);
     },[])
 
     useEffect(()=>{
         const getAllBatch=async ()=>{
                       
-            allCourseIdAndName();
-            allTeacherIdAndName();
-            const response  = await getBatchByInstitute();
+            //allCourseIdAndName();
+            //allTeacherIdAndName();
+            const response  = await getBatchByInstitute(instituteId);
             setAllBatches(response);
         }
         getAllBatch();
@@ -94,13 +96,13 @@ const Batch=()=>{
 
     const allCourseIdAndName=async ()=>{
 
-        const response = await getCourseIdAndNameRecord();        
+        const response = await getCourseIdAndNameRecord(instituteId);        
         setCoursesIdAndName(response);
     }
 
     const allTeacherIdAndName=async ()=>{
 
-        const response  = await getTeacherIdAndNameRecord();
+        const response  = await getTeacherIdAndNameRecord(instituteId);
         setTeacherIdAndName(response);
     }
 

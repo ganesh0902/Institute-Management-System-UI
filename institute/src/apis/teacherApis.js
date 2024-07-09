@@ -10,10 +10,10 @@ const API_GET_TEACHER="http://localhost:8999/teacher/institute/"
     const token = localStorage.getItem("authToken");
     const instituteId = localStorage.getItem("INSTITUTED_ID");
     
-export const getTeacherByInstitute=async ()=>{
+export const getTeacherByInstitute=async (institutesId)=>{
 
     try{
-    const response = await  fetch(API_GET_TEACHER+instituteId,{
+    const response = await  fetch(API_GET_TEACHER+institutesId,{
 
             method:"GET",
             headers:{

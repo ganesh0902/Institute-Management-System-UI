@@ -21,7 +21,7 @@ const CourseSchema =Yup.object().shape({
     fees:Yup.string().required("Fees is Mandatory")
 });
 
-const Course =()=>{
+const Course =({instituteId})=>{
 
     const [loading, setLoading] = useState(false);
     const[fDate,setFDate]=useState("");
@@ -55,16 +55,18 @@ const Course =()=>{
         courseName: '',
         description: '',
         skills: '',
-        fees:""
+        fees:"",
+        instituteId:instituteId
       };
       
     useEffect(()=>{
  
         const getAllCourse=async ()=>{
                          
-            const response  = await getAllCoursesRecord();
+            const response  = await getAllCoursesRecord(instituteId);
             console.log("Course Response is ",response);
-            setAllCourses(response);            
+            setAllCourses(response);     
+            console.log("Institute Id is in course ",instituteId);
         }
         getAllCourse();
     },[]);
@@ -78,7 +80,7 @@ const Course =()=>{
     useEffect(() => {
         const getAllCourse=async ()=>{
                       
-            const response  = await getAllCoursesRecord();
+            const response  = await getAllCoursesRecord(instituteId);
             setAllCourses(response);
         }
         getAllCourse();

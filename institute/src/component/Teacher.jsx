@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import {saveTeacherRecord,getTeacherByInstitute} from '../apis/teacherApis'
 
 const instituteId= localStorage.getItem("instituteId");
-const Teacher=()=>{
+const Teacher=({instituteId})=>{
 
     const token = localStorage.getItem('authToken');
 
@@ -30,7 +30,7 @@ const Teacher=()=>{
     useEffect(()=>{
         
        const getTeacher=async ()=>{
-        const response  = await getTeacherByInstitute();
+        const response  = await getTeacherByInstitute(instituteId);
         setTeacher(response);
        }            
        getTeacher();
@@ -40,7 +40,7 @@ const Teacher=()=>{
     useEffect(()=>{
         
         const getTeacher=async ()=>{
-            const response  = await getTeacherByInstitute();
+            const response  = await getTeacherByInstitute(instituteId);
             setTeacher(response);
         }
         getTeacher();

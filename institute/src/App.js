@@ -66,20 +66,20 @@ const openSidebar=()=>{
       {
         // if admin is login show the header
         login &&
-        <Header openSidebar={openSidebar}  logOutRoute={logOut}/>
+        <Header instituteId={localStorage.getItem("INSTITUTE_ID")} openSidebar={openSidebar}  logOutRoute={logOut}/>
       }     
       {
         login &&                   
           <Routes>                        
-              <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTED_ID")}/>} />        
-              <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTED_ID")}/> }/> 
-              <Route path='/course' element={<Course/>}/> 
-              <Route path='/batch' element={<Batch/>}/> 
-              <Route path='/teacher' element={<Teacher/>} /> 
+              <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />        
+              <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
+              <Route path='/course' element={<Course instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 
+              <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")}/>}/> 
+              <Route path='/teacher' element={<Teacher instituteId={localStorage.getItem("INSTITUTE_ID")}/>} /> 
               <Route path='/cDetails/:cId' element={<CourseDetails/>} /> 
               <Route path='/bDetails/:bId' element={<BatchDisplay/>} /> 
               <Route path='/tDetails/:tId' element={<TeacherDetails/>} />
-              <Route path='/stdDetails/:stdId' element={<StudentDetails/>}/>                        
+              <Route path='/stdDetails/:stdId' element={<StudentDetails instituteId={localStorage.getItem("INSTITUTE_ID")} />}/>                        
           </Routes>
       }                                   
 

@@ -67,7 +67,7 @@ const HomePage=(props)=>{
             const instituteDetails = await getInstitute(validate.username);
 
             if (instituteDetails && instituteDetails.id !== undefined) {
-                localStorage.setItem("INSTITUTED_ID", instituteDetails.id);
+                localStorage.setItem("INSTITUTE_ID", instituteDetails.id);
                 localStorage.setItem("userInformation",instituteDetails);
                 loginStatus(localStorage.getItem("ROLE"));
 
