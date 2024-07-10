@@ -259,7 +259,8 @@ nav .navigationForDesktop{
     text-align: start;
     background-color: #f9f9ff;
     height: 100%;    
-    position: relative;    
+    position: relative;   
+    border-radius: 10px; 
 }
 
 #course img{
@@ -291,7 +292,31 @@ nav .navigationForDesktop{
   right: 5px;
   bottom: 40px;  
 }
+.details-image img{
+  width: 100%;
+  height: 80%;
+  background-position: center;
+  background-color: red;
+  border-radius: 10px;
+}
+.course-details .title{
+  color: black;
+  margin-right: 10px;
+}
+/* for home page batch details */
+.teacher-profile img{
 
+  width: 90%;
+  height: 90%;
+  clip-path: circle();
+}
+.teacher .title{
+  margin-right: 10px;
+}
+.teacher-social-media-link{
+  text-decoration: none;
+  list-style-type: none;
+}
 /* end course  */
 
 /* registration */
