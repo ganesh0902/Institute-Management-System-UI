@@ -5,6 +5,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { MdStarRate } from 'react-icons/md';
 import NavigationBar from "./NavigationBar"
+import { FaInstagram,FaGithub,FaLinkedin  } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa6";
+import { CiTwitter } from "react-icons/ci";
+import { IoMdTime } from 'react-icons/io';
 import c1 from '../../images/c1.jpg'
 import c2 from '../../images/c2.jpg'
 import c3 from '../../images/c3.jpg'
@@ -114,7 +118,7 @@ const CourseCarousel = () => {
         <Modal size="xl" isOpen={detailsModal} toggle={()=>setDetailsModal(!detailsModal)} className="batchModal">
         <ModalHeader toggle={()=>setDetailsModal(!detailsModal)} className="addBatchTitle"> Course Details  </ModalHeader>
         <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
-        <Row className='shadow p-3'>
+        <Row className='shadow p-3 shadow'>
             <Col lg={3} md={12}>
                 <div className='details-image shadow'>
                     <img src={c1}></img>
@@ -156,12 +160,12 @@ const CourseCarousel = () => {
                         <label> $5000 </label>
                     </div>
                     <div className='col-4 mt-4'>
-                        <button className='btn form-control btn-primary'> Buy </button>
+                        <button className='btn form-control btn-primary buy-btn'> Buy </button>
                     </div>
                    </div>
                 </div>
-            </Col>
-            <Col lg={3} md={12} className="mt-5 bg-white pt-2 ">
+            </Col>            
+            <Col lg={3} md={12} className="mt-5 shadow teacher-profile-details">
             <div className="teacher-profile text-center">
                     <img class="text-center shadow-4-strong" alt="avatar2" src={c1} />
             </div>
@@ -171,37 +175,15 @@ const CourseCarousel = () => {
             </div>
             <div className='teacher-social-media-link mt-2'>
                  <li className='text-decoration-none pt-2'>
-                    <ul> Instagram </ul>
-                    <ul> Face Book </ul>
-                    <ul> Linkedin </ul>
-                    <ul> Twitter </ul>
+                    <ul><a href=""><FaInstagram/></a> Instagram </ul>
+                    <ul><a href=""><CiTwitter/></a> Twitter </ul>
+                    <ul><a href=""><FaLinkedin/></a> Linkedin </ul>                    
                  </li>
             </div>
-            </Col>
-            <Col lg={6} md={12} className="mt-5 pt-2 teacher">
-                <div className='row'>
-                 <div className='col-6'>
-                    <label className='title'> First Name</label>
-                    <label> Ganesh</label>
-                 </div>
-                 <div className='col-6'>
-                    <label className='title'> Last Name</label>
-                    <label> Sakhare </label>
-                 </div>
-                 <div className='col-6'>
-                    <label className='title'> Education</label>
-                    <label> MCT </label>
-                 </div>
-                 <div className='col-6'>
-                    <label className='title'> Contact No.</label>
-                    <label> 9595956150 </label>
-                 </div>
-                 <div className='col-12'>
-                    <label className='title'> Email </label>
-                    <label> example123@gmail.com </label>
-                 </div>
-                </div>
-            </Col>
+            <div className='text-center my-2'>
+                <button className='btn btn-primary text-center px-5 view-btn'> View </button>  
+            </div>            
+            </Col>            
         </Row>                                                           
         </ModalBody>
         </Modal>

@@ -16,27 +16,34 @@ import NavigationBar from './component/home/NavigationBar'
 import BatchDisplay from './component/batch/BatchDisplay';
 import TeacherDetails from './component/teachers/TeacherDetails';
 import StudentDetails from './component/student/StudentDetails';
+import TeacherHeader from './component//teacherComponent/TeacherHeader'
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
-  const[login,setLogin]=useState(false);
+  const[login,setLogin]=useState(false);  
 const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
 }
+
+  const[loginRole,setLoginRole]=useState();
+
   const loginStatus=(role)=>{    
     
     if(role==="TEACHER")
     {
       alert(role);
+      setLoginRole(role);
     }
     else if(role=="STUDENT")
     {
       alert(role);
+      setLoginRole(role);
     }
     else if(role==="ADMIN"){
 
       alert(role);
+      setLoginRole(role);
     }
     setLogin(true);
   }
@@ -60,16 +67,16 @@ const openSidebar=()=>{
       <div className="grid-container">                  
       {
         // if admin is login show  side bar
-        login &&
+        login && loginRole=="ADMIN" &&
         <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar}/>                    
       }
       {
         // if admin is login show the header
-        login &&
+        login && loginRole =="ADMIN" &&
         <Header instituteId={localStorage.getItem("INSTITUTE_ID")} openSidebar={openSidebar}  logOutRoute={logOut}/>
       }     
       {
-        login &&                   
+        login && loginRole =="ADMIN" &&                  
           <Routes>                        
               <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />        
               <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
@@ -81,9 +88,12 @@ const openSidebar=()=>{
               <Route path='/tDetails/:tId' element={<TeacherDetails/>} />
               <Route path='/stdDetails/:stdId' element={<StudentDetails instituteId={localStorage.getItem("INSTITUTE_ID")} />}/>                        
           </Routes>
-      }                                   
-
-          </div>       
+      } 
+      {
+         loginRole!="ADMIN" &&
+         <TeacherHeader/>
+      }                                  
+        </div>       
         </Router>                     
     </div>
   );

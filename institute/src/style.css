@@ -317,6 +317,28 @@ nav .navigationForDesktop{
   text-decoration: none;
   list-style-type: none;
 }
+.teacher-social-media-link li ul a{
+  font-size: 20px;
+  margin-right: 10px;
+  text-decoration: none;
+  color: #2c2c2c;
+}
+.teacher-profile-details .view-btn{
+  
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 13px 35px;
+    background-color:rgb(7, 7, 100);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 3px;
+    transition: 0.3s ease;  
+    border: #f9f9ff;
+  }
+  .course-details .buy-btn:hover{    
+    background-color: white;
+    color:black;  
+}
 /* end course  */
 
 /* registration */
