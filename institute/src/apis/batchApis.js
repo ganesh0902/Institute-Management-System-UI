@@ -163,3 +163,24 @@ export const get_findByBatchTitleRecord=async (searchByBatchTitle)=>{
 
     return await response.json();
 }
+
+export const getBatchById=async (batchId)=>{
+    try
+    {
+       const response = await fetch(updateBatchAPI+batchId,{
+            method:"GET",
+            headers:{
+                'Content-type':'application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    }
+    catch(error)
+    {
+        console.log(error.statusText);
+    }
+
+}

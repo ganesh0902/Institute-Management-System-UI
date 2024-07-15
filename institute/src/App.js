@@ -89,10 +89,10 @@ const openSidebar=()=>{
               <Route path='/stdDetails/:stdId' element={<StudentDetails instituteId={localStorage.getItem("INSTITUTE_ID")} />}/>                        
           </Routes>
       } 
-      {
+      {/* {
          loginRole!="ADMIN" &&
          <TeacherHeader/>
-      }                                  
+      }                                   */}
         </div>       
         </Router>                     
     </div>

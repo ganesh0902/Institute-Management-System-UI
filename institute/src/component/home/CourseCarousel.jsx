@@ -20,7 +20,7 @@ import profile2 from '../../images/pro2.webp'
 import profile3 from '../../images/pro3.webp'
 import profile4 from '../../images/pro4.webp'
 import { useRef,useEffect } from 'react';
-import { getBatchByInstitute } from '../../apis/batchApis';
+import { getBatchByInstitute,getBatchById } from '../../apis/batchApis';
 import Batch from '../Batch';
 import { useState } from 'react';
 import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
@@ -41,6 +41,7 @@ const CourseCarousel = () => {
 
     const[batch,setBatch]=useState([]);
     const[detailsModal,setDetailsModal]=useState(false);
+    const[singleBatch,setSingleBatch]=useState([]);
 
     const settings = {
         dots: true,
@@ -77,13 +78,18 @@ const CourseCarousel = () => {
         getBatch();
     },[Batch]);
 
+    const toggle=async (batchId)=>{
+        
+        const response = await getBatchById(batchId);
+        setSingleBatch(response);
+    }
+
     useEffect(()=>{
 
-        console.log("Batch",batch);
-
-    },[batch]);
-
-
+        console.log("Selected Batch details", singleBatch);
+        setDetailsModal(true);
+    },[singleBatch]);
+   
     return (
         <section id="course">
             <h1>Our Popular Courses</h1>
@@ -92,7 +98,7 @@ const CourseCarousel = () => {
                 {
                     batch.map((data)=>(
                     <div className="course-box mr-4">
-                    <Link to="#" className="course-box-link" onClick={()=>setDetailsModal(!detailsModal)}>
+                    <Link to="#" className="course-box-link" onClick={()=>toggle(data.bid)}>
                         <div className="courses m-2">
                             <img src={`../batch/${data.image}`} alt="" />
                             <div className="details">
@@ -129,27 +135,27 @@ const CourseCarousel = () => {
                    <div className='row'>
                     <div className='col-4'>
                         <label className='title'>Batch Title</label>
-                        <label> Java Developer </label>
+                        <label> {singleBatch.batchTitle} </label>
                     </div>
                     <div className='col-4'>
                         <label className='title'> Duration </label>
-                        <label> 6 Months </label>
+                        <label> {singleBatch.duration} </label>
                     </div>
                     <div className='col-4'>
                         <label className='title'> Start Date </label>
-                        <label> 05-Jun-2022 </label>
+                        <label> {singleBatch.startDate} </label>
                     </div>
                     <div className='col-4 mt-4'>
                         <label className='title'> End Date </label>
-                        <label> 05-Dec-2022 </label>
+                        <label> {singleBatch.endDate} </label>
                     </div>
                     <div className='col-4 mt-4'>
                         <label className='title'> Location </label>
-                        <label> Pune </label>
+                        <label> {singleBatch.location} </label>
                     </div>
                     <div className='col-4 mt-4'>
                         <label className='title'>Batch Time </label>
-                        <label> 10:30 PM </label>
+                        <label> {singleBatch.time} </label>
                     </div>
                     <div className='col-4 mt-4'>
                         <label className='title'>Skills </label>
