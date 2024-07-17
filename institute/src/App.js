@@ -16,7 +16,9 @@ import NavigationBar from './component/home/NavigationBar'
 import BatchDisplay from './component/batch/BatchDisplay';
 import TeacherDetails from './component/teachers/TeacherDetails';
 import StudentDetails from './component/student/StudentDetails';
-import TeacherHeader from './component//teacherComponent/TeacherHeader'
+import TeacherRoot from './component//teacherComponent/TeacherRoot';
+import 'bootstrap/dist/js/bootstrap.min.js'
+
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
@@ -35,7 +37,7 @@ const openSidebar=()=>{
       alert(role);
       setLoginRole(role);
     }
-    else if(role=="STUDENT")
+    else if(role==="STUDENT")
     {
       alert(role);
       setLoginRole(role);
@@ -89,10 +91,10 @@ const openSidebar=()=>{
               <Route path='/stdDetails/:stdId' element={<StudentDetails instituteId={localStorage.getItem("INSTITUTE_ID")} />}/>                        
           </Routes>
       } 
-      {/* {
-         loginRole!="ADMIN" &&
-         <TeacherHeader/>
-      }                                   */}
+      {
+         loginRole==="TEACHER" &&
+         <TeacherRoot/>
+      }                                  
         </div>       
         </Router>                     
     </div>
