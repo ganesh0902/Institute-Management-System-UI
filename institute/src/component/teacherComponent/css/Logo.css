@@ -1,0 +1,28 @@
+.logo{
+    height: 1;
+    margin-right: 50px;
+    text-decoration: none;
+}
+.sidebar{
+    font-size: 20px;
+    color: darkslategrey;
+}
+
+@media(min-width:1200px)
+{
+    .logo{
+        width: 180px;
+    }
+}
+
+.logo img{
+    max-height: 26px;
+    margin-right: 6px;
+}
+
+.logo span{
+    font-size: 26px;
+    font-weight: 700px;
+    color: #012970;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
