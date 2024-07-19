@@ -10,7 +10,7 @@
         top: 50px;
         left: 0px;
         right: 0px;
-        padding: 20px;
+        padding: 10px;
         box-shadow: 0px 0px 15px 0px rgba(1,41, 112, 0.1);
         background-color: white;
         z-index: 9999;
@@ -54,4 +54,10 @@
     padding: 0;
     margin-left: -30px;
     background: none;
+}
+
+
+.header .search-form button i{
+    
+    color: #012970;
 }
