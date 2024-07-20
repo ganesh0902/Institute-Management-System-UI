@@ -1,9 +1,12 @@
 import React from 'react'
-
+import UserProfile from '../..//component/UserProfile'
 
 const NavMessage=()=> {
   return (
-    <div>NavMessage</div>
+    <div>
+
+      <UserProfile className='icon'> </UserProfile>        
+    </div>
   )
 }
 

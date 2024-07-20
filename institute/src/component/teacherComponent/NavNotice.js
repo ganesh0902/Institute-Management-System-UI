@@ -1,13 +1,13 @@
 import React from 'react'
  import { CiBellOn } from "react-icons/ci";
  import './css/Nav.css'
-
+//import exclamation from '../..//images/exclamation-circle.svg'
 const NavNotice = () => {
   return (
     <li className='nav-item dropdown'>
         <a href='j' className='nav-link nav-icon' data-bs-toggle="dropdown">
-            <i className='bi bi-bell text-black'> <CiBellOn/> </i>
-            <span className='badge bg-primary badge-number'>4</span>
+            <i className='bi bi-bell text-black'> <CiBellOn/>             
+            </i>
         </a>
 
         <ul className='dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications'>
@@ -20,55 +20,32 @@ const NavNotice = () => {
             <li>
                 <hr className='dropdown-divider' />
             </li>
-            <li className='message-item'>
-                <a href='aa'>
-                    <img src='' alt='Loading' className='rounded-circle'/>
-                </a>    
-                <div className=''>
-                    <h4> John sinhs </h4>
-                    <p> Thank you for visiting ....</p>    
-                    <p> 4 Hours ago </p>
-                </div>                
+            <li className='message-item'>                           
+                <div className='row p-3'>                    
+                    <div className='col-9 col-sm-9 col-md-9'>
+                        <h6> John sinhs </h6>
+                        <label> Thank you for visiting ....</label>   <br/> 
+                        <span> 4 Hours ago </span>
+                    </div>
+                    <hr className='dropdown-divider' />      
+                    <div className='col-9 col-sm-9 col-md-9'>
+                        <h6> John sinhs </h6>
+                        <label> Thank you for visiting ....</label>   <br/> 
+                        <span> 4 Hours ago </span>
+                    </div>
+                    <hr className='dropdown-divider' />      
+                    <div className='col-9 col-sm-9 col-md-9'>
+                        <h6> John sinhs </h6>
+                        <label> Thank you for visiting ....</label>   <br/> 
+                        <span> 4 Hours ago </span>
+                    </div>
+                    <hr className='dropdown-divider' />                                              
+                </div>              
             </li>            
             <li>
-                <hr className='dropdown-divider' />
+                
             </li>
-
-            <li className='notification-items'>
-                <i className='bi bi-exclamation-circle next-warning'> </i>
-            <div className=''>
-                <h4> Lorem Ipsum</h4>
-                <p> Some -----</p>
-                <p>30  Min Ago</p>
-            </div>   
-            </li>
-            <li>
-                <hr className='dropdown-divider' />
-            </li>
-            <li className='notification-items'>
-                <i className='bi bi-exclamation-circle next-warning'> </i>
-            <div className=''>
-                <h4> Lorem Ipsum</h4>
-                <p> Some -----</p>
-                <p>30  Min Ago</p>
-            </div>   
-            </li>
-            <li>
-                <hr className='dropdown-divider' />
-            </li>
-            <li className='notification-items'>
-                <i className='bi bi-exclamation-circle next-warning'> </i>
-            <div className=''>
-                <h4> Lorem Ipsum</h4>
-                <p> Some -----</p>
-                <p>30  Min Ago</p>
-            </div>   
-            </li>
-            <li>
-                <hr className='dropdown-divider' />
-            </li>
-
-            <div className=''>
+            <div className='m-2 text-decoration-none'>
                <a href='#f'> Show All notifications</a>
             </div>  
 

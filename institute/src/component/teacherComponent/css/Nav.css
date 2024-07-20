@@ -1,3 +1,4 @@
+
 .header-nav ul{
     list-style: none;
     color: black;
@@ -66,6 +67,14 @@
 
 .header-nav .notifications .notification-item:hover{
     background-color: #f6f9ff;
+}
+
+.indicate-icon img{
+    
+    width: 60%;
+    text-align: center;
+    margin-top: 15px;        
+
 }
 
 .header-nav .message{

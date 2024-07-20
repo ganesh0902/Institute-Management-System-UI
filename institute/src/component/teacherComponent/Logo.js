@@ -1,6 +1,6 @@
 import React from 'react'
 import './css/Logo.css'
-import {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
+import {BsJustify}
  from 'react-icons/bs';
 function Logo() {
 
@@ -12,7 +12,7 @@ function Logo() {
   return (
     <div className='d-flex align-items-center justify-content-between'>
         <a href='h' className='logo d-flex align-items-center mr-5'>
-            <span className='d-none d-lg-block'>AdminDashboard </span>
+            <span className='d-none d-lg-block font-2'>AdminDashboard </span>
         </a>
         {/* <i className='bi bi-list toggle-sidebar-btn' 
             onClick={handleToggleSidebar}>

@@ -43,7 +43,7 @@ const HomePage=(props)=>{
         const token = await getToken(value);        
         console.log("user token is ",token);        
                 
-        if(token=="")
+        if(token==="")
         {
             alert("Invalid Token");
             return;
@@ -56,8 +56,8 @@ const HomePage=(props)=>{
                                                      
             const validate  = await validateToken(token);    
 
-            if (!validate) {
-                alert("Token validation failed");
+            if (!validate) {                
+                alert("Token validation failed "+validate);
                 return;
             }
             localStorage.setItem("USER_ID",validate.username);
@@ -79,7 +79,7 @@ const HomePage=(props)=>{
 
         },500);
         
-        if(token=="")
+        if(token==="")
         {
             alert("Invalid Credential");
         }        
