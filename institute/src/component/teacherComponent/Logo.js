@@ -2,13 +2,8 @@ import React from 'react'
 import './css/Logo.css'
 import {BsJustify}
  from 'react-icons/bs';
-function Logo() {
-
-    const handleToggleSidebar=()=>{
-
-        document.body.classList.toggle('toggle-sidebar');
-    }
-    
+function Logo({setSidebarToggleTeacher}) {
+       
   return (
     <div className='d-flex align-items-center justify-content-between'>
         <a href='h' className='logo d-flex align-items-center mr-5'>
@@ -17,7 +12,7 @@ function Logo() {
         {/* <i className='bi bi-list toggle-sidebar-btn' 
             onClick={handleToggleSidebar}>
         </i> */}
-        <BsJustify className='pl-5 sidebar' onClick={handleToggleSidebar}></BsJustify>
+        <BsJustify className='pl-5 sidebar' onClick={setSidebarToggleTeacher}></BsJustify>
     </div>
   )
 }

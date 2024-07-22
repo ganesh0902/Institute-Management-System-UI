@@ -10,7 +10,7 @@ function Nav() {
         <ul className='d-flex align-items-center'>
             <NavNotice/>            
             <NavMessage/>            
-            {/* <NavAvatar/> */}
+            {/* <NavAvatar/> */}            
         </ul>
     </div>
   )

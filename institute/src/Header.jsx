@@ -9,7 +9,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
  import { RiLockPasswordFill } from "react-icons/ri";
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import UsePasswordToggle from './component/common/UsePasswordToggle';
 import { useEffect } from 'react'
 import {getInstitute} from '../src/apis/instituteApi';
 import Loader from "../src//component/Loader";

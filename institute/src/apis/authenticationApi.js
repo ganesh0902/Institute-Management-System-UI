@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 const validateTokenAPI='http://localhost:9096/auth/validate';
 const token=localStorage.getItem("authToken");
@@ -41,12 +39,12 @@ export const getToken=async (value)=>{
          if(!response.ok)
          {
             throw new Error("Something went wrong while generating token")
-         }             
+         }                      
          return response.text();        
     }
     catch(error)
     {
-        console.log(error);
+        console.log(error);        
         return "Invalid Credential";
     }    
 }

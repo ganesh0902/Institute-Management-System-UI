@@ -1,15 +1,10 @@
 import React from 'react'
-import { PiStudentThin } from "react-icons/pi";
-import {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
-    BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
+
+import {BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill,  BsListCheck}
    from 'react-icons/bs'
 import { NavLink } from 'react-router-dom';
 function Sidebar({openSidebarToggle,openSidebar}) {
-
-    const toggle=(type)=>{
-
-        console.log("Type is "+type)
-    }
+  
 
   return (
        <aside id='sidebar' className={openSidebarToggle ? "sidebar-responsive" : ""}>

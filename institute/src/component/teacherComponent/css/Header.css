@@ -1,12 +1,12 @@
 
-.header{
+.tHeader{
     transition: all 0.1s;
     z-index: 997;
     height: 60px;    
     background-color: white;
-    padding-left: 20px;
+    padding-left: 20px;    
 }
-.header .toggle-sidebar-btn{
+.tHeader .toggle-sidebar-btn{
     font-size: 32px;
     padding-left: 10px;
     cursor: pointer;

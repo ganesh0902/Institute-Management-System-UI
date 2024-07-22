@@ -1,9 +1,9 @@
 import React from 'react'
 import THeader from '..//teacherComponent/THeader'
-const TeacherRoot=()=>{
+const TeacherRoot=({setSidebarToggleTeacher})=>{
     return(
         <div>
-            <THeader/>
+            <THeader setSidebarToggleTeacher={setSidebarToggleTeacher}/>
         </div>
 
     )

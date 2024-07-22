@@ -10,7 +10,6 @@ import Teacher from './component/Teacher'
 import Batch from './component/Batch';
 import Course from './component/Course';
 import CourseDetails from './courses/CourseDetails';
-import Login from './component/authentication/Login';
 import HomePage from './component/home/HomePage';
 import NavigationBar from './component/home/NavigationBar'
 import BatchDisplay from './component/batch/BatchDisplay';
@@ -18,14 +17,21 @@ import TeacherDetails from './component/teachers/TeacherDetails';
 import StudentDetails from './component/student/StudentDetails';
 import TeacherRoot from './component//teacherComponent/TeacherRoot';
 import 'bootstrap/dist/js/bootstrap.min.js'
+import TSidebar from './component/teacherComponent/TSidebar';
 
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
+  const[openSidebarToggleForTeacher,setOpenSidebarToggleForTeacher]=useState(false);
+
   const[login,setLogin]=useState(false);  
 const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
+}
+
+const setSidebarToggleTeacher=()=>{
+  setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  
 }
 
   const[loginRole,setLoginRole]=useState();
@@ -69,16 +75,16 @@ const openSidebar=()=>{
       <div className="grid-container">                  
       {
         // if admin is login show  side bar
-        login && loginRole=="ADMIN" &&
+        login && loginRole==="ADMIN" &&
         <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar}/>                    
       }
       {
         // if admin is login show the header
-        login && loginRole =="ADMIN" &&
+        login && loginRole ==="ADMIN" &&
         <Header instituteId={localStorage.getItem("INSTITUTE_ID")} openSidebar={openSidebar}  logOutRoute={logOut}/>
       }     
       {
-        login && loginRole =="ADMIN" &&                  
+        login && loginRole ==="ADMIN" &&                  
           <Routes>                        
               <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />        
               <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
@@ -93,7 +99,10 @@ const openSidebar=()=>{
       } 
       {
          loginRole==="TEACHER" &&
-         <TeacherRoot/>
+         <>
+          <TeacherRoot setSidebarToggleTeacher={setSidebarToggleTeacher}/>
+          <TSidebar toggle={openSidebarToggleForTeacher}/>
+         </>         
       }                                  
         </div>       
         </Router>                     

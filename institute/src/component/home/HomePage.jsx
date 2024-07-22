@@ -39,9 +39,8 @@ const HomePage=(props)=>{
         localStorage.removeItem("INSTITUTED_ID");
         localStorage.removeItem("ROLE");
         localStorage.removeItem("userInformation");
-
-        const token = await getToken(value);        
-        console.log("user token is ",token);        
+        
+        const token = await getToken(value);                       
                 
         if(token==="")
         {
@@ -50,14 +49,14 @@ const HomePage=(props)=>{
         }
         else{
             localStorage.setItem("authToken",token);
-        }               
+        }                       
 
         setTimeout(async ()=>{
-                                                     
+                                                           
             const validate  = await validateToken(token);    
-
+            
             if (!validate) {                
-                alert("Token validation failed "+validate);
+                alert("Token validation failed ",validate);
                 return;
             }
             localStorage.setItem("USER_ID",validate.username);
