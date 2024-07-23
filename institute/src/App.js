@@ -18,6 +18,7 @@ import StudentDetails from './component/student/StudentDetails';
 import TeacherRoot from './component//teacherComponent/TeacherRoot';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import TSidebar from './component/teacherComponent/TSidebar';
+import THomePage from './component/teacherComponent/THomePage'
 
 
 function App() {
@@ -33,7 +34,6 @@ const openSidebar=()=>{
 const setSidebarToggleTeacher=()=>{
   setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  
 }
-
   const[loginRole,setLoginRole]=useState();
 
   const loginStatus=(role)=>{    
@@ -102,6 +102,9 @@ const setSidebarToggleTeacher=()=>{
          <>
           <TeacherRoot setSidebarToggleTeacher={setSidebarToggleTeacher}/>
           <TSidebar toggle={openSidebarToggleForTeacher}/>
+          <Routes>
+            <Route path='/tHome' element={<THomePage/>} />
+          </Routes>
          </>         
       }                                  
         </div>       

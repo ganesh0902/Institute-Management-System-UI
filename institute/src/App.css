@@ -984,7 +984,7 @@ width: 100%;
   background: linear-gradient(45deg, #FEDA77, #F58529, #DD2A7B, #8134AF, #515BD4);
   color: white;
   padding: 5px;
-  clip-path: circle();
+  clip-path: circle();  
 }
 
 .stdDetails .twitter{  

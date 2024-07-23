@@ -1,24 +1,7 @@
 import React from "react"
 import styled from 'styled-components';
 import { FaHome, FaUserAlt, FaCog } from 'react-icons/fa';
-
-const SidebarContainer = styled.div`
-  width: 250px;
-  height: 100vh;
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  position: fixed;  
-  left:0px; 
-  transition: transform 0.3s ease-in-out;
-  @media (max-width: 768px) {
-    transform: translateX(-100%); // Hide the sidebar by shifting it to the left
-    
-  }
-`;
+import { NavLink } from "react-router-dom";
 
 const SidebarItem = styled.div`
   width: 100%;
@@ -27,7 +10,7 @@ const SidebarItem = styled.div`
   align-items: center;
   justify-content: start;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s;  
   &:hover {
     background-color: #34495e;
   }
@@ -41,7 +24,6 @@ const Icon = styled.div`
   margin-right: 10px;
 `;
 
-
 const TSidebar=({toggle})=>{
 
   const sidebarStyle = {
@@ -50,34 +32,41 @@ const TSidebar=({toggle})=>{
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '250px',
+    width: '250px',    
     height: '100%',
-    backgroundColor: '#111',
+    backgroundColor: '#134B70',
     color: 'white',
-    padding: '20px',
+    padding: '20px',    
   };
+
+  const linkStyle = {
+    color: "white",
+    textDecoration: "none",        
+    backgroundColor: "#134B70",
+    borderRadius: "5px",        
+};
 
     return(<di> 
         <aside style={sidebarStyle}>
             <SidebarItem>
             <Icon><FaHome /></Icon>
-              Home
-            </SidebarItem>  
+              Home            
+            </SidebarItem>              
             <SidebarItem>
             <Icon><FaUserAlt /></Icon>
-              Profile
+            <NavLink to="/tHome" style={linkStyle}>Home</NavLink>            
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaHome /></Icon>
-              Category
+             <NavLink style={linkStyle}> Category </NavLink>
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaCog /></Icon>
-              Student
+              <NavLink to="" style={linkStyle}>  Student </NavLink>
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaHome /></Icon>
-              Home
+            <NavLink to="" className="item" style={linkStyle}>  Profile </NavLink>
             </SidebarItem>            
         </aside>  
        
