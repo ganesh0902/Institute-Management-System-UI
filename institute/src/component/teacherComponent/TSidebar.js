@@ -10,7 +10,8 @@ const SidebarItem = styled.div`
   align-items: center;
   justify-content: start;
   cursor: pointer;
-  transition: background-color 0.3s;  
+  transition: background-color 0.3s;   
+
   &:hover {
     background-color: #34495e;
   }
@@ -30,13 +31,15 @@ const TSidebar=({toggle})=>{
     transform: toggle ? 'translateX(0%)' : 'translateX(-100%)',
     transition: 'transform 0.3s ease-in-out',
     position: 'fixed',
-    top: 0,
+    top: 60,
     left: 0,
-    width: '250px',    
+    width: '220px',    
     height: '100%',
     backgroundColor: '#134B70',
     color: 'white',
-    padding: '20px',    
+    padding: '20px', 
+    zindex:'900px'
+               
   };
 
   const linkStyle = {
@@ -46,7 +49,7 @@ const TSidebar=({toggle})=>{
     borderRadius: "5px",        
 };
 
-    return(<di> 
+    return( 
         <aside style={sidebarStyle}>
             <SidebarItem>
             <Icon><FaHome /></Icon>
@@ -70,6 +73,6 @@ const TSidebar=({toggle})=>{
             </SidebarItem>            
         </aside>  
        
-     </di>)
+     )
 }
 export default TSidebar

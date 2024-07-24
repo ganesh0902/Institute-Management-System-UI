@@ -5,7 +5,6 @@ const TeacherRoot=({setSidebarToggleTeacher})=>{
         <div>
             <THeader setSidebarToggleTeacher={setSidebarToggleTeacher}/>
         </div>
-
     )
 }
 export default TeacherRoot
