@@ -179,5 +179,4 @@ const data = [
     </main>
   )
 }
-
 export default Home
