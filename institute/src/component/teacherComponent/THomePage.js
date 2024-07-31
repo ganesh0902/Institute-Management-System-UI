@@ -1,15 +1,14 @@
 import React from "react"
 import { FaHome } from 'react-icons/fa';
 import './css/THomePage.css'
-import {AreaChart, BarChart, Bar,Area, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart,Line   } from 'recharts';
 const THomePage=()=>{
 
     const linkStyle = {
-        margin: "70px 10px 0px -30px",
-        padding: "0px 20px 20px 20px", 
+        margin: "70px 0px 0px -30px",
+        padding: "0px 10px 20px 20px", 
         backgroundColor:"#F6F5F5"               
     };
-
 
     const data = [  
 
@@ -57,6 +56,7 @@ const THomePage=()=>{
         },
       ];
 
+      
     return(<div style={linkStyle} className="">
         <div className="tHomeCards">            
             <div className="tHomeCard" style={{backgroundColor:"#2378D0",color:"white"}}>
@@ -98,32 +98,58 @@ const THomePage=()=>{
                     <p> 2000 </p>
                     <small> 80% increase </small>
                 </div>
-            </div>                                                                                     
-            <div className="row shadow">
+            </div>                                                                                               
+        </div> 
+        <div>
+            <div className="row shadow mt-5">
                 <div className="col-12 col-sm-12 col-md-6">
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                    width={500}
-                    height={300}
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="pv" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-                    <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
-                    </BarChart>
-                </ResponsiveContainer>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <BarChart
+                            width={500}
+                            height={300}
+                            data={data}
+                            margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                            }}
+                            >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="pv" fill="#8884d8" />
+                            <Bar dataKey="uv" fill="#82ca9d" />
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
-             </div>
-        </div>                          
+                <div className="col-12 col-sm-12 col-md-6 mt-3">
+                    <ResponsiveContainer width="100%" height={400}>
+                        <LineChart 
+                            width={500}
+                            height={300}
+                            data={data}
+                            margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                            }}
+                            >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line  dataKey="pv" fill="#8884d8" />
+                            <Line  dataKey="uv" fill="#82ca9d" />
+                        </LineChart >
+                    </ResponsiveContainer>
+                </div>
+            </div>
+        </div>                         
     </div>)
 }
 export default THomePage

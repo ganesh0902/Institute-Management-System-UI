@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import {AreaChart, BarChart, Bar,Area, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
-    BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BsFillArchiveFill,  BsFillGearFill}
    from 'react-icons/bs'
 import { useEffect } from 'react';
 import {getStudentCount, getTeacherCount, getCourseCount, getBatchCount} from './apis/adminHomeApi'

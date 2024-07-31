@@ -3,7 +3,7 @@ import UserProfile from '../..//component/UserProfile'
 
 const NavMessage=()=> {
   return (
-    <div className='mr-3'>
+    <div className='mr-3' style={{marginRight:"10px"}}>
       <UserProfile className='icon'> </UserProfile>        
     </div>
   )

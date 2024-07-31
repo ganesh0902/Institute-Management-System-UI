@@ -50,13 +50,9 @@ const TSidebar=({toggle})=>{
 };
 
     return( 
-        <aside style={sidebarStyle}>
+        <aside style={sidebarStyle}>            
             <SidebarItem>
             <Icon><FaHome /></Icon>
-              Home            
-            </SidebarItem>              
-            <SidebarItem>
-            <Icon><FaUserAlt /></Icon>
             <NavLink to="/tHome" style={linkStyle}>Home</NavLink>            
             </SidebarItem>  
             <SidebarItem>
