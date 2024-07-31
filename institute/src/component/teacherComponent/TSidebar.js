@@ -1,11 +1,11 @@
 import React from "react"
 import styled from 'styled-components';
-import { FaHome, FaUserAlt, FaCog } from 'react-icons/fa';
+import { FaHome, FaUserAlt, FaCog, FaUserGraduate } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
 
 const SidebarItem = styled.div`
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 10px;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -56,13 +56,17 @@ const TSidebar=({toggle})=>{
             <NavLink to="/tHome" style={linkStyle}>Home</NavLink>            
             </SidebarItem>  
             <SidebarItem>
-            <Icon><FaHome /></Icon>
-             <NavLink style={linkStyle}> Category </NavLink>
+            <Icon><FaUserGraduate /></Icon>
+              <NavLink to="" style={linkStyle}>  Student </NavLink>
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaCog /></Icon>
-              <NavLink to="" style={linkStyle}>  Student </NavLink>
+              <NavLink to="" style={linkStyle}>  Daily Task </NavLink>
             </SidebarItem>  
+            <SidebarItem>
+            <Icon><FaHome /></Icon>
+             <NavLink style={linkStyle}>Upcoming Batch </NavLink>
+            </SidebarItem>              
             <SidebarItem>
             <Icon><FaHome /></Icon>
             <NavLink to="" className="item" style={linkStyle}>  Profile </NavLink>
