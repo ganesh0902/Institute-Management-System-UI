@@ -19,6 +19,7 @@ import TeacherRoot from './component//teacherComponent/TeacherRoot';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import TSidebar from './component/teacherComponent/TSidebar';
 import THomePage from './component/teacherComponent/THomePage'
+import Batches from './component/teacherComponent/Batches';
 
 
 function App() {
@@ -104,6 +105,7 @@ const setSidebarToggleTeacher=()=>{
           <TSidebar toggle={openSidebarToggleForTeacher}/>
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
+            <Route path='/tBatch' element={<Batches/>}/>
           </Routes>
          </>         
       }                                  

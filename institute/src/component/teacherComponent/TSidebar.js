@@ -61,7 +61,7 @@ const TSidebar=({toggle})=>{
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaCog /></Icon>
-              <NavLink to="" style={linkStyle}>  Daily Task </NavLink>
+              <NavLink to="/tBatch" style={linkStyle}>  Batches </NavLink>
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaHome /></Icon>
