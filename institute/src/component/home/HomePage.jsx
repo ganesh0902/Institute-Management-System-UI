@@ -60,7 +60,8 @@ const HomePage=(props)=>{
                 return;
             }
             localStorage.setItem("USER_ID",validate.username);
-            const user =  await getUserInformation(validate.username);                  
+            const user =  await getUserInformation(validate.username);
+            
             localStorage.setItem("ROLE",user.role);   
 
             const instituteDetails = await getInstitute(validate.username);

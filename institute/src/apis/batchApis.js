@@ -8,9 +8,9 @@ const getBatchByInstituteAPI='http://localhost:8999/batch/institute/'
 const getTeacherIdAndNameApis="http://localhost:9003/teacher/getTeachers";                            
 const get_TeacherIdAndName="http://localhost:8999/teacher/getTeachers/"
 const get_findByBatchTitleAPI="http://localhost:8999/batch/batchTitle/";
+const getBatchesByTeacherAPI ="http://localhost:8999/batch/teacher/";
 
 const token = localStorage.getItem('authToken');
-const instituteId = localStorage.getItem("INSTITUTED_ID");
 
 export const getBatchByInstitute=async (institutesId)=>{
 
@@ -182,5 +182,30 @@ export const getBatchById=async (batchId)=>{
     {
         console.log(error.statusText);
     }
+}
+export const getBatchesByTeacher=async (tId)=>{
 
+    try
+    {
+      const response  =  await fetch(getBatchesByTeacherAPI+tId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+                throw new Error("Something went wrong while fetching batches for teacher admin");
+        }        
+
+        const data = await response.json();
+        console.log(data);
+        return data;        
+    }
+    catch(error)
+    {
+        console.log(error.statusText);
+    }
 }

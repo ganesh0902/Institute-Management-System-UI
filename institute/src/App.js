@@ -105,9 +105,9 @@ const setSidebarToggleTeacher=()=>{
           <TSidebar toggle={openSidebarToggleForTeacher}/>
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
-            <Route path='/tBatch' element={<Batches/>}/>
+            <Route path='/tBatch' element={<Batches teacherId={localStorage.getItem("INSTITUTE_ID")} />} />
           </Routes>
-         </>         
+         </>                  
       }                                  
         </div>       
         </Router>                     

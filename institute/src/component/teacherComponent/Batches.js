@@ -1,19 +1,10 @@
-import React from 'react'
-import { SplitButton } from 'primereact/splitbutton';
+import React, { useEffect, useState } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview';   
+import {getBatchesByTeacher} from '..//..//apis/batchApis'
 
- const  Batches=()=> {
+ const  Batches=({teacherId})=> {
 
-  const items = [
-    {
-        label: 'Update',
-        icon: 'pi pi-refresh'
-    },
-    {
-        label: 'Delete',
-        icon: 'pi pi-times'
-    }
-];
+    const[batches,setBatches]=useState([]);
 
     const linkStyle = {
         margin: "70px 0px 0px -30px",
@@ -22,6 +13,19 @@ import { TabView, TabPanel } from 'primereact/tabview';
         color:"white",
         width:"100%"
     };
+
+    useEffect(()=>{
+        
+        const getBatches=async()=>{
+            const data = await getBatchesByTeacher(teacherId);
+            setBatches(data);            
+        };
+        getBatches();
+
+        alert(teacherId);
+        
+    },[]);
+
 
   return (
     <div style={linkStyle}>

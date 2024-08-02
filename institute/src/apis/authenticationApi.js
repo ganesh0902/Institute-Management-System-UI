@@ -53,7 +53,7 @@ export const validateToken=async (nToken)=>{
 
     try
     {
-    const response  = await fetch(`http://localhost:9096/auth/validate?token=${nToken}`,{
+    const response  = await fetch(`http://localhost:9096/auth/in?token=${nToken}`,{
             method:"GET",
             headers:{
                 'Content-Type':'application/json'
@@ -64,7 +64,8 @@ export const validateToken=async (nToken)=>{
         {
             throw new Error("API response was not okay ",response);
         }
-        const data = await response.json();        
+        const data = await response.json();  
+        console.log("validate token",data);
         return data;        
     }
     catch(error)
