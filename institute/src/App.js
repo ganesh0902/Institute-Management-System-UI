@@ -37,11 +37,11 @@ const setSidebarToggleTeacher=()=>{
 }
   const[loginRole,setLoginRole]=useState();
 
-  const loginStatus=(role)=>{    
+  const loginStatus=(role,userId)=>{    
     
     if(role==="TEACHER")
     {
-      alert(role);
+      alert(role+"And"+userId);
       setLoginRole(role);
     }
     else if(role==="STUDENT")
@@ -93,7 +93,7 @@ const setSidebarToggleTeacher=()=>{
               <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")}/>}/> 
               <Route path='/teacher' element={<Teacher instituteId={localStorage.getItem("INSTITUTE_ID")}/>} /> 
               <Route path='/cDetails/:cId' element={<CourseDetails/>} /> 
-              <Route path='/bDetails/:bId' element={<BatchDisplay/>} /> 
+              <Route path='/bDetails/:bId' element={<BatchDisplay />} /> 
               <Route path='/tDetails/:tId' element={<TeacherDetails/>} />
               <Route path='/stdDetails/:stdId' element={<StudentDetails instituteId={localStorage.getItem("INSTITUTE_ID")} />}/>                        
           </Routes>

@@ -51,10 +51,9 @@ const HomePage=(props)=>{
             localStorage.setItem("authToken",token);
         }                       
 
-        setTimeout(async ()=>{
-                                                           
-            const validate  = await validateToken(token);    
-            
+        setTimeout(async ()=>{                                                           
+            const validate  = await validateToken(token);  
+                          
             if (!validate) {                
                 alert("Token validation failed ",validate);
                 return;
@@ -62,6 +61,8 @@ const HomePage=(props)=>{
             localStorage.setItem("USER_ID",validate.username);
             const user =  await getUserInformation(validate.username);
             
+            console.log("User Information is ",user.id);
+
             localStorage.setItem("ROLE",user.role);   
 
             const instituteDetails = await getInstitute(validate.username);

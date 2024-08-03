@@ -7,6 +7,7 @@ const save_batch="http://localhost:8999/batch/";
 const getBatchByInstituteAPI='http://localhost:8999/batch/institute/'
 const getTeacherIdAndNameApis="http://localhost:9003/teacher/getTeachers";                            
 const get_TeacherIdAndName="http://localhost:8999/teacher/getTeachers/"
+const getTeacherIdAndNameByCredential="http://localhost:9096/auth/teacher/"
 const get_findByBatchTitleAPI="http://localhost:8999/batch/batchTitle/";
 const getBatchesByTeacherAPI ="http://localhost:8999/batch/teacher/";
 
@@ -145,6 +146,31 @@ export const getTeacherIdAndNameRecord = async (institutesId) => {
         throw error;
     }
 };
+
+export const getTeacherIdAndNameByIdentityService=(async(institute)=>{
+    try
+    {
+        const response  = await fetch(getTeacherIdAndNameByCredential+institute,{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+            throw new Error(`API response was not okay ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }
+    catch(Error)
+    {
+        console.log(Error.statusText);
+    }
+});
 
 export const get_findByBatchTitleRecord=async (searchByBatchTitle)=>{
 

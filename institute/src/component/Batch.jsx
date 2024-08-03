@@ -5,7 +5,7 @@ import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
 import Loader from './Loader';
-import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord,getBatchByInstitute} from '../apis/batchApis'
+import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord,getBatchByInstitute,getTeacherIdAndNameByIdentityService} from '../apis/batchApis'
 import {getCourseIdAndNameRecord} from '../apis/courseApis';
 
 const token = localStorage.getItem('authToken');
@@ -102,7 +102,7 @@ const Batch=({instituteId})=>{
 
     const allTeacherIdAndName=async ()=>{
 
-        const response  = await getTeacherIdAndNameRecord(instituteId);
+        const response  = await getTeacherIdAndNameByIdentityService(instituteId);
         setTeacherIdAndName(response);
     }
 
@@ -257,7 +257,7 @@ const Batch=({instituteId})=>{
                                 <option value='1'> Select </option>
                                 {
                                     teacherIdAndName.map((result)=>(
-                                        <option value={result.teacherId}>{result.teacherName} </option>
+                                        <option value={result.teacherId}>{result.name} </option>
                                     ))
                                 }
                             </select>                                                     

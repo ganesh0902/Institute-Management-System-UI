@@ -14,21 +14,16 @@ import 'primeicons/primeicons.css';
 import {getTeachersNameAndIds} from '../../apis/teacherApis'
 import {updateBatch} from '../../apis/batchApis'
 import {getCourserNameAndId} from '../../apis/courseApis'
-
-import { Dropdown } from 'primereact/dropdown';
 import Loader from '../Loader';
+
 const BatchDisplay=()=>{
     
     const params = useParams();
     const bId = params ? params.bId : null;
-    const[name,setName]=useState("");
+    
     const[batch,setBatch]=useState([]);   
     const[course,setCourse]=useState([]);
     const[teacher,setTeacher]=useState([]);
-    const [selectedSkill, setSelectedSkills] = useState(null);
-    const toast = useRef(null);
-    const [loading, setLoading] = useState(false);
-    const [isReadOnly, setIsReadOnly] = useState(false);
     const [loadingTeacher, setLoadingTeacher] = useState(true);
 
     const[batchTitle,setBatchTitle]=useState("");
