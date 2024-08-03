@@ -70,7 +70,7 @@ const HomePage=(props)=>{
             if (instituteDetails && instituteDetails.id !== undefined) {
                 localStorage.setItem("INSTITUTE_ID", instituteDetails.id);
                 localStorage.setItem("userInformation",instituteDetails);
-                loginStatus(localStorage.getItem("ROLE"));
+                loginStatus(localStorage.getItem("ROLE"), user.id);
 
             } else {
                 console.error("Failed to get a valid Institute ID");
