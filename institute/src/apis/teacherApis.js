@@ -6,6 +6,7 @@ const getTeacherIdAndTimeAPIS="http://localhost:9003/teacher/getTeachers";
 const API_SAVE_TEACHER="http://localhost:8999/teacher/";
 const getTeacherByIdAPI='http://localhost:8999/teacher/'
 const API_GET_TEACHER="http://localhost:8999/teacher/institute/"
+const SAVE_TEACHER_APIS="http://localhost:9096/auth/register"
 
     const token = localStorage.getItem("authToken");
     const instituteId = localStorage.getItem("INSTITUTED_ID");
@@ -102,6 +103,25 @@ export const saveTeacherRecord=async (teacher)=>{
     if(!response.ok)
     {
         throw new Error("Response was not okay ",response.statusText);
+    }    
+}
+
+export const saveTeacher=async(teacher)=>{
+
+    const response  = await fetch(SAVE_TEACHER_APIS,{
+
+        method:"POST",
+        headers:{
+            'Content-Type':'application/json',            
+        },
+        body:JSON.stringify(teacher)
+    });
+
+    if(!response.ok)
+    {
+        throw new Error("Response was not okay",response.statusText);
     }
-    
+
+    const data = await response.text();    
+    return data;
 }

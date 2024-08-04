@@ -59,9 +59,7 @@ const HomePage=(props)=>{
                 return;
             }
             localStorage.setItem("USER_ID",validate.username);
-            const user =  await getUserInformation(validate.username);
-            
-            console.log("User Information is ",user.id);
+            const user =  await getUserInformation(validate.username);                        
 
             localStorage.setItem("ROLE",user.role);   
 

@@ -73,8 +73,8 @@ const Batch=({instituteId})=>{
         const getAllBatch=async ()=>{
                       
             allCourseIdAndName();
-            allTeacherIdAndName();
-                                   
+            allTeacherIdAndName();       
+            getTeacherIdAndNameByIdentityService();                 
             const response  = await getBatchByInstitute(instituteId);
             setAllBatches(response);           
         }
@@ -101,10 +101,15 @@ const Batch=({instituteId})=>{
     }
 
     const allTeacherIdAndName=async ()=>{
-
+                
         const response  = await getTeacherIdAndNameByIdentityService(instituteId);
-        setTeacherIdAndName(response);
+        setTeacherIdAndName(response);                
     }
+
+    useEffect(()=>{
+        console.log("Teacher Information");
+        console.log(teacherIdAndName);
+    },[teacherIdAndName])
 
     const findByBatch=async ()=>{
         if(searchByBatchTitle!="")

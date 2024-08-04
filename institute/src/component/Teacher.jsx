@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ModalTitle } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect } from 'react';
-import {saveTeacherRecord,getTeacherByInstitute} from '../apis/teacherApis'
+import {saveTeacherRecord,getTeacherByInstitute,saveTeacher} from '../apis/teacherApis'
 
 const instituteId= localStorage.getItem("instituteId");
 const Teacher=({instituteId})=>{
@@ -48,8 +48,16 @@ const Teacher=({instituteId})=>{
     },[addTeacher])
 
     const submit=async  ()=>{
-        const teacher={firstName,lastName,contact,email,education,image,instituteId};       
+              
+        const password="t123";
+        const role="TEACHER";
+        const name= firstName+lastName;
+        const teacherCredential={name, email,password,role,instituteId};       
        
+        const credentialId = await saveTeacher(teacherCredential);
+
+        alert("Credential Id "+credentialId);
+        const teacher={firstName,lastName,contact,email,education,image,instituteId,credentialId }; 
         await saveTeacherRecord(teacher);
 
         alert("Teacher Added Successfully");

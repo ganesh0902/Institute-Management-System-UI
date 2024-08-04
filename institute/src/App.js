@@ -3,7 +3,7 @@ import './App.css';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Home from './Home';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Student from './component/Student';
 import Teacher from './component/Teacher'
@@ -27,6 +27,9 @@ function App() {
   const[openSidebarToggleForTeacher,setOpenSidebarToggleForTeacher]=useState(false);
 
   const[login,setLogin]=useState(false);  
+  const[userId,setUserId]=useState();
+
+  let globalNUserId = null;
 const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
@@ -37,12 +40,15 @@ const setSidebarToggleTeacher=()=>{
 }
   const[loginRole,setLoginRole]=useState();
 
-  const loginStatus=(role,userId)=>{    
+  const loginStatus=(role,nUserId)=>{    
     
+    globalNUserId = nUserId;
     if(role==="TEACHER")
-    {
-      alert(role+"And"+userId);
+    { 
+      alert("User Id is n",nUserId);     
       setLoginRole(role);
+      setUserId(nUserId);
+      alert("User Id is ",userId);
     }
     else if(role==="STUDENT")
     {
@@ -50,9 +56,10 @@ const setSidebarToggleTeacher=()=>{
       setLoginRole(role);
     }
     else if(role==="ADMIN"){
-
-      alert(role);
-      setLoginRole(role);
+      
+      setUserId(nUserId);
+      setLoginRole(role); 
+      alert(globalNUserId);                
     }
     setLogin(true);
   }
@@ -61,6 +68,7 @@ const setSidebarToggleTeacher=()=>{
 
     setLogin(false);
   }
+
 
   return (
     <div >
@@ -90,7 +98,7 @@ const setSidebarToggleTeacher=()=>{
               <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />        
               <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
               <Route path='/course' element={<Course instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 
-              <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")}/>}/> 
+              <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 
               <Route path='/teacher' element={<Teacher instituteId={localStorage.getItem("INSTITUTE_ID")}/>} /> 
               <Route path='/cDetails/:cId' element={<CourseDetails/>} /> 
               <Route path='/bDetails/:bId' element={<BatchDisplay />} /> 
