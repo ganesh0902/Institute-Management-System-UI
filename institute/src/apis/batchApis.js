@@ -34,8 +34,7 @@ export const getBatchByInstitute=async (institutesId)=>{
 
 export const getBatchTitleAndDate=(async (instituteId)=>{         
         try
-        {
-          
+        {          
            const response = await fetch(getBatchTitleAndDateAPIS+instituteId,{
                 method:"GET",
                 headers:{
@@ -101,8 +100,7 @@ export const saveBatchRecord=async (batch)=>{
     if(!response.ok)
     {
         console.log("Something went wrong");
-    }
-    console.log("batch Save Successfully");
+    }    
 }
 
 export const getTeacherIdAndName=async ()=>{

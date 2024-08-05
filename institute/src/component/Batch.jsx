@@ -38,11 +38,11 @@ const Batch=({instituteId})=>{
     const[loader,setLoader]=useState(false);      
 
     const saveBatch=async (batch)=>{        
-                  
+         
+        console.log("Batch is ",batch);
         await saveBatchRecord(batch);
         setToggle(!toggle)
-        setPageLoad(!pageLoad);
-          
+        setPageLoad(!pageLoad);          
     }
         
       const saveImage = async (e) => {                        
@@ -85,9 +85,7 @@ const Batch=({instituteId})=>{
 
     useEffect(()=>{
         const getAllBatch=async ()=>{
-                      
-            //allCourseIdAndName();
-            //allTeacherIdAndName();
+                                  
             const response  = await getBatchByInstitute(instituteId);
             setAllBatches(response);
         }
@@ -122,8 +120,7 @@ const Batch=({instituteId})=>{
     const submit=()=>{
 
         const batch={batchTitle, duration, startDate, endDate, status, location,image, courseId, teacherId,time,instituteId};
-        console.log(batch);
-
+        console.log(batch);        
         saveBatch(batch);
     }
     return(
@@ -251,8 +248,7 @@ const Batch=({instituteId})=>{
                                     {
                                     loader && <Loader/>
                                     }
-                                </div>
-                            
+                                </div>                            
                         </Col>
                         <Col lg={6} md={12} className="mb-3 mb-sm-2">
                             <label className='batchCl' htmlFor="teacher"> Select Teacher For Batch</label>
@@ -262,7 +258,7 @@ const Batch=({instituteId})=>{
                                 <option value='1'> Select </option>
                                 {
                                     teacherIdAndName.map((result)=>(
-                                        <option value={result.teacherId}>{result.name} </option>
+                                        <option value={result.tid}>{result.firstName} {result.lastName} </option>
                                     ))
                                 }
                             </select>                                                     
