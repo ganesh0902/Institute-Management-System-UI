@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview';   
 import {getBatchesByTeacher} from '..//..//apis/batchApis'
 
- const  Batches=({teacherId})=> {
+ const  Batches=({teacherId,credentialId})=> {
 
     const[batches,setBatches]=useState([]);
 
@@ -17,12 +17,12 @@ import {getBatchesByTeacher} from '..//..//apis/batchApis'
     useEffect(()=>{
         
         const getBatches=async()=>{
-            const data = await getBatchesByTeacher(teacherId);
+            const data = await getBatchesByTeacher(1);
             setBatches(data);            
         };
         getBatches();
 
-        alert(teacherId);
+        alert(localStorage.getItem("credentialId"));
         
     },[]);
 

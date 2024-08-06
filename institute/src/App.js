@@ -29,26 +29,25 @@ function App() {
   const[login,setLogin]=useState(false);  
   const[userId,setUserId]=useState();
 
-  let globalNUserId = null;
+  const[loginRole,setLoginRole]=useState();
+  const[credentialId,setCredentialId]=useState(0);
+  let globalNUserId = 0;
 const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
 }
 
 const setSidebarToggleTeacher=()=>{
-  setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  
-}
-  const[loginRole,setLoginRole]=useState();
+  setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  }
 
-  const loginStatus=(role,nUserId)=>{    
-    
-    globalNUserId = nUserId;
+  const loginStatus=async(role, nUserId)=>{    
+        
+    globalNUserId = nUserId;    
     if(role==="TEACHER")
-    { 
-      alert("User Id is n",nUserId);     
+    {         
       setLoginRole(role);
-      setUserId(nUserId);
-      alert("User Id is ",userId);
+      setUserId(nUserId); 
+      setCredentialId(nUserId);     
     }
     else if(role==="STUDENT")
     {
@@ -58,8 +57,7 @@ const setSidebarToggleTeacher=()=>{
     else if(role==="ADMIN"){
       
       setUserId(nUserId);
-      setLoginRole(role); 
-      alert(globalNUserId);                
+      setLoginRole(role);               
     }
     setLogin(true);
   }
@@ -113,7 +111,7 @@ const setSidebarToggleTeacher=()=>{
           <TSidebar toggle={openSidebarToggleForTeacher}/>
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
-            <Route path='/tBatch' element={<Batches teacherId={localStorage.getItem("INSTITUTE_ID")} />} />
+            <Route path='/tBatch' element={<Batches teacherId={localStorage.getItem("INSTITUTE_ID")}  credentialId={credentialId}/>} />
           </Routes>
          </>                  
       }                                  

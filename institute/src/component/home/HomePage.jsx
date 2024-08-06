@@ -12,7 +12,7 @@ import CourseCarousel from './CourseCarousel'
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
-import {getInstitute} from '../..//apis/instituteApi'
+import {getInstitute, getTeacherDetailsRecord} from '../..//apis/instituteApi'
 import {useAppContext } from '../common/AppProvider'
 import Loader from "../Loader"
 
@@ -24,6 +24,8 @@ const HomePage=(props)=>{
     const[modalSignUp,setModalSignUp]=useState(false);
     const[loaderToggle,setLoaderToggle]=useState(false);
     const[isWorking,setIsWorking]  =useState(false);
+    const[teacherDetails,setTeacherDetails]=useState([]);
+
     const {loginStatus}=props;    
     
     const initialValueForSignIn={
@@ -59,16 +61,23 @@ const HomePage=(props)=>{
                 return;
             }
             localStorage.setItem("USER_ID",validate.username);
-            const user =  await getUserInformation(validate.username);                        
+            const user =  await getUserInformation(validate.username);             
 
             localStorage.setItem("ROLE",user.role);   
+
+            if(user.role ==='TEACHER')
+            {
+                console.log("User Ids"+user.id);
+                const data = await getTeacherDetailsRecord(user.id);                 
+                setTeacherDetails(data);                                  
+            }
 
             const instituteDetails = await getInstitute(validate.username);
 
             if (instituteDetails && instituteDetails.id !== undefined) {
                 localStorage.setItem("INSTITUTE_ID", instituteDetails.id);
                 localStorage.setItem("userInformation",instituteDetails);
-                loginStatus(localStorage.getItem("ROLE"), user.id);
+                loginStatus(localStorage.getItem("ROLE"), user.id);                              
 
             } else {
                 console.error("Failed to get a valid Institute ID");
@@ -89,6 +98,11 @@ const HomePage=(props)=>{
         }
     };
 
+    useEffect(()=>{
+        
+        console.log(teacherDetails)
+        localStorage.setItem("credentialId",teacherDetails.tid);
+    },[teacherDetails]);
     //formik for sign up
     const formInitialSchema={
         name:'',        
