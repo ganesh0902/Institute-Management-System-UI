@@ -46,3 +46,17 @@
         width: calc(24.33% - 10px); /* Three cards per row on large screens */
     }
 }
+.batchDetails{
+    margin: 10px;
+}
+.batchDetails .title{
+    width: 100%;
+    font-size: 20px;    
+    text-align: center;
+}
+
+.batchDetails .title span{
+    font-size: 1.5rem;
+    font-weight: 700;   
+    padding: 20px; 
+}

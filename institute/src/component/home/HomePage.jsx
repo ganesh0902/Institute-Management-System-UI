@@ -101,7 +101,7 @@ const HomePage=(props)=>{
     useEffect(()=>{
         
         console.log(teacherDetails)
-        localStorage.setItem("credentialId",teacherDetails.tid);
+        localStorage.setItem("teacherId",teacherDetails.tid);
     },[teacherDetails]);
     //formik for sign up
     const formInitialSchema={

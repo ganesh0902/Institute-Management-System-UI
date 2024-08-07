@@ -25,8 +25,7 @@ export const getInstitute=async (email)=>{
 }
 
 export const getTeacherDetailsRecord=async (credentialId)=>{
-
-    alert(credentialId);
+    
     try
     {
         const response  = await fetch(getTeacherDetails+credentialId,{
@@ -46,9 +45,9 @@ export const getTeacherDetailsRecord=async (credentialId)=>{
         console.log(data);
         return data;
     }
-    catch(Error)
+    catch(error)
     {
-        throw new Error(Error);
+        throw new Error("Something Went wrong");
 
     }
 }
