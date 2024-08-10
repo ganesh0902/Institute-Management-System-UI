@@ -47,16 +47,34 @@
     }
 }
 .batchDetails{
-    margin: 10px;
+    margin: 10px;    
 }
-.batchDetails .title{
+
+.navLink .batchDetails .title label{
+    margin: 10px;  
+    text-decoration: none !important;  
+    list-style: none !important;
+}
+
+.navLink .title{
     width: 100%;
     font-size: 20px;    
     text-align: center;
+    text-decoration: none;
 }
 
 .batchDetails .title span{
     font-size: 1.5rem;
     font-weight: 700;   
     padding: 20px; 
+}
+
+.batchDetails .batchInfo{
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;         
+    flex-wrap: wrap;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
 }
