@@ -20,7 +20,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import TSidebar from './component/teacherComponent/TSidebar';
 import THomePage from './component/teacherComponent/THomePage'
 import Batches from './component/teacherComponent/Batches';
-
+import BatchStudent from './component/teacherComponent/BatchStudent'
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
@@ -112,6 +112,7 @@ const setSidebarToggleTeacher=()=>{
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
             <Route path='/tBatch' element={<Batches instituteId={localStorage.getItem("INSTITUTE_ID")}  teacherId={localStorage.getItem("teacherId")}/>} />
+            <Route path='/batchStudent/:bId' element={<BatchStudent/>}></Route>
           </Routes>
          </>                  
       }                                  

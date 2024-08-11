@@ -6,10 +6,7 @@ import './css/THomePage.css'
 import { NavLink } from 'react-router-dom';
  const  Batches=({instituteId,teacherId})=> {
 
-    const[batches,setBatches]=useState([]);
-    const [groupedBatches, setGroupedBatches] = useState({});
-    const[loading,setLoading]=useState(true);
-    const [pendingBatches, setPendingBatches] = useState([]);
+    const[batches,setBatches]=useState([]);        
      
     const linkStyle = {
         margin: "70px 0px 0px -30px",
@@ -29,42 +26,10 @@ import { NavLink } from 'react-router-dom';
             }
             catch(error){
                 console.log("Error Fetching batch");
-            }
-            finally{
-                setLoading(false);
-            }
-            
+            }                        
         };
         getBatches();                
     },[teacherId]);
-
-    useEffect(() => {
-        // Group the data by status
-        const groupBatchesSet=()=>{
-            console.log("Batches is ");
-            console.log(batches);
-            const groupedData = batches.reduce((acc, batch) => {
-                const { status } = batch;
-                if (!acc[status]) {
-                    acc[status] = [];
-                }
-                acc[status].push(batch);
-                return acc;
-            }, {});            
-            setGroupedBatches(JSON.stringify(groupedData, null, 2));               
-        }     
-        groupBatchesSet();
-    }, [batches]);
-
-    useEffect(()=>{        
-        console.log("Group Data");        
-        console.log(groupedBatches);                        
-    },[groupedBatches]);      
-    
-    if(!groupedBatches)
-    {
-        return(<div> Loading</div>)
-    }
 
     const filteredBatches = batches.filter(batch => batch.status === "End");
     const filteredBatchStarted = batches.filter(batch => batch.status === "Started");
@@ -82,7 +47,7 @@ import { NavLink } from 'react-router-dom';
             {batches
                 .filter(batch => batch.status === "Started").map((batch, index) => (            
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to="" className="navLink">
+                    <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
                     <div className='image'>
                     <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                     </div>
@@ -111,7 +76,7 @@ import { NavLink } from 'react-router-dom';
                 {batches
                     .filter(batch => batch.status === "Pending").map((batch, index) => (
                     <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                        <NavLink to="" className="navLink">
+                        <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
                         <div className='image'>
                             <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                         </div>
@@ -140,7 +105,7 @@ import { NavLink } from 'react-router-dom';
             {batches
                 .filter(batch => batch.status === "End").map((batch, index) => (
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to="" className="navLink">
+                    <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
                     <div className='image'>
                         <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                     </div>
