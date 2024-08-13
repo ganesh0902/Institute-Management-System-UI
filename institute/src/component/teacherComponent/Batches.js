@@ -49,7 +49,7 @@ import { NavLink } from 'react-router-dom';
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
                     <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
                     <div className='image'>
-                    <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
+                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                     </div>
                     <div className='batchDetails'>                            
                         <div className='title'>

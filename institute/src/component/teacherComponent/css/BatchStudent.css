@@ -80,16 +80,64 @@
     height: 500px;    
     overflow-y: scroll;
     width: 100%;
+    background-color: #F6F5F5;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat{
     display: flex;
-    flex-direction: row;
+    flex-direction: row;    
 }
+
+.chat input{
+    border-radius: 20px;
+}
+
 .chat .send{
-    font-size: 25px;
+    font-size: 20px;    
     padding: 5px;
     background-color: #6EACDA;
     color: white;
-    border-radius: 5px;
+    border-radius: 5px;    
+}
+
+.chat-context .client-context .client{
+    
+    background-color: #fff;
+    margin: 10px 10px 10px 0px;
+    padding: 12px 12px 12px 12px;
+    border-radius: 20px;        
+}
+
+.chat-context .client-context .client-dp{
+    clip-path: circle();   
+    width: 100px;
+    height: 50px;
+}
+
+.owner-context .owner-context{
+    display: flex;
+    flex-direction: row;
+    gap: 2px;     
+}
+
+.chat-context .owner-context .owner-dp{    
+    clip-path: circle();
+    width: 100px;
+    height: 50px;    
+    float: right;
+}
+
+.chat-context .owner-context .owner{
+    background-color: #6EACDA;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 10px 10px 10px;
+    float: right;
+}
+.navLink{
+
+    text-decoration: none;
+    list-style-type: none;    
 }

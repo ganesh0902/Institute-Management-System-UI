@@ -7,7 +7,8 @@ const search_student="http://localhost:8999/student/filter/";
 const get_Student="http://localhost:8999/student/institute/"
 const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate/";
 const token = localStorage.getItem('authToken');
-    
+const getStudentByBatchIdAPI="http://localhost:8999/student/studentByBatch/"
+
 const instituteId= localStorage.getItem("INSTITUTED_ID");
 export const getStudentDetails=async (stdId)=>{
     
@@ -136,4 +137,30 @@ export const getStudentRecordByInstitute=async (institutesId)=>{
     }
     const data = await response.json();
     return data;
+}
+
+export const getStudentByBatchId=async (batchId)=>{
+
+    try
+    {
+       const response = await fetch(getStudentByBatchIdAPI+batchId,{
+            method:"GET",
+            headers:{
+                'Content-Type':"application/json",
+                "Authorization":`Bearer ${token}`,
+            }
+        });
+
+        if(!response.ok)
+        {
+            console.log("API response was not okay");
+        }
+
+        const data = await response.json();
+        return data;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
 }

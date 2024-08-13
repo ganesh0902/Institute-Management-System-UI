@@ -8,8 +8,7 @@ const getTeacherByIdAPI='http://localhost:8999/teacher/'
 const API_GET_TEACHER="http://localhost:8999/teacher/institute/"
 const SAVE_TEACHER_APIS="http://localhost:9096/auth/register"
 
-    const token = localStorage.getItem("authToken");
-    const instituteId = localStorage.getItem("INSTITUTED_ID");
+const token = localStorage.getItem("authToken");    
     
 export const getTeacherByInstitute=async (institutesId)=>{
 
