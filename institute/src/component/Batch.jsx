@@ -153,7 +153,7 @@ const Batch=({instituteId})=>{
                                         <div className=''>
                                         <NavLink to={`/bDetails/${batch.bid}`} className="batchCardLink"> 
                                             <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
-                                            </NavLink>
+                                        </NavLink>
                                         </div>
                                         <div className=''>
                                             <p className='bold mt-2 text-center'> {batch.batchTitle} </p>

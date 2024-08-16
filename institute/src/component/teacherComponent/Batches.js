@@ -47,7 +47,7 @@ import { NavLink } from 'react-router-dom';
             {batches
                 .filter(batch => batch.status === "Started").map((batch, index) => (            
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
+                    <NavLink to={`/batchStudent/${batch.bid}`} className="navLink">
                     <div className='image'>
                         <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                     </div>
@@ -76,7 +76,7 @@ import { NavLink } from 'react-router-dom';
                 {batches
                     .filter(batch => batch.status === "Pending").map((batch, index) => (
                     <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                        <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
+                        <NavLink to={`/batchStudent/${batch.bid}`} className="navLink">
                         <div className='image'>
                             <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                         </div>
@@ -105,7 +105,7 @@ import { NavLink } from 'react-router-dom';
             {batches
                 .filter(batch => batch.status === "End").map((batch, index) => (
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to={`/batchStudent/:${batch.bid}`} className="navLink">
+                    <NavLink to={`/batchStudent/${batch.bid}`} className="navLink">
                     <div className='image'>
                         <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
                     </div>
