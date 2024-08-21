@@ -6,15 +6,19 @@ import { NavLink } from "react-router-dom";
 import Chatting from './Chatting'
 import {getStudentByBatchId} from '../../apis/studentApis'
 import Loader from "../Loader";
-
+import { Editor } from "primereact/editor";
+import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 const BatchStudent=()=>{
 
     const[students,setStudents]=useState([]);
+    const[openDialog,setOpenDialog]=useState(false);
     const[load,setLoad]=useState(true);
+    const [text, setText] = useState('');
+
     const linkStyle = {
         margin: "70px 0px 0px -30px",
         padding: "0px 10px 20px 20px",                 
-        width:"100%",        
+        width:"100%",                
     };
     
     const params = useParams();
@@ -54,31 +58,57 @@ const BatchStudent=()=>{
                             <label> Student List</label>
                         </div>                   
                         <div className="col-6 col-sm-6 col-md-6">
-                            <button> Add Assignment </button>
-                        </div>         
-                        <div className="col-12 col-sm-12 col-md-12 shadow scroll mt-3">
-                            {
-                                students.map((student,index)=>(
-                                <NavLink to="" className="navLink">
-                                    <div className="studentList">                                
-                                        <div>
-                                            <img src={a} alt=""></img>                                
-                                        </div>
-                                        <div>
-                                            <label> {student.firstName} &nbsp; {student.lastName} </label> <br/> 
-                                            <small className="text-decoration-none"> Java Development Batch</small>                                  
-                                        </div>                                
-                                    </div>    
-                                </NavLink>                            
-                                ))
-                            }                          
-                        </div>
+                            <button onClick={(()=>setOpenDialog(!openDialog))}> Add Assignment </button>
+                        </div>                                 
+                        <div className="col-12 col-sm-12 col-md-12 shadow scroll mt-3">                           
+                        {
+                        students.map((student,index)=>(
+                            <NavLink to={`/batchChats/${student.stdId}`} className="navLink">
+                                <div className="studentList">                                
+                                    <div>
+                                        <img src={a} alt=""/>
+                                    </div>
+                                    <div>
+                                        <label> {student.firstName} &nbsp; {student.lastName} </label> <br/> 
+                                        <small className="text-decoration-none"> Java Development Batch</small>                                  
+                                    </div>                                
+                                </div>    
+                            </NavLink>                                                                                 
+                            ))
+                        }
+                        </div>                         
                     </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-8 shadow">
-                      <Chatting/>  
+                    <Chatting/>  
                 </div>
-            </div>           
+            </div>    
+            <Modal size="lg" isOpen={openDialog} toggle={()=>setOpenDialog(!openDialog)}>
+                    <ModalHeader toggle={()=>setOpenDialog(!openDialog)} style={{backgroundColor:"#F5F7F8"}}>
+                        Add Assignment
+                    </ModalHeader>                    
+                    <ModalBody className="modals" style={{backgroundColor:"#DDE6ED"}}>
+                        <Row>
+                            <Col lg={6} sm={12}>
+                                <label> Add Title For Assignment</label>
+                                <input type="input" className="form-control"  placeholder="Add Title"/>
+                            </Col>
+                            <Col>
+                                <label> Add End Date </label>
+                                <input type="date" className="form-control" placeholder="Add Time"/>
+                            </Col>
+                            <Col lg={12} sm={12}>
+                                <label className="mt-3"> Add Description</label>                                
+                                <div className="bg-dark">
+                                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '320px' }} className="bg-dark shadow mt-2"/>
+                                </div>
+                            </Col>
+                            <Col lg={6} sm={12}>
+                                <button type="submit"  className="btn mt-3 btn-primary pt-2 pb-2 pl-5 pr-5" > Add </button>
+                            </Col>
+                        </Row>
+                </ModalBody>
+            </Modal>
         </div>
     )
 }

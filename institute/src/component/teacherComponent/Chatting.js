@@ -7,7 +7,7 @@ import { VscMenu } from "react-icons/vsc";
 import { IoSendOutline } from "react-icons/io5";
 const Chatting=()=>{
     return(
-        <div>
+        <div className="">
             <div className="chatContainer">                                                    
                         <div className="title shadow">
                             <img src={a} alt="" />
@@ -54,7 +54,7 @@ const Chatting=()=>{
                         </div>  
                         <div className="owner-context">
                             <img src={a} alt="" className="owner-dp"/>
-                            <label className="owner"> Okay,Keep working hark <small> 02:25pm</small></label>
+                            <label className="owner"> Okay, Keep working hark <small> 02:25pm</small></label>
                         </div>  
                         <div className="client-context">
                             <img src={a} alt="" className="client-dp"/>

@@ -21,6 +21,7 @@ import TSidebar from './component/teacherComponent/TSidebar';
 import THomePage from './component/teacherComponent/THomePage'
 import Batches from './component/teacherComponent/Batches';
 import BatchStudent from './component/teacherComponent/BatchStudent'
+import Chatting from './component/teacherComponent/Chatting';
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
@@ -112,7 +113,8 @@ const setSidebarToggleTeacher=()=>{
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
             <Route path='/tBatch' element={<Batches instituteId={localStorage.getItem("INSTITUTE_ID")}  teacherId={localStorage.getItem("teacherId")}/>} />
-            <Route path='/batchStudent/:bId' element={<BatchStudent/>}></Route>
+            <Route path='/batchStudent/:bId' element={<BatchStudent/>}/>
+            <Route path='/batchChats/:stdId' element={<Chatting/>}/>
           </Routes>
          </>                  
       }                                  
@@ -121,5 +123,4 @@ const setSidebarToggleTeacher=()=>{
     </div>
   );
 }
-
 export default App;

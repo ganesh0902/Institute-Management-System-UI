@@ -1,6 +1,6 @@
 import React from "react"
 import styled from 'styled-components';
-import { FaHome, FaUserAlt, FaCog, FaUserGraduate } from 'react-icons/fa';
+import { FaHome, FaCog, FaUserGraduate } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
 
 const SidebarItem = styled.div`
@@ -65,7 +65,7 @@ const TSidebar=({toggle})=>{
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaHome /></Icon>
-             <NavLink style={linkStyle}>Upcoming Batch </NavLink>
+             <NavLink style={linkStyle}>Assignment List </NavLink>
             </SidebarItem>              
             <SidebarItem>
             <Icon><FaHome /></Icon>

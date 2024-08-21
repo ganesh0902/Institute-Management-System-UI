@@ -1,7 +1,7 @@
 import React from "react"
 import { FaHome } from 'react-icons/fa';
 import './css/THomePage.css'
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart,Line   } from 'recharts';
+import { BarChart, Bar,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart,Line   } from 'recharts';
 const THomePage=()=>{
 
     const linkStyle = {
