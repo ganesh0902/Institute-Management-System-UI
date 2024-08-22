@@ -1,4 +1,5 @@
 import axios from "axios";
+import { json } from "react-router-dom";
 
 const GET_STUDENT_DETAILS_API = 'http://localhost:8999/student/studentDetails/'; 
 const UPDATE_STUDENT_API='http://localhost:8999/student/';
@@ -8,6 +9,9 @@ const get_Student="http://localhost:8999/student/institute/"
 const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate/";
 const token = localStorage.getItem('authToken');
 const getStudentByBatchIdAPI="http://localhost:8999/student/studentByBatch/"
+
+// following API is for Assignment
+const saveAssignmentAPI="http://localhost:8999/batch/assignmentSave";
 
 const instituteId= localStorage.getItem("INSTITUTED_ID");
 export const getStudentDetails=async (stdId)=>{
@@ -164,3 +168,22 @@ export const getStudentByBatchId=async (batchId)=>{
         console.log(error);
     }
 }
+
+export const saveAssignment=(async (assignment)=>{
+    
+   try
+   {
+       await fetch(saveAssignmentAPI,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":`Bearer ${token}`
+            },
+            body:JSON.stringify(assignment)
+        })
+   }
+   catch(error)
+   {
+        console.log(error);
+   }
+});

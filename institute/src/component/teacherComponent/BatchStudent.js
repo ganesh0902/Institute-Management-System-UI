@@ -4,7 +4,7 @@ import a from '..//..//images/back1.jpg';
 import './css/BatchStudent.css'
 import { NavLink } from "react-router-dom";
 import Chatting from './Chatting'
-import {getStudentByBatchId} from '../../apis/studentApis'
+import {getStudentByBatchId, saveAssignment} from '../../apis/studentApis'
 import Loader from "../Loader";
 import { Editor } from "primereact/editor";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
@@ -12,18 +12,27 @@ const BatchStudent=()=>{
 
     const[students,setStudents]=useState([]);
     const[openDialog,setOpenDialog]=useState(false);
-    const[load,setLoad]=useState(true);
-    const [text, setText] = useState('');
+    const[load,setLoad]=useState(true);    
+    const[Description,setDescription]=useState("");
+
+    const params = useParams();
+    const bId = params ? params.bId : null;
+    
+    const[assignment,setAssignment]=useState({
+
+        description:"",
+        title:"",
+        endDate:"",
+        time:"",
+        batchId:bId
+    });
 
     const linkStyle = {
         margin: "70px 0px 0px -30px",
         padding: "0px 10px 20px 20px",                 
         width:"100%",                
     };
-    
-    const params = useParams();
-    const bId = params ? params.bId : null;
-        
+               
     useEffect(()=>{
 
         const getStudents=async ()=>{            
@@ -43,6 +52,26 @@ const BatchStudent=()=>{
         }
         getStudents();
     },[])
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+        console.log(name+" "+value);
+        setAssignment(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async () => {        
+        
+        assignment.description=Description;   
+        console.log(Description);     
+        console.log("Assignment is ");        
+        console.log(assignment);    
+
+        await saveAssignment(assignment);
+    };
 
     if(load)
     {
@@ -91,20 +120,26 @@ const BatchStudent=()=>{
                         <Row>
                             <Col lg={6} sm={12}>
                                 <label> Add Title For Assignment</label>
-                                <input type="input" className="form-control"  placeholder="Add Title"/>
+                                <input type="input" className="form-control"  placeholder="Add Title" value={assignment.title} name="title" onChange={handleInputChange}/>
                             </Col>
                             <Col>
                                 <label> Add End Date </label>
-                                <input type="date" className="form-control" placeholder="Add Time"/>
+                                <input type="date" className="form-control" placeholder="Add Time" value={assignment.endDate} name="endDate" onChange={handleInputChange} />
+                            </Col>
+                            <Col>
+                                <label> Add Time Date </label>
+                                <input type="time" className="form-control" placeholder="Add End Time" value={assignment.time} name="time" onChange={handleInputChange} />
                             </Col>
                             <Col lg={12} sm={12}>
                                 <label className="mt-3"> Add Description</label>                                
                                 <div className="bg-dark">
-                                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)} style={{ height: '320px' }} className="bg-dark shadow mt-2"/>
+                                    <Editor value={Description} name="description"  style={{ height: '320px' }} className="bg-dark shadow mt-2" onTextChange={(e)=> setDescription(e.htmlValue)}/>
                                 </div>
                             </Col>
                             <Col lg={6} sm={12}>
-                                <button type="submit"  className="btn mt-3 btn-primary pt-2 pb-2 pl-5 pr-5" > Add </button>
+                                <div className="btn-container">
+                                    <button type="submit" className="btn btn-primary form-control mt-3" onClick={() => handleSubmit()}>Add</button>
+                                </div>
                             </Col>
                         </Row>
                 </ModalBody>
