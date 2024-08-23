@@ -12,8 +12,8 @@ const getStudentByBatchIdAPI="http://localhost:8999/student/studentByBatch/"
 
 // following API is for Assignment
 const saveAssignmentAPI="http://localhost:8999/batch/assignmentSave";
+const getStudentAPI="http://localhost:8999/student/";
 
-const instituteId= localStorage.getItem("INSTITUTED_ID");
 export const getStudentDetails=async (stdId)=>{
     
     try{
@@ -187,3 +187,30 @@ export const saveAssignment=(async (assignment)=>{
         console.log(error);
    }
 });
+
+export const getStudent=(async(stdId)=>{
+
+    try
+    {
+        const response  = await fetch(getStudentAPI+stdId,{
+
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+            throw new Error("Response was not okay "+response.statusText);
+        }
+
+        const data = await response.json();
+        return data;
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+})

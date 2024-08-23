@@ -8,12 +8,14 @@ import {getStudentByBatchId, saveAssignment} from '../../apis/studentApis'
 import Loader from "../Loader";
 import { Editor } from "primereact/editor";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
+
 const BatchStudent=()=>{
 
     const[students,setStudents]=useState([]);
     const[openDialog,setOpenDialog]=useState(false);
     const[load,setLoad]=useState(true);    
     const[Description,setDescription]=useState("");
+    const[studentId,setStudentId]=useState("");
 
     const params = useParams();
     const bId = params ? params.bId : null;
@@ -73,6 +75,12 @@ const BatchStudent=()=>{
         await saveAssignment(assignment);
     };
 
+    useEffect(()=>{
+
+        console.log("Student Id is ");
+        console.log(studentId);
+    },[studentId]);
+
     if(load)
     {
         return(<Loader/>)
@@ -87,29 +95,31 @@ const BatchStudent=()=>{
                             <label> Student List</label>
                         </div>                   
                         <div className="col-6 col-sm-6 col-md-6">
-                            <button onClick={(()=>setOpenDialog(!openDialog))}> Add Assignment </button>
+                            <button className="assignment" onClick={(()=>setOpenDialog(!openDialog))}> Add Assignment </button>
                         </div>                                 
                         <div className="col-12 col-sm-12 col-md-12 shadow scroll mt-3">                           
                         {
-                        students.map((student,index)=>(
-                            <NavLink to={`/batchChats/${student.stdId}`} className="navLink">
-                                <div className="studentList">                                
-                                    <div>
-                                        <img src={a} alt=""/>
-                                    </div>
-                                    <div>
-                                        <label> {student.firstName} &nbsp; {student.lastName} </label> <br/> 
-                                        <small className="text-decoration-none"> Java Development Batch</small>                                  
-                                    </div>                                
-                                </div>    
-                            </NavLink>                                                                                 
+                        students.map((student,index)=>(                            
+                            <div className="studentList">                                
+                                <div>
+                                    <img src={a} alt=""/>
+                                </div>
+                                <div>
+                                     <button className="btn form-control chat-btn" onClick={()=>setStudentId(student.stdId)}> {student.firstName} &nbsp; {student.lastName} </button> <br/> 
+                                    <small className="text-decoration-none"> Java Development Batch</small>                                  
+                                </div>                                
+                            </div>                                
                             ))
                         }
                         </div>                         
                     </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-8 shadow">
-                    <Chatting/>  
+                    
+                    {
+                        studentId && <Chatting stdId={studentId}/>
+                    }                    
+                                            
                 </div>
             </div>    
             <Modal size="lg" isOpen={openDialog} toggle={()=>setOpenDialog(!openDialog)}>

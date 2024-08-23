@@ -1,17 +1,45 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import a from '..//..//images/back1.jpg';
 import './css/BatchStudent.css'
 import { IoCallOutline } from "react-icons/io5";
 import { CiVideoOn } from "react-icons/ci";
 import { VscMenu } from "react-icons/vsc";
 import { IoSendOutline } from "react-icons/io5";
-const Chatting=()=>{
+import { getStudent } from "../../apis/studentApis";
+import Loader from "../Loader";
+
+const Chatting=({stdId})=>{
+
+    const[student,setStudent]=useState([]);
+    
+    useEffect(()=>{
+
+        const getStudentDetails=( async()=>{
+            const data = await getStudent(stdId);
+            setStudent(data);
+        })
+        getStudentDetails();
+        console.log("Student Id is in chat");
+        console.log(stdId);
+        
+    },[stdId]);
+
+    useEffect(()=>{
+
+        console.log("Student Details");
+        console.log(student);
+    },[student]);
+
+    if(!student==null)
+    {
+        return(<Loader/>)
+    }
     return(
         <div className="">
             <div className="chatContainer">                                                    
                         <div className="title shadow">
                             <img src={a} alt="" />
-                            <label> Ganesh Sakhare </label>                             
+                            <label> {student.firstName} &nbsp; {student.lastName} </label>                             
                             <div className="media">
                                 <label className="call"> <IoCallOutline/> </label>
                                 <label className="video"> <CiVideoOn/> </label>
