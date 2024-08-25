@@ -31,7 +31,7 @@ const TeacherDetails=()=>{
         getTeacher();
         
          getBatches();            
-    },[tId,batches]);
+    },[tId]);
 
     const getTeacher=async ()=>{
         const response  = await getTeacherById(tId);
@@ -47,6 +47,7 @@ const TeacherDetails=()=>{
                      
     const saveTeacher=async ()=>{
 
+        
         const teacher={tId,firstName,lastName,contact,education};
         console.log("Teacher record ",teacher);
          await updateTeacher(tId,teacher);         
