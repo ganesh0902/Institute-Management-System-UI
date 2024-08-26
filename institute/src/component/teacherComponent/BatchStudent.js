@@ -73,6 +73,12 @@ const BatchStudent=()=>{
         console.log(assignment);    
 
         await saveAssignment(assignment);
+
+        alert("Record Save Successfully");
+        setOpenDialog(false);
+        setDescription("");
+        resetAssignment();
+       
     };
 
     useEffect(()=>{
@@ -80,6 +86,19 @@ const BatchStudent=()=>{
         console.log("Student Id is ");
         console.log(studentId);
     },[studentId]);
+
+
+    const resetAssignment = () => {
+        setAssignment({
+            description: "",
+            title: "",
+            endDate: "",
+            time: "",
+            batchId: bId // Assuming bId is still the same
+        });
+    };
+
+    
 
     if(load)
     {

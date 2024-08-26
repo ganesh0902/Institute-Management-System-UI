@@ -1,0 +1,55 @@
+/* Container styling */
+.row {
+    display: flex;
+    justify-content: center; /* Centers the card in the row */
+    margin: 20px 0; /* Adds space above and below the row */
+}
+
+/* Card styling */
+.assignment-card {
+    background-color: #fff; 
+    border-radius: 8px;
+    padding: 20px; 
+    margin: 10px 0; 
+    transition: transform 0.2s ease-in-out; 
+}
+
+.assignment-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+}
+
+/* NavLink styling */
+.assignment-card a {
+    text-decoration: none; 
+    color: inherit;
+}
+
+/* Title styling */
+.assignment-card h4 {
+    font-size: 1.5rem; 
+    margin-bottom: 10px;
+    color: #333; 
+}
+
+/* Bold text styling */
+.text-bold {
+    font-weight: 600; 
+    color: #555; 
+}
+
+/* Description styling */
+.assignment-card p {
+    font-size: 1rem; 
+    line-height: 1.5; 
+    color: #666; 
+    margin-bottom: 10px; 
+}
+
+/* Date styling */
+.assignment-card small {
+    display: block;
+    margin-top: 15px; 
+    font-size: 0.875rem; 
+    color: #999; 
+}

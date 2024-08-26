@@ -65,7 +65,7 @@ const TSidebar=({toggle})=>{
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaHome /></Icon>
-             <NavLink style={linkStyle}>Assignment List </NavLink>
+             <NavLink to="/assignment" style={linkStyle}>Assignment List </NavLink>
             </SidebarItem>              
             <SidebarItem>
             <Icon><FaHome /></Icon>
