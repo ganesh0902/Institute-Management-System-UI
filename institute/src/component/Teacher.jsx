@@ -10,7 +10,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import {saveTeacherRecord,getTeacherByInstitute,saveTeacher} from '../apis/teacherApis'
 
-const instituteId= localStorage.getItem("instituteId");
 const Teacher=({instituteId})=>{
 
     const token = localStorage.getItem('authToken');
@@ -23,9 +22,7 @@ const Teacher=({instituteId})=>{
     const[education,setEducation]=useState('');
     const[teachers,setTeacher]=useState([]);
     const[image,setImage]=useState("");
-
-    const API_SAVE_TEACHER="http://localhost:9003/teacher/";
-    const API_GET_TEACHER="http://localhost:8999/teacher/institute/"    
+   
 
     useEffect(()=>{
         

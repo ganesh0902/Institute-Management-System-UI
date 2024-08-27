@@ -60,7 +60,7 @@ const HomePage=(props)=>{
                 alert("Token validation failed ",validate);
                 return;
             }
-            localStorage.setItem("USER_ID",validate.username);
+            localStorage.setItem("USER_ID",validate.username);            
             const user =  await getUserInformation(validate.username);             
 
             localStorage.setItem("ROLE",user.role);   
@@ -68,6 +68,7 @@ const HomePage=(props)=>{
             if(user.role ==='TEACHER')
             {
                 console.log("User Ids"+user.id);
+                localStorage.setItem("userId",user.id);
                 const data = await getTeacherDetailsRecord(user.id);                 
                 setTeacherDetails(data);                                  
             }

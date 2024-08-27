@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import {updateTeacher, getTeacherById} from '../../apis/teacherApis'
 import {getBatchesByTeacherId} from '../../apis/batchApis'
-import userEvent from '@testing-library/user-event';
 
 const TeacherDetails=()=>{
 
@@ -22,15 +21,13 @@ const TeacherDetails=()=>{
     const[contact,setContact]=useState("");
     const[education,setEducation]=useState("");
     const[reloadPage,setReloadPage]=useState(false);
+        
     
-    const API_GET_TEACHER ="http://localhost:8999/teacher/";
-
-    const token=localStorage.getItem("authToken");
     useEffect(()=>{
         
         getTeacher();
         
-         getBatches();            
+        getBatches();            
     },[tId]);
 
     const getTeacher=async ()=>{
@@ -46,7 +43,6 @@ const TeacherDetails=()=>{
     }
                      
     const saveTeacher=async ()=>{
-
         
         const teacher={tId,firstName,lastName,contact,education};
         console.log("Teacher record ",teacher);

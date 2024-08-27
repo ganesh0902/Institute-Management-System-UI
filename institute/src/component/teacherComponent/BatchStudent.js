@@ -9,7 +9,7 @@ import Loader from "../Loader";
 import { Editor } from "primereact/editor";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 
-const BatchStudent=()=>{
+const BatchStudent=({teacherId})=>{
 
     const[students,setStudents]=useState([]);
     const[openDialog,setOpenDialog]=useState(false);
@@ -26,7 +26,8 @@ const BatchStudent=()=>{
         title:"",
         endDate:"",
         time:"",
-        batchId:bId
+        batchId:bId,
+        teacherId:teacherId
     });
 
     const linkStyle = {
@@ -72,13 +73,13 @@ const BatchStudent=()=>{
         console.log("Assignment is ");        
         console.log(assignment);    
 
+        alert(teacherId);
         await saveAssignment(assignment);
 
         alert("Record Save Successfully");
         setOpenDialog(false);
         setDescription("");
-        resetAssignment();
-       
+        resetAssignment();       
     };
 
     useEffect(()=>{
@@ -94,12 +95,12 @@ const BatchStudent=()=>{
             title: "",
             endDate: "",
             time: "",
-            batchId: bId // Assuming bId is still the same
+            batchId: bId, 
+            teacherId:teacherId
         });
     };
 
     
-
     if(load)
     {
         return(<Loader/>)

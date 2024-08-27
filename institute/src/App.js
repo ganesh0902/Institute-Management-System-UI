@@ -113,8 +113,8 @@ const setSidebarToggleTeacher=()=>{
           <Routes>
             <Route path='/tHome' element={<THomePage/>} />
             <Route path='/tBatch' element={<Batches instituteId={localStorage.getItem("INSTITUTE_ID")}  teacherId={localStorage.getItem("teacherId")}/>} />
-            <Route path='/batchStudent/:bId' element={<BatchStudent/>}/>
-            <Route path='/assignment' element={<AssignmentList/>}/>
+            <Route path='/batchStudent/:bId' element={<BatchStudent teacherId={localStorage.getItem("userId")} />}/>
+            <Route path='/assignment' teacherId={localStorage.getItem("userId")} element={<AssignmentList/>}/>
           </Routes>
          </>                  
       }                                  
