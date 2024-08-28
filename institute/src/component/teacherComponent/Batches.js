@@ -15,12 +15,12 @@ import { NavLink } from 'react-router-dom';
         color:"white",
         width:"100%",        
     };
-
+    
     useEffect(()=>{
         
         const getBatches=async()=>{
             try
-            {
+            {                
                 const data = await getBatchesByTeacher(teacherId);            
                 setBatches(data);                        
             }

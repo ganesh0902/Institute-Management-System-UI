@@ -22,6 +22,7 @@ import THomePage from './component/teacherComponent/THomePage'
 import Batches from './component/teacherComponent/Batches';
 import BatchStudent from './component/teacherComponent/BatchStudent'
 import AssignmentList from './component/teacherComponent/AssignmentList';
+import Assignments from './component/teacherComponent/Assignments';
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
@@ -114,7 +115,8 @@ const setSidebarToggleTeacher=()=>{
             <Route path='/tHome' element={<THomePage/>} />
             <Route path='/tBatch' element={<Batches instituteId={localStorage.getItem("INSTITUTE_ID")}  teacherId={localStorage.getItem("teacherId")}/>} />
             <Route path='/batchStudent/:bId' element={<BatchStudent teacherId={localStorage.getItem("userId")} />}/>
-            <Route path='/assignment' teacherId={localStorage.getItem("userId")} element={<AssignmentList/>}/>
+            <Route path='/assignment' element={<AssignmentList user={localStorage.getItem("userId")} teacherId={localStorage.getItem("teacherId")} />}/>
+            <Route path='/assignments' element={<Assignments/> }/>
           </Routes>
          </>                  
       }                                  

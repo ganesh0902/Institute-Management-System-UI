@@ -1,8 +1,6 @@
-/* Container styling */
 .row {
-    display: flex;
-    justify-content: center; /* Centers the card in the row */
-    margin: 20px 0; /* Adds space above and below the row */
+    display: flex;    
+    margin: 20px 0;
 }
 
 /* Card styling */
