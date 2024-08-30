@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 import a from '..//..//images/back1.jpg';
 import './css/BatchStudent.css'
-import { NavLink } from "react-router-dom";
 import Chatting from './Chatting'
 import {getStudentByBatchId, saveAssignment} from '../../apis/studentApis'
 import Loader from "../Loader";
@@ -31,9 +30,10 @@ const BatchStudent=({teacherId})=>{
     });
 
     const linkStyle = {
-        margin: "70px 0px 0px -30px",
-        padding: "0px 10px 20px 20px",                 
-        width:"100%",                
+        margin: "50px 0px 0px -30px",
+        padding: "0px 10px 00px 20px",                 
+        width:"100%", 
+                      
     };
                
     useEffect(()=>{
@@ -58,8 +58,7 @@ const BatchStudent=({teacherId})=>{
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
-        console.log(name+" "+value);
+        
         setAssignment(prevState => ({
             ...prevState,
             [name]: value

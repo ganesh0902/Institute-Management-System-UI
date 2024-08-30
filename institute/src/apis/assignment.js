@@ -1,11 +1,11 @@
-const getAssignmentByTeacherId ="http://localhost:8999/batch/asssignmentByTeacherId/"
+const getAssignmentByTeacherId ="http://localhost:8999/batch/assignmentByBatchId/"
 const token = localStorage.getItem('authToken');   
 
-export const getAssignmentByTeacherIdAPI=async (teacherId)=>{
+export const getAssignmentByBatchIdAPI=async (batchId)=>{
 
     try
     {
-        const response =  await fetch(getAssignmentByTeacherId+teacherId,{
+        const response =  await fetch(getAssignmentByTeacherId+batchId,{
             method:"GET",
             headers:{
                 "Content-Type":'application/json',

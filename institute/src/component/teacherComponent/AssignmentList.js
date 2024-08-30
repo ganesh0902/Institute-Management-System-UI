@@ -47,9 +47,9 @@ const AssignmentList=({user,teacherId})=>{
             {batches
                 .filter(batch => batch.status === "Started").map((batch, index) => (            
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to='/assignments' className="navLink">
+                    <NavLink to={`/assignments/${batch.bid}`} className="navLink">
                     <div className='image'>
-                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
+                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
                     </div>
                     <div className='batchDetails'>                            
                         <div className='title'>
@@ -76,9 +76,10 @@ const AssignmentList=({user,teacherId})=>{
                 {batches
                     .filter(batch => batch.status === "Pending").map((batch, index) => (
                     <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                        <NavLink to='/assignments' className="navLink">
+                        <NavLink to={`/assignments/${batch.bid}`} className="navLink">
                         <div className='image'>
-                            <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
+                            {/* <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/> */}
+                            <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
                         </div>
                         <div className='batchDetails'>                            
                             <div className='title'>
@@ -105,9 +106,9 @@ const AssignmentList=({user,teacherId})=>{
             {batches
                 .filter(batch => batch.status === "End").map((batch, index) => (
                 <div className='col-12 col-sm-12 col-md-3 shadow rounder'>
-                    <NavLink to='/assignments' className="navLink">
+                    <NavLink to={`/assignments/${batch.bid}`} className="navLink">
                     <div className='image'>
-                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={a}/>
+                        <img className='batch-card card-img-top' loading='lazy' alt='uploading' src={`../batch/${batch.image}`}/>
                     </div>
                     <div className='batchDetails'>                            
                         <div className='title'>
@@ -125,6 +126,7 @@ const AssignmentList=({user,teacherId})=>{
             ))}           
             </div>                
             </TabPanel>
+            
             </TabView>
             </div>        
         </div>

@@ -34,67 +34,69 @@ const Chatting=({stdId})=>{
     {
         return(<Loader/>)
     }
-    return(
-        <div className="">
-            <div className="chatContainer">                                                    
-                        <div className="title shadow">
-                            <img src={a} alt="" />
-                            <label> {student.firstName} &nbsp; {student.lastName} </label>                             
-                            <div className="media">
-                                <label className="call"> <IoCallOutline/> </label>
-                                <label className="video"> <CiVideoOn/> </label>
-                                <label className="menu"> <VscMenu/> </label>                                
-                            </div>                            
-                        </div>
+    return( 
+            <div className="">
+            <div className="chatContainer">     
+                <div className="">
+                    <div className="title shadow">
+                        <img src={a} alt="" />
+                        <label> {student.firstName} &nbsp; {student.lastName} </label>                             
+                        <div className="media">
+                            <label className="call"> <IoCallOutline/> </label>
+                            <label className="video"> <CiVideoOn/> </label>
+                            <label className="menu"> <VscMenu/> </label>                                
+                        </div>                            
                     </div>
-                    <div className="chat-context">                                                               
-                        <div className="client-context">
-                            <img src={a} alt="" className="client-dp"/>
-                            <label className="client"> Hello React How are you </label>
-                            <small> 02:25pm</small>
-                        </div>                                             
-                        <div className="owner-context">
-                            <img src={a} alt="" className="owner-dp"/>
-                            <label className="owner"> Hello I am very well <small> 02:25pm</small></label>                            
-                        </div>  
-                        <div className="client-context">
-                            <img src={a} alt="" className="client-dp"/>
-                            <label className="client"> How's your work going on</label>
-                            <small> 02:25pm</small>
-                        </div>    
-                        <div className="owner-context">
-                            <img src={a} alt="" className="owner-dp"/>
-                            <label className="owner"> My work is going well as usually <small> 02:25pm</small></label>
-                        </div>
-                        <div className="client-context">
-                            <img src={a} alt="" className="client-dp"/>
-                            <label className="client"> Ok, It's great  </label>
-                            <small> 02:25pm</small>
-                        </div> 
-                        <div className="owner-context">
-                            <img src={a} alt="" className="owner-dp"/>
-                            <label className="owner"> Yes, What's about you how your work going on <small> 02:25pm</small></label>
-                        </div>    
-                        <div className="client-context">
-                            <img src={a} alt="" className="client-dp"/>
-                            <label className="client"> My work also going well   </label>
-                            <small> 02:25pm</small>
-                        </div>  
-                        <div className="owner-context">
-                            <img src={a} alt="" className="owner-dp"/>
-                            <label className="owner"> Okay, Keep working hark <small> 02:25pm</small></label>
-                        </div>  
-                        <div className="client-context">
-                            <img src={a} alt="" className="client-dp"/>
-                            <label className="client"> Yes, Thank You  </label>
-                            <small> 02:25pm</small>
-                        </div>                                          
-                    </div>                    
-                    <div className="chat">
-                        <input type="text" className="form-control" />
-                        <button className="send"><IoSendOutline/></button>
-                    </div>   
-        </div>
+                </div>
+                <div className="chat-context">                                                               
+                    <div className="client-context">
+                        <img src={a} alt="" className="client-dp"/>
+                        <label className="client"> Hello React How are you </label>
+                        <small> 02:25pm</small>
+                    </div>                                             
+                    <div className="owner-context">
+                        <img src={a} alt="" className="owner-dp"/>
+                        <label className="owner"> Hello I am very well <small> 02:25pm</small></label>                            
+                    </div>  
+                    <div className="client-context">
+                        <img src={a} alt="" className="client-dp"/>
+                        <label className="client"> How's your work going on</label>
+                        <small> 02:25pm</small>
+                    </div>    
+                    <div className="owner-context">
+                        <img src={a} alt="" className="owner-dp"/>
+                        <label className="owner"> My work is going well as usually <small> 02:25pm</small></label>
+                    </div>
+                    <div className="client-context">
+                        <img src={a} alt="" className="client-dp"/>
+                        <label className="client"> Ok, It's great  </label>
+                        <small> 02:25pm</small>
+                    </div> 
+                    <div className="owner-context">
+                        <img src={a} alt="" className="owner-dp"/>
+                        <label className="owner"> Yes, What's about you how your work going on <small> 02:25pm</small></label>
+                    </div>    
+                    <div className="client-context">
+                        <img src={a} alt="" className="client-dp"/>
+                        <label className="client"> My work also going well   </label>
+                        <small> 02:25pm</small>
+                    </div>  
+                    <div className="owner-context">
+                        <img src={a} alt="" className="owner-dp"/>
+                        <label className="owner"> Okay, Keep working hark <small> 02:25pm</small></label>
+                    </div>  
+                    <div className="client-context">
+                        <img src={a} alt="" className="client-dp"/>
+                        <label className="client"> Yes, Thank You  </label>
+                        <small> 02:25pm</small>
+                    </div>                                          
+                </div>                                        
+                <div className="chat">
+                    <input type="text" className="form-control" />
+                    <button className="send"><IoSendOutline/></button>
+                </div> 
+                </div>                                               
+            </div>                                                            
     )
 }
 export default Chatting
