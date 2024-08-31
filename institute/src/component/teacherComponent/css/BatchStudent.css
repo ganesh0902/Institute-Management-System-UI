@@ -36,6 +36,13 @@
     border: 1px solid #F6F5F5;
 }
 
+@media only screen and (max-width: 767px) {
+    .batchStudent .student-names{
+        display: none;
+        background-color: red;
+    }
+  }
+
 .chatContainer {
     background-color: #EEF7FF;                
 }

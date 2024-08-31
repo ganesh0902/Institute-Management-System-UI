@@ -30,11 +30,11 @@ const BatchStudent=({teacherId})=>{
     });
 
     const linkStyle = {
-        margin: "50px 0px 0px -30px",
+        margin: "70px 0px 0px -2px",
         padding: "0px 10px 00px 20px",                 
-        width:"100%", 
-                      
-    };
+        width:"100%",         
+        height:"600px",           
+    };  
                
     useEffect(()=>{
 
@@ -108,9 +108,9 @@ const BatchStudent=({teacherId})=>{
     return(
         <div style={linkStyle}>
             <div id="batchStudent" className="row">                
-                <div className="col-12 col-sm-12 col-md-4 ">                
+                <div className="col-12 col-sm-12 col-md-4">                
                     <div className="row">
-                        <div className="col-6 col-sm-6 col-md-6">
+                        <div className="col-6 col-sm-6 col-md-6 student-names">
                             <label> Student List</label>
                         </div>                   
                         <div className="col-6 col-sm-6 col-md-6">

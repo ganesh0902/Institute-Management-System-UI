@@ -10,7 +10,8 @@ const SidebarItem = styled.div`
   align-items: center;
   justify-content: start;
   cursor: pointer;
-  transition: background-color 0.3s;   
+  transition: background-color 0.3s; 
+    
 
   &:hover {
     background-color: #34495e;
@@ -37,8 +38,7 @@ const TSidebar=({toggle})=>{
     height: '100%',
     backgroundColor: '#134B70',
     color: 'white',
-    padding: '20px', 
-    zindex:'900px'
+    padding: '20px',         
                
   };
 

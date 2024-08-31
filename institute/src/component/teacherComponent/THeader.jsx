@@ -6,6 +6,7 @@ import Nav from "./Nav"
 const THeader=({setSidebarToggleTeacher})=>{
     return(
         <div id="header" className="tHeader shadow fixed-top d-flex align-items-center"> 
+          
             <Logo setSidebarToggleTeacher={setSidebarToggleTeacher}/>
             <SearchBar/>
             <Nav/>

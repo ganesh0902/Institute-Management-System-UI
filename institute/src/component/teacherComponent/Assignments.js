@@ -10,9 +10,10 @@ const Assignments=()=>{
     const[assignment,setAssignment]=useState([]);
 
     const linkStyle = {
-        margin: "70px 0px 0px -30px",
-        padding: "0px 10px 20px 20px", 
-        backgroundColor:"#F6F5F5"               
+        margin: "40px 0px 0px -2px",
+        padding: "0px 10px 20px 0px",  
+        height:"600px",         
+        
     };
 
     const { batchId } = useParams();
@@ -74,7 +75,7 @@ const Assignments=()=>{
                             </NavLink>
                         </div>                                                        
                             ))
-                        }                        
+                        }                                                
                     </div>
             </TabPanel>                  
             <TabPanel header="Pending Assignment" className="batch-in-teacher-header px-4 py-2 text-5" leftIcon="pi pi-user mr-2">
