@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getAssignmentByBatchIdAPI } from '../../apis/assignment';
 import Loader from '../Loader';
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import AssignmentDescription from './AssignmentDescription';
 const Assignments=()=>{
     
     const[assignment,setAssignment]=useState([]);
@@ -48,7 +49,6 @@ const Assignments=()=>{
     const filterAssignmentCompleted  = assignment.filter(assignment=> assignment.status ==="completed");
     const filterAssignmentActive     = assignment.filter(assignment=> assignment.status === "active");
 
-
     if(!assignment)
     {
         return(<Loader/>)
@@ -81,7 +81,7 @@ const Assignments=()=>{
                                     <small>09-02-2001</small>
                                 </div>
                                 }>
-                                <div> Hello </div> 
+                                <div> <AssignmentDescription description={assignment.description}/> </div> 
                                 </AccordionTab>
                             </Accordion>
                             ))
@@ -96,19 +96,19 @@ const Assignments=()=>{
                             filterAssignmentPending.length ===0 && <div className='text-center'> No Pending Assignment Found </div>
                         }
                         {
-                            assignment.filter(assignment=> assignment.status === "pending").map((assignment,index)=>(
-                            <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
-                                <NavLink to="">
-                                <div className=''>
-                                    <h4>{assignment.title}</h4>                               
-                                    <p>Write a Java program that creates or appends to a log file, 
-                                        adding a new entry each time the program is run. Each entry 
-                                        should be timestamped with the current date and time.</p>
-                                    <small>02-JUN-2024</small>    
-                                </div>
-                                </NavLink>
-                            </div>                                                        
-                            ))
+                        assignment.filter(assignment=> assignment.status === "pending").map((assignment,index)=>(
+                        <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
+                            <NavLink to="">
+                            <div className=''>
+                                <h4>{assignment.title}</h4>                               
+                                <p>Write a Java program that creates or appends to a log file, 
+                                    adding a new entry each time the program is run. Each entry 
+                                    should be timestamped with the current date and time.</p>
+                                <small>02-JUN-2024</small>    
+                            </div>
+                            </NavLink>
+                        </div>                                                        
+                        ))
                         }                        
                     </div>
             </TabPanel>                  
