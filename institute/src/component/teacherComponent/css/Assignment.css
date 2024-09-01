@@ -7,9 +7,23 @@
 .assignment-card {
     background-color: #fff; 
     border-radius: 8px;
-    padding: 20px; 
+    padding: 20px;  
+    height: 550px;    
     margin: 10px 0; 
-    transition: transform 0.2s ease-in-out; 
+    transition: transform 0.2s ease-in-out;   
+    overflow: scroll;  
+}
+@media (max-width: 480px) {
+
+    .assignment-card{
+        background-color: #fff; 
+        border-radius: 8px;
+        padding: 20px;  
+        height: auto;    
+        margin: 10px 0; 
+        transition: transform 0.2s ease-in-out;   
+        overflow: scroll;  
+    }
 }
 
 .assignment-card:hover {
@@ -44,10 +58,11 @@
     margin-bottom: 10px; 
 }
 
-/* Date styling */
-.assignment-card small {
-    display: block;
-    margin-top: 15px; 
-    font-size: 0.875rem; 
-    color: #999; 
+.p-accordion-header .p-accordion-toggle-icon {
+   padding: 0px;
+   font-size: 40px;
+   width: 40px;
 }
+.p-accordion-header {
+    margin-top: 10px;
+  }
