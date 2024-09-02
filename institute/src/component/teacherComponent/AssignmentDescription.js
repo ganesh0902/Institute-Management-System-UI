@@ -1,6 +1,6 @@
  const AssignmentDescription = ({ description }) => {
     return (
-      <div
+      <div className="p-3"
         dangerouslySetInnerHTML={{ __html: description }}
       />
     )

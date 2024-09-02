@@ -60,79 +60,113 @@ const Assignments=()=>{
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center'
+    }    
+    const submissionList={
+        width:"98%",        
+        display:"flex",
+        justifyContent:"right",
+        pointer:"cursor", 
+        marginTop:"10px"         
+    }
+    const navLink={
+        backgroundColor:"white",   
+        color:"black",     
+        padding:"5px 20px 5px 20px", 
+        borderRadius:"20px",             
     }
     return(
         <div style={linkStyle}> 
         <div className='mt-3'>
         <TabView className="fixed-tab-view-for-batches"> 
         <TabPanel header="Active Assignment" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">
-                    <div className='row'>
-                        {
-                            filterAssignmentActive.length ===0 && <div className='text-center'> No Active Assignment Found </div>
-                        }                       
-                        <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
+            <div className='row'>                
+                <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
+                {
+                    filterAssignmentActive.length ===0 && <div className='text-center'> No Active Assignment Found </div>
+                }                       
+                    <div className='assignment-list'>
+                    {
+                        assignment.filter(assignment=> assignment.status ==='active').map((assignment,index)=>(
+                        <Accordion activeIndex={-1}>
+                        <AccordionTab header={
+                            <div style={assignmentListCss}>
+                                <span style={{marginTop:"-7px"}}>{assignment.title}</span>
+                                <small>{assignment.startDate}</small>
+                            </div>
+                            }>
+                            <div> 
+                                <div style={submissionList}>
+                                    <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                </div>
+                                <AssignmentDescription description={assignment.description}/> 
+                            </div> 
+                            </AccordionTab>
+                        </Accordion>
+                        ))
+                    }     
+                    </div>   
+                </div>                                                                                                                           
+            </div>
+            </TabPanel>     
+            <TabPanel header="Pending Assignment" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">                                
+                <div className='row'>                  
+                    <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
+                    {
+                        filterAssignmentPending.length ===0 && <div className='text-center'> No Pending Assignment Found </div>
+                    }                       
                         <div className='assignment-list'>
                         {
-                            assignment.filter(assignment=> assignment.status ==='active').map((assignment,index)=>(
+                            assignment.filter(assignment=> assignment.status ==='pending').map((assignment,index)=>(
                             <Accordion activeIndex={-1}>
                             <AccordionTab header={
                                 <div style={assignmentListCss}>
-                                    <span>{assignment.title}</span>
-                                    <small>09-02-2001</small>
+                                    <span style={{marginTop:"-7px"}}>{assignment.title}</span>
+                                    <small>{assignment.startDate}</small>
                                 </div>
                                 }>
-                                <div> <AssignmentDescription description={assignment.description}/> </div> 
+                                <div> 
+                                    <div style={submissionList}>
+                                        <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                    </div>
+                                    <AssignmentDescription description={assignment.description}/> 
+                                </div> 
                                 </AccordionTab>
                             </Accordion>
                             ))
                         }     
                         </div>   
-                        </div>                                                                                                                           
-                    </div>
+                    </div>                                                                                                                           
+                </div>
             </TabPanel>                  
-            <TabPanel header="Pending Assignment" className="batch-in-teacher-header px-4 py-2 text-5" leftIcon="pi pi-user mr-2">
-                    <div className='row'>
+            <TabPanel header="Completed Assignment" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">
+                <div className='row'>                  
+                    <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
+                    {
+                        filterAssignmentCompleted.length ===0 && <div className='text-center'> No Completed Assignment Found </div>
+                    }                       
+                        <div className='assignment-list'>
                         {
-                            filterAssignmentPending.length ===0 && <div className='text-center'> No Pending Assignment Found </div>
-                        }
-                        {
-                        assignment.filter(assignment=> assignment.status === "pending").map((assignment,index)=>(
-                        <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
-                            <NavLink to="">
-                            <div className=''>
-                                <h4>{assignment.title}</h4>                               
-                                <p>Write a Java program that creates or appends to a log file, 
-                                    adding a new entry each time the program is run. Each entry 
-                                    should be timestamped with the current date and time.</p>
-                                <small>02-JUN-2024</small>    
-                            </div>
-                            </NavLink>
-                        </div>                                                        
-                        ))
-                        }                        
-                    </div>
-            </TabPanel>                  
-            <TabPanel header="Completed Assignment" className="batch-in-teacher-header px-4 py-2 text-5" leftIcon="pi pi-user mr-2">
-                    <div className='row'>
-                        {
-                            filterAssignmentCompleted.length === 0 && <div className='text-center'> No Completed Assignment Found </div>
-                        }
-                        {
-                            assignment.filter(assignment=> assignment.title === "active").map((assignment,index)=>(
-                            <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
-                                <NavLink to="">
-                                <div className=''>
-                                    <h4>Java File Handling</h4>                               
-                                    <p>Write a Java program that creates or appends to a log file, 
-                                        adding a new entry each time the program is run. Each entry 
-                                        should be timestamped with the current date and time.</p>
-                                    <small>02-JUN-2024</small>    
+                            assignment.filter(assignment=> assignment.status ==='completed').map((assignment,index)=>(
+                            <Accordion activeIndex={-1}>
+                            <AccordionTab header={
+                                <div style={assignmentListCss}>
+                                    <span style={{marginTop:"-7px"}}>{assignment.title}</span>
+                                    <small>{assignment.startDate}</small>
                                 </div>
-                                </NavLink>
-                             </div>  
+                                }>
+                                <div> 
+                                    <div style={submissionList}>
+                                        <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                    </div>
+                                    <AssignmentDescription description={assignment.description}/> 
+                                </div> 
+                                </AccordionTab>
+                            </Accordion>
                             ))
-                        }                                                                              
-                    </div>
+                        }     
+                        </div>   
+                    </div>                                                                                                                           
+                </div>                        
             </TabPanel>                  
         </TabView>
         </div>
