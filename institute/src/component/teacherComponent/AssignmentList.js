@@ -28,7 +28,7 @@ const AssignmentList=({user,teacherId})=>{
             }                        
         };
         getBatches();                
-    },[teacherId]);
+    },[]);
 
     
     const filteredBatches = batches.filter(batch => batch.status === "End");

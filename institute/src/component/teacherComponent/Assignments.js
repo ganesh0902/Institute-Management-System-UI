@@ -7,9 +7,12 @@ import { getAssignmentByBatchIdAPI } from '../../apis/assignment';
 import Loader from '../Loader';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AssignmentDescription from './AssignmentDescription';
+import { useNavigate } from 'react-router-dom';
 const Assignments=()=>{
     
     const[assignment,setAssignment]=useState([]);
+    const navigate=useNavigate();
+    const [activeIndex, setActiveIndex] = useState(0); // 0 is the index of the first tab
 
     const linkStyle = {
         margin: "40px 0px 0px -2px",
@@ -19,6 +22,14 @@ const Assignments=()=>{
     };
 
     const { batchId } = useParams();
+        
+
+    // Function to open the second tab
+    const openTab = (index,assignmentId) => {
+      setActiveIndex(index);
+      console.log("Assignment Id is "+assignmentId);
+    };
+
 
     useEffect(()=>{
 
@@ -53,6 +64,7 @@ const Assignments=()=>{
     {
         return(<Loader/>)
     }
+    
 
     const assignmentListCss={
         padding: '15px 15px 15px 0px', 
@@ -66,18 +78,20 @@ const Assignments=()=>{
         display:"flex",
         justifyContent:"right",
         pointer:"cursor", 
-        marginTop:"10px"         
+        marginTop:"10px",
+        border:"none"         
     }
     const navLink={
         backgroundColor:"white",   
         color:"black",     
         padding:"5px 20px 5px 20px", 
-        borderRadius:"20px",             
-    }
+        borderRadius:"20px",                 
+        border:"none"
+    }    
     return(
         <div style={linkStyle}> 
         <div className='mt-3'>
-        <TabView className="fixed-tab-view-for-batches"> 
+        <TabView className="fixed-tab-view-for-batches" activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}> 
         <TabPanel header="Active Assignment" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">
             <div className='row'>                
                 <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
@@ -96,7 +110,7 @@ const Assignments=()=>{
                             }>
                             <div> 
                                 <div style={submissionList}>
-                                    <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                    <button onClick={()=>openTab(3,assignment.taskId)} className="shadow" style={navLink}> Submission List </button>
                                 </div>
                                 <AssignmentDescription description={assignment.description}/> 
                             </div> 
@@ -126,7 +140,7 @@ const Assignments=()=>{
                                 }>
                                 <div> 
                                     <div style={submissionList}>
-                                        <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                        <button onClick={()=>openTab(3,assignment.taskId)} className="shadow" style={navLink}> Submission List </button>
                                     </div>
                                     <AssignmentDescription description={assignment.description}/> 
                                 </div> 
@@ -156,7 +170,7 @@ const Assignments=()=>{
                                 }>
                                 <div> 
                                     <div style={submissionList}>
-                                        <NavLink to="" className="shadow" style={navLink}> Submission List </NavLink>
+                                     <button onClick={()=>openTab(3)} className="shadow" style={navLink}> Submission List </button>
                                     </div>
                                     <AssignmentDescription description={assignment.description}/> 
                                 </div> 
@@ -167,7 +181,14 @@ const Assignments=()=>{
                         </div>   
                     </div>                                                                                                                           
                 </div>                        
-            </TabPanel>                  
+            </TabPanel>   
+            <TabPanel header="Submission List" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">                                
+            <div className='row'>                  
+                <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
+                    <h2> Submission List </h2>
+                </div>
+            </div>
+            </TabPanel>               
         </TabView>
         </div>
         </div>
