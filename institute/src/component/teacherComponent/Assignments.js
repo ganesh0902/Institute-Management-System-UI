@@ -1,18 +1,19 @@
 import { TabView, TabPanel } from 'primereact/tabview';   
-import { NavLink } from 'react-router-dom';
 import '../teacherComponent/css/Assignment.css'
 import {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom';
+import a from '..//..//images/back1.jpg';
+import { NavLink, useParams } from 'react-router-dom';
 import { getAssignmentByBatchIdAPI } from '../../apis/assignment';
 import Loader from '../Loader';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AssignmentDescription from './AssignmentDescription';
-import { useNavigate } from 'react-router-dom';
+import { getStudentByAssignmentIdAPI } from '../../apis/studentApis';
 const Assignments=()=>{
     
-    const[assignment,setAssignment]=useState([]);
-    const navigate=useNavigate();
+    const[assignment,setAssignment]=useState([]);    
     const [activeIndex, setActiveIndex] = useState(0); // 0 is the index of the first tab
+    const[assignmentId,setAssignmentId]=useState(0);
+    const[students,setStudents]=useState([]);
 
     const linkStyle = {
         margin: "40px 0px 0px -2px",
@@ -23,12 +24,18 @@ const Assignments=()=>{
 
     const { batchId } = useParams();
         
-
     // Function to open the second tab
     const openTab = (index,assignmentId) => {
       setActiveIndex(index);
+      setAssignmentId(assignmentId);
+      getStudentByAssignment(assignmentId); //call get student list
       console.log("Assignment Id is "+assignmentId);
-    };
+    };    
+
+    useEffect(()=>{
+
+        console.log("AssignmentId is "+assignmentId);
+    },[assignmentId]);
 
 
     useEffect(()=>{
@@ -49,12 +56,20 @@ const Assignments=()=>{
         }
     }
 
+    const getStudentByAssignment=async (assignmentId)=>{
+
+        const data = await getStudentByAssignmentIdAPI(assignmentId);
+        setStudents(data);
+    }
+
     useEffect(()=>{
         console.log("BatchId "+batchId);
         console.log("Assignment");
         console.log(assignment);
+        console.log("student list");
+        console.log(students);
         
-    },[assignment]);
+    },[assignment,students]);
 
     const filterAssignmentPending    = assignment.filter(assignment=> assignment.status ==="pending");
     const filterAssignmentCompleted  = assignment.filter(assignment=> assignment.status ==="completed");
@@ -88,6 +103,10 @@ const Assignments=()=>{
         borderRadius:"20px",                 
         border:"none"
     }    
+
+    const selectedStudent=(stdId)=>{
+        console.log("Student id is "+stdId);
+    }
     return(
         <div style={linkStyle}> 
         <div className='mt-3'>
@@ -184,8 +203,26 @@ const Assignments=()=>{
             </TabPanel>   
             <TabPanel header="Submission List" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">                                
             <div className='row'>                  
-                <div className='col-12 col-sm-12 col-md-12 shadow assignment-card'>
-                    <h2> Submission List </h2>
+                <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
+                <div id='image-label-container'>
+                    {
+                        students.length === 0 && <div className='text-center'> No Student Found Yet </div>
+                    }
+                    {
+                        students.map((student,index)=>(
+                            <div className='image-label'>
+                                <NavLink to="#" onClick={()=>selectedStudent(1021)}>
+                                <img src={a} alt="Ganesh Sakhare" />
+                                <label>Ganesh Sakhare</label>
+                                </NavLink>
+                            </div>  
+                        ))
+                    }                                       
+                    </div>
+                </div>
+                <div className='col-12 col-sm-12 col-md-9 shadow assignment-card'>
+                    <h2> 
+                     </h2>
                 </div>
             </div>
             </TabPanel>               

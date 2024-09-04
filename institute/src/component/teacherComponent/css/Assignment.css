@@ -65,4 +65,51 @@
 }
 .p-accordion-header {
     margin-top: 10px;
+}
+
+#image-label-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#image-label-container .image-label {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  #image-label-container .image-label img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    transition: transform 0.3s ease;
+  }
+    
+  #image-label-container .image-label label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .image-label:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .image-label:hover img {
+    transform: scale(1.1);
+  }
+  
+  .image-label:hover label {
+    color: #007bff;
   }
