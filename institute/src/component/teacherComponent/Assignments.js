@@ -14,6 +14,8 @@ const Assignments=()=>{
     const [activeIndex, setActiveIndex] = useState(0); // 0 is the index of the first tab
     const[assignmentId,setAssignmentId]=useState(0);
     const[students,setStudents]=useState([]);
+    const[selectedStdId,setSelectedStdId]=useState(0);
+    const { batchId } = useParams();
 
     const linkStyle = {
         margin: "40px 0px 0px -2px",
@@ -21,8 +23,7 @@ const Assignments=()=>{
         height:"600px",         
         
     };
-
-    const { batchId } = useParams();
+    
         
     // Function to open the second tab
     const openTab = (index,assignmentId) => {
@@ -35,13 +36,18 @@ const Assignments=()=>{
     useEffect(()=>{
 
         console.log("AssignmentId is "+assignmentId);
-    },[assignmentId]);
+    },[assignmentId,selectedStdId]);
 
 
     useEffect(()=>{
 
         getAssignment();
     },[]);
+
+    // useEffect(()=>{
+
+
+    // },[selectedStdId])
 
     const getAssignment=async ()=>{
         try
@@ -69,7 +75,7 @@ const Assignments=()=>{
         console.log("student list");
         console.log(students);
         
-    },[assignment,students]);
+    },[assignment,students,selectedStdId]);
 
     const filterAssignmentPending    = assignment.filter(assignment=> assignment.status ==="pending");
     const filterAssignmentCompleted  = assignment.filter(assignment=> assignment.status ==="completed");
@@ -104,9 +110,12 @@ const Assignments=()=>{
         border:"none"
     }    
 
-    const selectedStudent=(stdId)=>{
-        console.log("Student id is "+stdId);
-    }
+    const selectedStudent=(studentId)=>{
+        
+        setSelectedStdId(studentId);
+        console.log("selected Student Id "+studentId);
+    }    
+
     return(
         <div style={linkStyle}> 
         <div className='mt-3'>
@@ -203,7 +212,7 @@ const Assignments=()=>{
             </TabPanel>   
             <TabPanel header="Submission List" className="batch-in-teacher-header px-4 text-5" leftIcon="pi pi-user mr-2">                                
             <div className='row'>                  
-                <div className='col-12 col-sm-12 col-md-3 shadow assignment-card'>
+                <div className='col-12 col-sm-12 col-md-4 shadow assignment-card'>
                 <div id='image-label-container'>
                     {
                         students.length === 0 && <div className='text-center'> No Student Found Yet </div>
@@ -211,18 +220,32 @@ const Assignments=()=>{
                     {
                         students.map((student,index)=>(
                             <div className='image-label'>
-                                <NavLink to="#" onClick={()=>selectedStudent(1021)}>
+                                <NavLink to="#" onClick={()=>selectedStudent(student.stdId, student.assignmentId)}>
                                 <img src={a} alt="Ganesh Sakhare" />
-                                <label>Ganesh Sakhare</label>
+                                <label>{student.firstName} &nbsp; {student.lastName}</label>
                                 </NavLink>
                             </div>  
                         ))
                     }                                       
                     </div>
                 </div>
-                <div className='col-12 col-sm-12 col-md-9 shadow assignment-card'>
+                <div className='col-12 col-sm-12 col-md-8 shadow assignment-card'>
                     <h2> 
-                     </h2>
+                    {
+                    students.filter(student => student.stdId === selectedStdId).length === 0 
+                        ? <div className='text-center'> No Student Found Yet </div> 
+                        : students.filter(student => student.stdId === selectedStdId).map(student => (
+                            <div key={student.stdId}>
+                            <small className='text-small' style={{ float: 'right' }}>
+                              {student.date ? new Date(student.date).toLocaleString() : 'No submission date'}
+                            </small><br/>
+                            <div>   
+                                 <p className='m-3'>Solution: {student.solution}</p>                            
+                            </div>
+                            </div>
+                        ))
+                    }
+                    </h2>
                 </div>
             </div>
             </TabPanel>               
