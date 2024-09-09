@@ -15,7 +15,7 @@ const Assignments=()=>{
     const[assignmentId,setAssignmentId]=useState(0);
     const[students,setStudents]=useState([]);
     const[selectedStdId,setSelectedStdId]=useState(0);
-    const { batchId } = useParams();
+    const { batchId } = useParams();   
 
     const linkStyle = {
         margin: "40px 0px 0px -2px",
@@ -43,11 +43,6 @@ const Assignments=()=>{
 
         getAssignment();
     },[]);
-
-    // useEffect(()=>{
-
-
-    // },[selectedStdId])
 
     const getAssignment=async ()=>{
         try
@@ -116,6 +111,11 @@ const Assignments=()=>{
         console.log("selected Student Id "+studentId);
     }    
 
+    const statusChange=(status)=>{
+
+        console.log("Status is "+status);
+        console.log("selected Student Id is "+selectedStdId);
+    }
     return(
         <div style={linkStyle}> 
         <div className='mt-3'>
@@ -235,14 +235,28 @@ const Assignments=()=>{
                     students.filter(student => student.stdId === selectedStdId).length === 0 
                         ? <div className='text-center'> No Student Found Yet </div> 
                         : students.filter(student => student.stdId === selectedStdId).map(student => (
-                            <div key={student.stdId}>
-                            <small className='text-small' style={{ float: 'right' }}>
-                              {student.date ? new Date(student.date).toLocaleString() : 'No submission date'}
-                            </small><br/>
-                            <div>   
+
+                            <div key={student.stdId} className='row'>
+                             <div className='col-12 col-sm-12 col-md-6 pt-4'>                                
+                            <small className='text-small'>
+                              Submission Date : {student.date ? new Date(student.date).toLocaleString() : 'No submission date'}
+                            </small>                        
+                            </div>   
+                            <div className='col-12 col-sm-12 col-md-6 assignmentStatusContainer mb-2'>
+                            <label> Select Status </label>
+                                <select style={{float:"right"}}  disabled={student.status === "Approved"} className='form-control' onChange={((e)=>statusChange(e.target.value))}>                                    
+                                    <option value="Reject" style={{display:student.status ==="Approved" ? 'block':"none"}}> Approved </option>
+                                    <option value="Reject"> Reject </option>
+                                    <option value="Approved"> Approved </option>
+                                </select>
+                            </div>
+                            <hr/>
+                            <div className='col-12 col-sm-12 col-md-12'>
                                  <p className='m-3'>Solution: {student.solution}</p>                            
                             </div>
-                            </div>
+
+                        </div>
+                        
                         ))
                     }
                     </h2>
