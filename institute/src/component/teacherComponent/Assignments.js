@@ -7,7 +7,7 @@ import { getAssignmentByBatchIdAPI } from '../../apis/assignment';
 import Loader from '../Loader';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import AssignmentDescription from './AssignmentDescription';
-import { getStudentByAssignmentIdAPI } from '../../apis/studentApis';
+import { getStudentByAssignmentIdAPI,changeSubmissionStatus} from '../../apis/studentApis';
 const Assignments=()=>{
     
     const[assignment,setAssignment]=useState([]);    
@@ -32,12 +32,6 @@ const Assignments=()=>{
       getStudentByAssignment(assignmentId); //call get student list
       console.log("Assignment Id is "+assignmentId);
     };    
-
-    useEffect(()=>{
-
-        console.log("AssignmentId is "+assignmentId);
-    },[assignmentId,selectedStdId]);
-
 
     useEffect(()=>{
 
@@ -111,10 +105,15 @@ const Assignments=()=>{
         console.log("selected Student Id "+studentId);
     }    
 
-    const statusChange=(status)=>{
+    const statusChange=async (status,submissionId)=>{
 
         console.log("Status is "+status);
         console.log("selected Student Id is "+selectedStdId);
+        console.log("selected submission Id is "+submissionId);
+        const response  = await changeSubmissionStatus(status,submissionId,selectedStdId);
+
+        alert(response);
+
     }
     return(
         <div style={linkStyle}> 
@@ -197,7 +196,7 @@ const Assignments=()=>{
                                 </div>
                                 }>
                                 <div> 
-                                    <div style={submissionList}>
+                                    <div>
                                      <button onClick={()=>openTab(3)} className="shadow" style={navLink}> Submission List </button>
                                     </div>
                                     <AssignmentDescription description={assignment.description}/> 
@@ -233,7 +232,7 @@ const Assignments=()=>{
                     <h2> 
                     {
                     students.filter(student => student.stdId === selectedStdId).length === 0 
-                        ? <div className='text-center'> No Student Found Yet </div> 
+                        ? <div className='text-center'> No Student Submission Yet </div> 
                         : students.filter(student => student.stdId === selectedStdId).map(student => (
 
                             <div key={student.stdId} className='row'>
@@ -244,7 +243,7 @@ const Assignments=()=>{
                             </div>   
                             <div className='col-12 col-sm-12 col-md-6 assignmentStatusContainer mb-2'>
                             <label> Select Status </label>
-                                <select style={{float:"right"}}  disabled={student.status === "Approved"} className='form-control' onChange={((e)=>statusChange(e.target.value))}>                                    
+                                <select style={{float:"right"}}  disabled={student.status === "Approved"} className='form-control' onChange={((e)=>statusChange(e.target.value,student.submissionId))}>                                    
                                     <option value="Reject" style={{display:student.status ==="Approved" ? 'block':"none"}}> Approved </option>
                                     <option value="Reject"> Reject </option>
                                     <option value="Approved"> Approved </option>

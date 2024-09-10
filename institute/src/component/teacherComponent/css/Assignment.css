@@ -124,30 +124,3 @@
     font-weight: 1000px;
 }
 
-/* Example custom CSS */
-.dropdown-container {
-    margin: 0 auto;
-    padding: 10px;
-}
-
-.dropdown-custom .p-dropdown {
-    border: 2px solid #007bff; /* Custom border color */
-    border-radius: 8px;        /* Rounded corners */
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.dropdown-custom .p-dropdown:hover {
-    border-color: #0056b3;
-}
-
-.dropdown-custom .p-dropdown-label {
-    font-size: 1rem;           /* Custom font size */
-}
-
-.dropdown-custom .p-dropdown.p-focus {
-    box-shadow: 0 0 5px 2px rgba(0, 123, 255, 0.2);
-}
-
-.dropdown-custom .p-dropdown-panel {
-    border-radius: 8px;        /* Rounded panel */
-}

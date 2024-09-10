@@ -14,6 +14,7 @@ const getStudentByAssignmentId="http://localhost:8999/submission/assignment/"
 // following API is for Assignment
 const saveAssignmentAPI="http://localhost:8999/batch/assignmentSave";
 const getStudentAPI="http://localhost:8999/student/";
+const changeSubmissionStatusAPI="http://localhost:8999/submission/status/"
 
 export const getStudentDetails=async (stdId)=>{
     
@@ -240,3 +241,23 @@ export const getStudentByAssignmentIdAPI=async (assignmentId)=>{
         console.log(error);
     }
 }
+
+export const changeSubmissionStatus=(async (status,submissionId,stdId)=>{
+
+    const response  = await fetch(changeSubmissionStatusAPI+status+"/"+submissionId+"/"+stdId,{
+
+        method:"PUT",
+        headers:{
+            'Content-Type':"application/json",
+            'Authorization':`Bearer ${token}`
+        }
+    });
+
+    if(!response.ok)
+    {
+        console.log("API Respoonse was not okay "+response.statusText);
+    }
+
+    const data = response.text;
+    return data;
+})
