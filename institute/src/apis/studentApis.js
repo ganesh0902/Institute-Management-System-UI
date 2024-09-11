@@ -258,6 +258,6 @@ export const changeSubmissionStatus=(async (status,submissionId,stdId)=>{
         console.log("API Respoonse was not okay "+response.statusText);
     }
 
-    const data = response.text;
+    const data = await response.text();
     return data;
 })

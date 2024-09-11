@@ -1,7 +1,6 @@
 import { TabView, TabPanel } from 'primereact/tabview';   
 import '../teacherComponent/css/Assignment.css'
 import {useEffect, useState} from 'react'
-import a from '..//..//images/back1.jpg';
 import { NavLink, useParams } from 'react-router-dom';
 import { getAssignmentByBatchIdAPI } from '../../apis/assignment';
 import Loader from '../Loader';
@@ -219,8 +218,8 @@ const Assignments=()=>{
                     {
                         students.map((student,index)=>(
                             <div className='image-label'>
-                                <NavLink to="#" onClick={()=>selectedStudent(student.stdId, student.assignmentId)}>
-                                <img src={a} alt="Ganesh Sakhare" />
+                                <NavLink to="#" onClick={()=>selectedStudent(student.stdId, student.assignmentId)}>                                
+                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={`../student/${student.image}`} alt="Card image cap" />
                                 <label>{student.firstName} &nbsp; {student.lastName}</label>
                                 </NavLink>
                             </div>  

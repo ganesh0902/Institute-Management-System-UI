@@ -57,7 +57,7 @@ const TSidebar=({toggle})=>{
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaUserGraduate /></Icon>
-              <NavLink to="" style={linkStyle}>  Student </NavLink>
+              <NavLink to="/student-list" style={linkStyle}>  Student </NavLink>
             </SidebarItem>  
             <SidebarItem>
             <Icon><FaCog /></Icon>
