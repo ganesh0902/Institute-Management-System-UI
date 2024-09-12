@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import '../teacherComponent/css/StudentList.css'
 import a from '..//..//images/back1.jpg';
+import { getAllStudents } from "../../apis/studentApis";
 const StudentList=({teacherId})=>{
     
+    const[students,setStudents]=useState([]);
+
     const linkStyle = {
         margin: "70px 10px 0px -2px",
         padding: "0px 10px 20px 0px",  
@@ -15,7 +18,15 @@ const StudentList=({teacherId})=>{
 
         console.log("Teacher Id is ");
         console.log(teacherId);
+        getStudent();
+        
     },[])
+
+    const getStudent=(async ()=>{
+
+        const data = await getAllStudents();
+        setStudents(data);
+    });
     return(
         <div style={linkStyle}>
             <div className="row" id="student-list">
@@ -24,76 +35,20 @@ const StudentList=({teacherId})=>{
                 </div>
                 <div className="col-12 col-sm-12 col-md-12">
                     <div className="row">
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
+                        {
+                            students.map((student,index)=>(
+                                <div className="col-12 col-sm-12 col-md-2  shadow">
                             <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
+                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={`../student/${student.image}`} alt="Card image cap" />
                             </div>
                             <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
-                        <div className="col-12 col-sm-12 col-md-2  shadow">
-                            <div>
-                                <img class="card-img-top rounded teacher-image-in-teacher-list" src={a} alt="Card image cap" />
-                            </div>
-                            <div className="details">
-                                <label> Ganesh Sakhare </label>
-                                <label> Batch JUNE-2020 </label>
-                                <button className="btn "> View Details</button>
-                            </div>
-                        </div>
+                                    <label> Ganesh Sakhare </label>
+                                    <label> Batch JUNE-2020 </label>
+                                    <button className="btn "> View Details</button>
+                                </div>
+                            </div>  
+                            ))
+                        }                                                                      
                     </div>
                 </div>
             </div>

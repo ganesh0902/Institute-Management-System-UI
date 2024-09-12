@@ -10,6 +10,7 @@ const getBatchTitleAndDate="http://localhost:8999/batch/batchTitleAndDate/";
 const token = localStorage.getItem('authToken');
 const getStudentByBatchIdAPI="http://localhost:8999/student/studentByBatch/"
 const getStudentByAssignmentId="http://localhost:8999/submission/assignment/"
+const getAllStudent ="http://localhost:8999/student/";
 
 // following API is for Assignment
 const saveAssignmentAPI="http://localhost:8999/batch/assignmentSave";
@@ -260,4 +261,30 @@ export const changeSubmissionStatus=(async (status,submissionId,stdId)=>{
 
     const data = await response.text();
     return data;
+})
+
+export const getAllStudents=(async ()=>{
+
+    try
+    {
+        const response = await fetch(getAllStudent,{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`
+            }
+        });
+
+        if(!response.ok)
+        {
+            console.log("API Response was not okay "+response.statusText);
+        }
+        const data = await response.json();
+        return data;
+
+    }
+    catch(error)
+    {
+        console.log(error.statusText);
+    }
 })
