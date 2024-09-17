@@ -1,8 +1,16 @@
-import React from "react"
+import { useState,useEffect } from "react";
 import { FaHome } from 'react-icons/fa';
 import './css/THomePage.css'
 import { BarChart, Bar,  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart,Line   } from 'recharts';
+import {getStudentCount, getTeacherCount, getCourseCount, getBatchCount} from '../../apis/adminHomeApi'
 const THomePage=()=>{
+
+    const instituteId=localStorage.getItem("INSTITUTE_ID");
+
+  const[student,setStudent]=useState(0);
+  const[teacher,setTeacher]=useState(0);
+  const[course,setCourse]=useState(0);
+  const[batch,setBatch]=useState(0); 
 
     const linkStyle = {
         margin: "70px 0px 0px -30px",
@@ -56,6 +64,35 @@ const THomePage=()=>{
         },
       ];
 
+      useEffect(()=>{
+
+        getBatch();
+        getStudent();
+        getCourse();
+        getTeacher();
+        console.log("Institute Id Home is ",instituteId);
+      
+      },[])
+    
+      const getStudent=async ()=>{
+        const response = await getStudentCount(instituteId);         
+        setStudent(response);   
+      }
+    
+      const getTeacher=async ()=>{  
+        const response =  await getTeacherCount(instituteId);    
+        setTeacher(response);  
+      }
+    
+      const getCourse=async ()=>{
+        const response  = await getCourseCount(instituteId);
+        setCourse(response);      
+      }
+    
+      const getBatch=async ()=>{
+        const response = await getBatchCount(instituteId);
+        setBatch(response);      
+      }
       
     return(<div style={linkStyle} className="">
         <div className="tHomeCards">            
@@ -64,8 +101,8 @@ const THomePage=()=>{
                     <FaHome/>
                 </div>
                 <div>
-                    <p> TOTAL STUDENT </p>
-                    <p> 2000 </p>
+                    <p> TOTAL STUDENTS </p>
+                    <p> {student} </p>
                     <small> 80% increase </small>
                 </div>
             </div>                                                                         
@@ -74,8 +111,8 @@ const THomePage=()=>{
                     <FaHome/>
                 </div>
                 <div>
-                    <p> NEW JOINING </p>
-                    <p> 2000 </p>
+                    <p> Teachers </p>
+                    <p> {teacher} </p>
                     <small> 80% increase </small>
                 </div>
             </div>                                                                         
@@ -85,7 +122,7 @@ const THomePage=()=>{
                 </div>
                 <div>
                     <p> TOTAL COURSES</p>
-                    <p> 2000 </p>
+                    <p> {course} </p>
                     <small> 80% increase </small>
                 </div>
             </div>                                                                         
