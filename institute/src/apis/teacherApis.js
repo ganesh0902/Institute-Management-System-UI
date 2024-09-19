@@ -84,7 +84,10 @@ export const getTeacherById=async (tId)=>{
     {
         throw new Error("Api Response was not okay",response.statusText);
     }
+    
     const data= await response.json();
+    console.log("Teacher Record is in teacherAPIs");
+    console.log(data);
     return data;
 }
 
