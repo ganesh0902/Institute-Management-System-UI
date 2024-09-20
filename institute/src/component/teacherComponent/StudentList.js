@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import '../teacherComponent/css/StudentList.css'
 import a from '..//..//images/back1.jpg';
-import { getAllStudents,getStudentDetails } from "../../apis/studentApis";
+import { getAllStudents,getStudentDetails, searchStudentByName } from "../../apis/studentApis";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
+import debounce from 'lodash/debounce';
 const StudentList=({teacherId})=>{
     
     const[students,setStudents]=useState([]);
     const[student,setStudent]=useState([]);
-    const[openDialog,setOpenDialog]=useState(false);
+    const[openDialog,setOpenDialog]=useState(false);    
+    const[newStudent,setNewStudent]=useState([]);
 
     const linkStyle = {
         margin: "70px 10px 0px -2px",
@@ -36,21 +38,37 @@ const StudentList=({teacherId})=>{
         const studentDetails =await getStudentDetails(stdId);        
         setStudent(studentDetails);
     });
-
+    
     useEffect(()=>{
 
         console.log(student);
-        if(student!=null)
-        {
-        setOpenDialog(!openDialog);
+    },[students]);
+
+    // Async function to search for a student by name
+    const getStudentSearch = async (search) => {
+        
+        try {
+            const response = await searchStudentByName(search);
+            if (response && response.length > 0) {
+                setStudents([]);  // Clear previous students
+                setStudents(response);  // Set the student data only if response is valid
+            } else {
+                 getStudent();
+            }
+        } catch (error) {
+            console.error('Error fetching student:', error);
+            // On error, reset the student state
         }
-    },[student]);
+    };
+      
+
+    
 
     return(
         <div style={linkStyle}>
             <div className="row" id="student-list">
                 <div className="col-12 col-12 col-md-12">
-                    <input type="text" className="search-box" placeholder="Search Student By Name"/>
+                    <input type="text" className="search-box" placeholder="Search Student By Name" onChange={(event)=>getStudentSearch(event.target.value)}/>
                 </div>
                 <div className="col-12 col-sm-12 col-md-12">
                     <div className="row">

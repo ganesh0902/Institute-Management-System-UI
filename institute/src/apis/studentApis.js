@@ -103,6 +103,21 @@ export const searchStudent=async (formData)=>{
     });
 }
 
+export const searchStudentByName=async (name)=>{
+
+    const response = await fetch(search_student+name,{
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`,
+        },        
+    });
+
+    const data =await response.json();
+
+    return data;
+}
+
 export const getBatchTileAndDateRecord=async (institutesId)=>{
     try {
         const response = await fetch(getBatchTitleAndDate+institutesId, {
