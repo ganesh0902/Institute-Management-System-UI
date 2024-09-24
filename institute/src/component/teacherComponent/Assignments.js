@@ -51,9 +51,15 @@ const Assignments=()=>{
     }
 
     const getStudentByAssignment=async (assignmentId)=>{
-
+        try
+        {
         const data = await getStudentByAssignmentIdAPI(assignmentId);
         setStudents(data);
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
     }
 
     useEffect(()=>{
