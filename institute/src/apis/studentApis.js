@@ -181,7 +181,7 @@ export const getStudentByBatchId=async (batchId)=>{
         const data = await response.json();
         return data;
     }
-    catch(error)
+    catch(error) 
     {
         console.log(error);
     }

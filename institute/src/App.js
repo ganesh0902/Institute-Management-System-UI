@@ -25,7 +25,7 @@ import AssignmentList from './component/teacherComponent/AssignmentList';
 import Assignments from './component/teacherComponent/Assignments';
 import SubmissionList from './component/teacherComponent/SubmissionList';
 import StudentList from './component/teacherComponent/StudentList';
-
+import PaymentComponent from './apis/paymentGateWay';
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
   const[openSidebarToggleForTeacher,setOpenSidebarToggleForTeacher]=useState(false);
@@ -121,6 +121,7 @@ const setSidebarToggleTeacher=()=>{
             <Route path='/assignments/:batchId' element={<Assignments/> }/>
             <Route path='/submissionList/:assignmentId' element={<SubmissionList/>}/>
             <Route path='/student-list' element={<StudentList teacherId={localStorage.getItem("teacherId")}/>} />
+            <Route path='/payment' element={<PaymentComponent/>}/>
           </Routes>
          </>                  
       }                                  
