@@ -162,7 +162,7 @@ const HomePage=(props)=>{
             {/* features */}
             <div id="features">
                 <h1> Awesome Features </h1>
-                <p> Replenish Man Have Thing Gathering lights yielding shall you </p>
+                <p> Replenish Man Have Thing Gathering lights yielding shall you </p>                
                 <div className="fea-base">
                     <div className="fea-box">
                         {<FaGraduationCap className="icon"/>}

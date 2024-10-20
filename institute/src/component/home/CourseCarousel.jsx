@@ -94,6 +94,25 @@ const CourseCarousel = () => {
         <section id="course">
             <h1>Our Popular Courses</h1>
             <p>Replenish Man Have Thing Gathering lights yielding shall you</p>
+
+            <div className="courses-name shadow">
+                    <div className="" style={{backgroundColor:"#F4F6FF"}}>
+                        <p className="text-dark py-2"> Our Courses Types</p>
+                    </div>
+                    <div className="content">
+                        <p>We have the most complete range of software training courses needed by the professionals around the world.Please do contact us for any queries related to the courses.</p>
+                        <h5> Here are some of the popular courses we offer. </h5>
+                    </div>
+                    <div className="course-btn">
+                        <button className="btn btn-primary"> Java Full Stack </button>
+                        <button className="btn btn-primary"> Python Full Stack </button>
+                        <button className="btn btn-primary">  Power BI </button>
+
+                        <button className="btn btn-primary"> Java Full Stack </button>
+                        <button className="btn btn-primary"> Python Full Stack </button>
+                        <button className="btn btn-primary">  Power BI </button>
+                    </div>
+                </div>
             <Slider {...settings}>
                 {
                     batch.map((data)=>(

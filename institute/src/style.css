@@ -233,6 +233,7 @@ nav .navigationForDesktop{
   font-weight: 400;
   color: rgb(70,70, 87);  
 }
+
 /* end features */
 
 /* course */
@@ -279,6 +280,24 @@ nav .navigationForDesktop{
 #course .courses .details .start{
   color: #fdc93d;
 }
+
+#course .courses-name .content{
+
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgb(70,70, 87);    
+}
+
+#course .courses-name .content h5{
+  color: #EB8317;
+}
+#course .courses-name .course-btn button{
+
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+
 #course .courses .cost
 {  
   line-height: 70px;

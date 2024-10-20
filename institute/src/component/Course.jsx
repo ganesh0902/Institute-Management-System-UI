@@ -12,26 +12,17 @@ import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
 import { MultiSelect } from 'primereact/multiselect';
 import { FloatLabel } from 'primereact/floatlabel';                
 import {Button} from 'primereact/button'
+import { Editor } from "primereact/editor";
 import {getAllCoursesRecord, saveCourseRecord} from '../apis//courseApis';
 
-const CourseSchema =Yup.object().shape({
-    courseName:Yup.string().required("course Name is Mandatory"),
-    description:Yup.string().required("Description is mandatory"),
-    skills:Yup.string().required("Skills is mandatory"),
-    fees:Yup.string().required("Fees is Mandatory")
-});
 
 const Course =({instituteId})=>{
 
     const [loading, setLoading] = useState(false);
-    const[fDate,setFDate]=useState("");
-    const[tDate,setToDate]=useState("");
-    const[course,setCourse]=useState("");
-    const[click,setClick]=useState(0);
     const[addCourse,setNewCourse]=useState(false);
     
     const[courseName,setCourseName]=useState("");
-    const[description,setDescription]=useState("");
+    const[Description,setDescription]=useState("");
     const[skills,setSkills]=useState("");
     const[fees,setFees]=useState(0);    
     const[updateToggle,setUpdateToggle]=useState(false);        
@@ -40,8 +31,9 @@ const Course =({instituteId})=>{
     const[apiError,setApiError]=useState("");        
     const[courseNames,setCourseNames]=useState("");    
     const [selectedSkill, setSelectedSkills] = useState(null);
-    const[updatedCourse,setUpdatedCourse]=useState(null);   
-     
+    const[updatedCourse,setUpdatedCourse]=useState(null); 
+    const[editorToggle,setEditorToggle]    = useState(false);    
+    const [topics, setTopics] = useState([{ topicName: '', content: '' }]);
     
     const skillSet = [
         { name: 'Java', id: 'NY' },
@@ -50,19 +42,22 @@ const Course =({instituteId})=>{
         { name: 'Microservices', id: 'IST' },
         { name: 'Reactjs', id: 'PRS' }
     ];
+   
 
-    const initialValues = {
-        courseName: '',
-        description: '',
-        skills: '',
-        fees:"",
-        instituteId:instituteId
-      };
+    const handleTopicChange = (index, event) => {
+        const { name, value } = event.target;
+        const newTopics = [...topics];
+        newTopics[index][name] = value;
+        setTopics(newTopics);
+    };
+
+    const addTopic = () => {
+        setTopics([...topics, { topicName: '', content: '' }]);
+    };
       
     useEffect(()=>{
  
-        const getAllCourse=async ()=>{
-                         
+        const getAllCourse=async ()=>{                         
             const response  = await getAllCoursesRecord(instituteId);
             console.log("Course Response is ",response);
             setAllCourses(response);     
@@ -85,11 +80,7 @@ const Course =({instituteId})=>{
         }
         getAllCourse();
       }, [addCourse]);
-
-      const submit = () => {
-        
-        
-    };
+      
     const saveCourse=async (course)=>{        
       
         try{
@@ -117,32 +108,8 @@ const Course =({instituteId})=>{
                 setApiError(error.message);
             }
         }                           
-    }
-    
-      const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
-        initialValues,
-        validationSchema:CourseSchema,
-        onSubmit:(value=>{
-            saveCourse(value);
-        }),
-      });
-  
-      const search=async ()=>{     
-         if(courseNames!="")
-         {
-        await fetch(`http://localhost:8999/course/getCourseByName/`+courseNames).then((result)=>{
+    }               
 
-        result.json().then((response)=>{
-
-            setAllCourses([]);            
-            setAllCourses(response);                     
-        })
-        })
-        }   
-        else{
-            setNewCourse(!addCourse);
-        }
-      }
       const column=[
         {
             name:"Course Name",
@@ -218,818 +185,6 @@ const Course =({instituteId})=>{
           });
      } 
 
-      const data=[
-        {
-            courseName:"python Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002",            
-        },
-        {
-            courseName:"sql Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"android Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"power BI Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        },
-        {
-            courseName:"Java Development",
-            description:"This is course for Java Development",
-            skills:"Java, Spring boot, Hibernate",
-            fees:"2000",
-            lastUpdatedDate:"02/09/2002"
-        }
-                
-
-      ]
-
-      const[records,setRecords]=useState(data);
-
       const handleFilter=(event)=>{
         const newData=allCourses.filter(row=>{
             return row.courseName.toLowerCase().includes(event.target.value.toLowerCase());
@@ -1042,7 +197,7 @@ const Course =({instituteId})=>{
         var allSkills=selectedSkill.map(skills=> skills.name);
         const skills=allSkills.join(",");                
         const cid=updatedCourse.cid;
-        var course={cid, courseName, description, fees, skills};                                        
+        var course={cid, courseName, Description, fees, skills};                                        
         saveCourse(course);
         setNewCourse(false);
         setUpdateToggle(false);
@@ -1051,6 +206,19 @@ const Course =({instituteId})=>{
         }, 2000);
     };   
 
+    const handleSubmit1 = () => {
+        const courseData = {
+            courseName: document.querySelector('input[name="courseName"]').value,
+            fees: document.querySelector('input[name="fees"]').value,
+            instituteId: 2, // or retrieve this dynamically if needed
+            topics: topics.map(topic => ({
+                topicName: topic.topicName,
+                content: topic.content
+            }))
+        };        
+        alert(JSON.stringify(courseData));
+
+    }
     
     return(
         <main className='main-container-course'>
@@ -1067,58 +235,72 @@ const Course =({instituteId})=>{
            
             </div>                                
             </div>
-            <Modal size="lg" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">
-                <ModalHeader toggle={()=>setNewCourse(!addCourse)} className="addBatchTitle"> Add New Batch </ModalHeader>
+            <Modal size="xl" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">
+                <ModalHeader toggle={()=>setNewCourse(!addCourse)} className="addBatchTitle"> Add New Course </ModalHeader>
                 <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
-                <form onSubmit={handleSubmit}>
+                
                     <Row>
-                        <Col lg={6} md={12} className="mb-sm-2">
-                            <label htmlFor="Course Name" >Course Name </label>
+                        <Col lg={4} md={12} className="mb-sm-2">
+                            <label htmlFor="Course Name" >Enter Course Name </label>
                             <input type="text"
                                 className="form-control bg-white"
                                 name='courseName'
                                 placeholder="Enter Course Name" 
-                                value={values.courseName} onBlur={handleBlur} 
-                                onChange={handleChange}/>  
-                             <small> {errors.courseName && errors.courseName} </small>
-                        </Col>
-                        <Col lg={6} md={12} className="mb-sm-2">
-                            <label htmlFor='Description'>Description {errors.description && <span className='text-danger text-medium'> * </span>}</label>
-                            <input type="text"
-                                className="form-control bg-white"
-                                name="description"
-                                placeholder='Enter Course Description'
-                                value={values.description} onBlur={handleBlur} 
-                                    onChange={handleChange} />
-                                <small> {errors.description && errors.description} </small> 
-                        </Col>
-                        <Col lg={6} md={12} className="mb-sm-2">
-                            <label htmlFor='Skills '>Skills {errors.skills && <span className='text-danger text-medium'> * </span>} </label>
-                            <input type="text"
-                                className="form-control bg-white"
-                                name='skills'
-                                placeholder='Enter Skills Separated By comma'
-                                value={values.skills} onBlur={handleBlur} 
-                                    onChange={handleChange}/>
-                                <small> {errors.skills && errors.skills} </small>  
-                        </Col>
-                        <Col lg={6} md={12} className="mb-sm-2">
-                        <label htmlFor='Fees'>Fees {errors.fees && <span className='text-danger text-medium'> * </span>}</label>
+                                />                               
+                        </Col>                        
+                       
+                        <Col lg={4} md={12} className="mb-sm-2">
+                        <label htmlFor="Course Name" >Enter Course Fees  </label>
                             <input type="text"
                                 name='fees'
                                 className="form-control bg-white"
                                 placeholder='Enter Fees' 
-                                value={values.fees} onBlur={handleBlur} 
-                                    onChange={handleChange}/>
-                                <small> {errors.fees && errors.fees} </small>
+                                />                                
                         </Col>
-                        <Col lg={6} md={12} className="mb-sm-2 mt-2">
-                            <button className='form-control btn btn-primary'> Submit </button>
+                        <Col lg={4} md={12} className="mb-sm-2 mt-4">
+                            <button className='form-control btn btn-primary' onClick={()=>handleSubmit1()} > Submit </button>
+                        </Col>                        
+                        <>
+                        {topics.map((topic, index) => (
+                            <div key={index}>
+                                <Col lg={12} sm={12}>
+                                    <label className="mt-3">Add Topic Name</label>                                
+                                    <div className="bg-dark">
+                                        <input
+                                            type='text'
+                                            className='form-control'
+                                            placeholder='Enter Topic Name'
+                                            name="topicName"
+                                            value={topic.topicName}
+                                            onChange={(event) => handleTopicChange(index, event)}
+                                            required
+                                        />
+                                    </div>
+                                </Col>
+
+                                <Col lg={12} sm={12}>
+                                    <label className="mt-3">Add Description</label>                                
+                                    <div className="bg-dark">
+                                        <Editor
+                                            value={topic.content}
+                                            name="content"
+                                            style={{ height: '320px' }}
+                                            className="bg-dark shadow mt-2"
+                                            onTextChange={(e) => handleTopicChange(index, { target: { name: 'content', value: e.htmlValue } })} // Use the correct method for the editor
+                                            required
+                                        />
+                                    </div>
+                                </Col>
+                            </div>
+                        ))}
+                        <Col lg={12} md={12} className="mb-sm-2 mt-2 text-center">
+                            <button className='btn btn-primary w-5' onClick={addTopic}>Add New Topic</button>
                         </Col>
-                    </Row>
-                </form>
+                    </>
+                    </Row>                
                 </ModalBody>
-            </Modal>         
+            </Modal>   
+
         <Modal size='lg' isOpen={updateToggle} toggle={()=>setUpdateToggle(!updateToggle)} className="batchModal">
             <ModalHeader toggle={()=>setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
             <Row className='m-1'>
