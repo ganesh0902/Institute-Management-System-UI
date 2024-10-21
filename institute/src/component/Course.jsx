@@ -17,22 +17,19 @@ import {getAllCoursesRecord, saveCourseRecord} from '../apis//courseApis';
 
 
 const Course =({instituteId})=>{
-
-    const [loading, setLoading] = useState(false);
+    
     const[addCourse,setNewCourse]=useState(false);
     
     const[courseName,setCourseName]=useState("");
-    const[Description,setDescription]=useState("");
-    const[skills,setSkills]=useState("");
+    
+    const[courseId,setCourseId]=useState(0);
     const[fees,setFees]=useState(0);    
+
     const[updateToggle,setUpdateToggle]=useState(false);        
-   const[allCourses,setAllCourses]=useState([]);
-    const API_SAVE_COURSE="http://localhost:8999/course/";
-    const[apiError,setApiError]=useState("");        
-    const[courseNames,setCourseNames]=useState("");    
-    const [selectedSkill, setSelectedSkills] = useState(null);
-    const[updatedCourse,setUpdatedCourse]=useState(null); 
-    const[editorToggle,setEditorToggle]    = useState(false);    
+   const[allCourses,setAllCourses]=useState([]);    
+    const[apiError,setApiError]=useState("");            
+    
+    const[updatedCourse,setUpdatedCourse]=useState(null);       
     const [topics, setTopics] = useState([{ topicName: '', content: '' }]);
     
     const skillSet = [
@@ -65,12 +62,6 @@ const Course =({instituteId})=>{
         }
         getAllCourse();
     },[]);
-
-    useEffect(()=>{
-
-        setLoading(false);
-
-    },[allCourses])
         
     useEffect(() => {
         const getAllCourse=async ()=>{
@@ -87,6 +78,7 @@ const Course =({instituteId})=>{
             const response= await saveCourseRecord(course);            
             console.log("Course Save Successfully");
             alert("Course Save Successfully");
+            console.log(response);
             setNewCourse(false);
             setUpdatedCourse(false);
             setNewCourse(!addCourse);
@@ -160,9 +152,15 @@ const Course =({instituteId})=>{
       ];
      
       const updateCourse = (json) => {                               
-            setUpdatedCourse(json);                
-            setUpdateToggle(!updateToggle);               
-      };
+        setCourseName(json.courseName);
+        setCourseId(json.cid);
+        setFees(json.fees);
+        setTopics(json.topics || [{ topicName: '', content: '' }]); // Set existing topics
+        setUpdatedCourse(json);                
+        setUpdateToggle(true);               
+        console.log(JSON.stringify(json));
+        console.log(topics);
+    };
 
      const deleteRecord=(row)=>{
 
@@ -190,35 +188,42 @@ const Course =({instituteId})=>{
             return row.courseName.toLowerCase().includes(event.target.value.toLowerCase());
         })
         setAllCourses(newData);
-      }      
-    
-      const load = () => {  //   load method will be call when submit button is click
-        setLoading(true);        
-        var allSkills=selectedSkill.map(skills=> skills.name);
-        const skills=allSkills.join(",");                
-        const cid=updatedCourse.cid;
-        var course={cid, courseName, Description, fees, skills};                                        
-        saveCourse(course);
-        setNewCourse(false);
-        setUpdateToggle(false);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    };   
+      }               
 
     const handleSubmit1 = () => {
         const courseData = {
-            courseName: document.querySelector('input[name="courseName"]').value,
-            fees: document.querySelector('input[name="fees"]').value,
-            instituteId: 2, // or retrieve this dynamically if needed
+            // courseName: document.querySelector('input[name="courseName"]').value,
+            // fees: document.querySelector('input[name="fees"]').value,
+            courseName: courseName,
+            fees: fees,
+
+            instituteId: instituteId, // received instituteId By props
             topics: topics.map(topic => ({
                 topicName: topic.topicName,
                 content: topic.content
             }))
         };        
-        alert(JSON.stringify(courseData));
-
+        saveCourse(courseData);
     }
+
+    const handleUpdateSubmit = () => {
+        const updatedCourseData = {
+            courseName: courseName,
+            cid:courseId,
+            fees: fees,
+            instituteId: instituteId, 
+            topics: topics.map(topic => ({
+                topicName: topic.topicName,
+                content: topic.content
+            }))
+        };
+        
+        saveCourse(updatedCourseData);
+        setUpdateToggle(false);  // Close the modal after successful update
+    };
+    
+   
+    
     
     return(
         <main className='main-container-course'>
@@ -246,6 +251,8 @@ const Course =({instituteId})=>{
                                 className="form-control bg-white"
                                 name='courseName'
                                 placeholder="Enter Course Name" 
+                                onChange={(e)=>setCourseName(e.target.value)}
+                                required
                                 />                               
                         </Col>                        
                        
@@ -254,7 +261,8 @@ const Course =({instituteId})=>{
                             <input type="text"
                                 name='fees'
                                 className="form-control bg-white"
-                                placeholder='Enter Fees' 
+                                placeholder='Enter Fees' required
+                                onChange={(e)=>setFees(e.target.value)}
                                 />                                
                         </Col>
                         <Col lg={4} md={12} className="mb-sm-2 mt-4">
@@ -301,39 +309,67 @@ const Course =({instituteId})=>{
                 </ModalBody>
             </Modal>   
 
-        <Modal size='lg' isOpen={updateToggle} toggle={()=>setUpdateToggle(!updateToggle)} className="batchModal">
-            <ModalHeader toggle={()=>setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
-            <Row className='m-1'>
-                <Col lg={6} md={12} className="mb-sm-2">
-                    <label> Enter Course Name  </label>                                        
-                    <InputText type="text" variant="filled" name="courseName" placeholder="Course" defaultValue={updatedCourse && updatedCourse.courseName} onChange={(even)=>setCourseName(even.target.value)} className='p-inputtext-xl text-dark'/>                    
-                </Col>
-                <Col lg={6} md={12} className="mb-sm-2">
-                    <label className='text-2'> Enter Course Description  </label>
-                    <InputText type="text" variant="filled"  placeholder="First Name" defaultValue={updatedCourse && updatedCourse.description} onChange={(even)=>setDescription(even.target.value)} className='p-inputtext-xl text-dark'/>                    
-                </Col>
-                <Col lg={6} md={12} className="mb-sm-2 mt-2">
-                    <label className='text-2'> Skills </label>
-                    <InputText type="text" variant="filled"  placeholder="Select Skills"  defaultValue={updatedCourse && updatedCourse.skills} onChange={(even)=>setSkills(even.target.value)} className='p-inputtext-xl text-dark'/>                    
-                </Col>                
-                <Col lg={6} md={12} className="mb-sm-2 mt-2">
-                    <label className='text-2'> Fees </label>
-                    <InputText type="text" variant="filled"  placeholder="Enter Fees" defaultValue={updatedCourse && updatedCourse.fees} onChange={(even)=>setFees(even.target.value)} className='p-inputtext-xl text-dark'/>                    
-                </Col>
-                <Col lg={12} md={12} className="mb-sm-2 mt-4">               
-                    <FloatLabel className="w-full md:w-26rem custom-floatlabel">
-                    <MultiSelect value={selectedSkill} onChange={(e) => setSelectedSkills(e.value)} 
-                        options={skillSet} optionLabel="name" maxSelectedLabels={3} 
-                        panelClassName="custom-multiselect-panel" className="w-full" />
-                    <label htmlFor="ms-cities">Select Skills</label>
-                    </FloatLabel>
-                </Col>
-                <Col lg={12} md={12} className="mb-sm-2 mt-4">               
-                    <Button label="Submit" className='primeButton' icon="pi pi-check"  loading={loading} onClick={load} />
-                </Col>
-            </Row>
-        </Modal>                                       
-        </main>
+    <Modal size='lg' isOpen={updateToggle} toggle={() => setUpdateToggle(!updateToggle)} className="batchModal">
+    <ModalHeader toggle={() => setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
+    <Row className='m-1'>
+        <Col lg={8} md={12} className="mb-sm-2 m-2">
+            <label> Course Name  </label>                                        
+            <InputText 
+                type="text" 
+                name="courseName" 
+                placeholder="Course" 
+                value={courseName} 
+                onChange={(e) => setCourseName(e.target.value)} 
+                className='p-inputtext-xl text-dark' 
+            />                    
+        </Col>
+        <Col lg={8} md={12} className="mb-sm-2 m-2">
+            <label className='text-2'> Fees  </label>
+            <InputText 
+                type="text" 
+                name="fees" 
+                placeholder="Enter Fees" 
+                value={fees} 
+                onChange={(e) => setFees(e.target.value)} 
+                className='p-inputtext-xl text-dark' 
+            />                    
+        </Col>                              
+    </Row>
+    
+    {topics.map((topic, index) => (
+        <div key={index}>
+            <Col lg={12} sm={12} className="m-2">
+                <label className="mt-3">Topic Name</label>                                
+                <div className="bg-dark">
+                    <InputText
+                        type='text'
+                        className='form-control'
+                        placeholder='Enter Topic Name'
+                        name="topicName"
+                        value={topic.topicName}
+                        onChange={(event) => handleTopicChange(index, event)}
+                    />
+                </div>
+            </Col>
+            <Col lg={8} sm={12} className="m-2">
+                <label className="mt-3">Topic Content</label>                                
+                <div className="bg-dark">
+                    <Editor
+                        value={topic.content}
+                        name="content"
+                        style={{ height: '320px' }}
+                        className="bg-dark shadow mt-2"
+                        onTextChange={(e) => handleTopicChange(index, { target: { name: 'content', value: e.htmlValue } })}
+                    />
+                </div>
+            </Col>
+        </div>
+        ))}    
+    <Col lg={12} md={12} className="mb-sm-2 mt-2 text-center">
+        <Button label="Submit" className='primeButton' icon="pi pi-check" onClick={handleUpdateSubmit} />
+    </Col>
+    </Modal>
+</main>
     )
 }
 export default Course
