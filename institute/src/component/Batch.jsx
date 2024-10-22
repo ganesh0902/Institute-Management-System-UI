@@ -1,27 +1,21 @@
-import { useState,useEffect } from 'react';
+import { useState,useEffect, Suspense } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
-import {useFormik} from 'formik'
-import * as Yup from 'yup';
 import Loader from './Loader';
-import {saveBatchRecord,getTeacherIdAndNameRecord,get_findByBatchTitleRecord,getBatchByInstitute,getTeacherIdAndNameByIdentityService} from '../apis/batchApis'
+import {saveBatchRecord,get_findByBatchTitleRecord,getBatchByInstitute,getTeacherIdAndNameByIdentityService} from '../apis/batchApis'
 import {getCourseIdAndNameRecord} from '../apis/courseApis';
 
 const token = localStorage.getItem('authToken');
-const instituteId =localStorage.getItem("INSTITUTED_ID");
 
-const Batch=({instituteId})=>{
+const BatchContent=({instituteId})=>{
 
     const[fDate,setFDate]=useState("");
-    const[tDate,setToDate]=useState("");
-    const[course,setCourse]=useState("");
-    const[addCourse,setNewCourse]=useState("");
+    const[tDate,setToDate]=useState("");    
     const[allBatches,setAllBatches]=useState([]);
     const[toggle,setToggle]=useState(false);
     const[pageLoad,setPageLoad]=useState(false);
-
-    const[date,setDate]=useState(new Date());
+    
     const[coursesIdAndName,setCoursesIdAndName]=useState([]);
     const[teacherIdAndName,setTeacherIdAndName]=useState([]);
     const[batchTitle,setBatchTitle]=useState("");
@@ -290,4 +284,14 @@ const Batch=({instituteId})=>{
         </main>
     )
 }
+
+// Home component with Suspense and fallback loader
+const  Batch=()=>({ instituteId }) =>{
+    return (
+      <Suspense fallback={<Loader />}>
+        <BatchContent instituteId={instituteId} />
+      </Suspense>
+    );
+  }
+
 export default Batch

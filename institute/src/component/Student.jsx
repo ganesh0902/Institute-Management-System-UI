@@ -152,10 +152,6 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
   }
   }
 
-  if(student.length <=0)
-  {
-    return<div> <Loader/> </div>
-  }
   return (
     <div className='container mt-2'>
       <div className='stdContainer'>

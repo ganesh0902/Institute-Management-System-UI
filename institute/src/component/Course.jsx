@@ -1,27 +1,21 @@
-import { useState,useEffect } from 'react';
-import axios from 'axios';
+import { useState,useEffect, Suspense } from 'react';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
-import {Formik,Form,Field,ErrorMessage, useFormik} from 'formik'
 import * as Yup from 'yup';
 import e from 'cors';
 import DataTable from 'react-data-table-component';
 import { BsPencil, BsTrash, BsEye } from 'react-icons/bs';
 import Swal from 'sweetalert2'
 import { InputText } from 'primereact/inputtext';
-import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css';
-import { MultiSelect } from 'primereact/multiselect';
-import { FloatLabel } from 'primereact/floatlabel';                
+import 'primereact/resources/themes/bootstrap4-dark-blue/theme.css'
 import {Button} from 'primereact/button'
 import { Editor } from "primereact/editor";
 import {getAllCoursesRecord, saveCourseRecord} from '../apis//courseApis';
+import Loader from './Loader';
 
-
-const Course =({instituteId})=>{
+const CourseContent =({instituteId})=>{
     
-    const[addCourse,setNewCourse]=useState(false);
-    
+    const[addCourse,setNewCourse]=useState(false);    
     const[courseName,setCourseName]=useState("");
-    
     const[courseId,setCourseId]=useState(0);
     const[fees,setFees]=useState(0);    
 
@@ -221,10 +215,7 @@ const Course =({instituteId})=>{
         saveCourse(updatedCourseData);
         setUpdateToggle(false);  // Close the modal after successful update
     };
-    
-   
-    
-    
+               
     return(
         <main className='main-container-course'>
             <div className="c-main-component ">                               
@@ -309,10 +300,10 @@ const Course =({instituteId})=>{
                 </ModalBody>
             </Modal>   
 
-    <Modal size='lg' isOpen={updateToggle} toggle={() => setUpdateToggle(!updateToggle)} className="batchModal">
+    <Modal size='xl' isOpen={updateToggle} toggle={() => setUpdateToggle(!updateToggle)} className="batchModal">
     <ModalHeader toggle={() => setUpdateToggle(!updateToggle)} className="addBatchTitle"> Update Course</ModalHeader>                
     <Row className='m-1'>
-        <Col lg={8} md={12} className="mb-sm-2 m-2">
+        <Col lg={6} md={12} className="mb-sm-2">
             <label> Course Name  </label>                                        
             <InputText 
                 type="text" 
@@ -323,7 +314,7 @@ const Course =({instituteId})=>{
                 className='p-inputtext-xl text-dark' 
             />                    
         </Col>
-        <Col lg={8} md={12} className="mb-sm-2 m-2">
+        <Col lg={6} md={12} className="mb-sm-2 ">
             <label className='text-2'> Fees  </label>
             <InputText 
                 type="text" 
@@ -333,12 +324,11 @@ const Course =({instituteId})=>{
                 onChange={(e) => setFees(e.target.value)} 
                 className='p-inputtext-xl text-dark' 
             />                    
-        </Col>                              
-    </Row>
+        </Col>                                  
     
     {topics.map((topic, index) => (
-        <div key={index}>
-            <Col lg={12} sm={12} className="m-2">
+        <div key={index} className="d-flex justify-content-center align-items-center flex-column">
+            <Col lg={10} sm={12}>
                 <label className="mt-3">Topic Name</label>                                
                 <div className="bg-dark">
                     <InputText
@@ -351,13 +341,13 @@ const Course =({instituteId})=>{
                     />
                 </div>
             </Col>
-            <Col lg={8} sm={12} className="m-2">
-                <label className="mt-3">Topic Content</label>                                
-                <div className="bg-dark">
+            <Col lg={10} sm={12} >
+                <label className="mt-4">Topic Content</label>                                
+                <div className="bg-dark ">
                     <Editor
                         value={topic.content}
                         name="content"
-                        style={{ height: '320px' }}
+                        style={{ height: '320px'}}
                         className="bg-dark shadow mt-2"
                         onTextChange={(e) => handleTopicChange(index, { target: { name: 'content', value: e.htmlValue } })}
                     />
@@ -368,8 +358,19 @@ const Course =({instituteId})=>{
     <Col lg={12} md={12} className="mb-sm-2 mt-2 text-center">
         <Button label="Submit" className='primeButton' icon="pi pi-check" onClick={handleUpdateSubmit} />
     </Col>
+    </Row>
     </Modal>
 </main>
     )
 }
+
+const Course=({instituteId})=>{
+
+    return (
+        <Suspense fallback={<Loader />}>
+          <CourseContent instituteId={instituteId} />
+        </Suspense>
+      );
+}
+
 export default Course
