@@ -13,7 +13,6 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
 import {getInstitute, getTeacherDetailsRecord} from '../..//apis/instituteApi'
-import {useAppContext } from '../common/AppProvider'
 import Loader from "../Loader"
 
 import { useEffect } from "react"

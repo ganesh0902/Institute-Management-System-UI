@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
-import {useFormik} from 'formik'
 import axios from 'axios';
 import * as Yup from 'yup';
 import Loader from "../component/Loader"
 import {saveStudent} from '../apis/studentApis'
-
 import {searchStudent,getBatchTileAndDateRecord,getStudentRecordByInstitute} from '../apis/studentApis'
+
 const Student=({instituteId}) =>{
 
   const [formData, setFormData] = useState({
@@ -17,37 +16,19 @@ const Student=({instituteId}) =>{
     courseName: '',
     status: ''  
   });
-  const[stdId,setId]=useState(1);
+  
   const[student,setStudent]=useState([]);
   const[addStudent,setAddStudent]=useState(false);
 
   const[firstName,setFirstName]=useState("");
   const[lastName,setLastName]=useState("");
   const[passoutYear,setPassoutYear]=useState("");
-  const[lastEducation,setLastEducation]=useState("");
-  const[courseName,setCourseName]=useState("");
+  const[lastEducation,setLastEducation]=useState("");  
   const[batchId,setBatchId]=useState('');
   const[batchTitleAndDate,setBatchTitleAndDate]=useState([]);
   const[image,setImage]=useState("");
 
   const token = localStorage.getItem('authToken');
-
-  const studentSchema=Yup.object().shape({    
-    firstName:Yup.string().required("First Name is mandatory"),
-    lastName:Yup.string().required("LastName is mandatory"),
-    passoutYear:Yup.string().required("LastPass Out Year is mandatory"),
-    lastEducation:Yup.string().required("Last Education is mandatory"),     
-    batchId:Yup.string().required("Batch is mandatory"),
-    image: Yup.mixed().nullable()    
-});
-
-const initialValues={
-  firstName:"",
-  lastName:"",
-  passoutYear:"",  
-  lastEducation:"",  
-  batchId:"" 
-}
 
 //const instituteId = localStorage.getItem("instituteId");
 
@@ -61,13 +42,6 @@ const studentSave=async ()=>{
   alert("Student Save Successfully");
   setAddStudent(!addStudent);
 }
-const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
-  initialValues,
-  validationSchema:studentSchema,
-  onSubmit:(value=>{
-      studentSave(value);      
-  }),
-});
 
   const search = async () => {        
     if(formData.studentName!="")
@@ -120,7 +94,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
       setStudent(response);
     }
     getStudent();
-  },[addStudent]);
+  },[addStudent,addStudent]);
 
   const getBatchTitleAndDate=(async ()=>{    
     
@@ -246,8 +220,7 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
                                     <option key={index} value={batch.bid}> {batch.batchTitle} {batch.startDate} </option>
                                   ))
                                 }                                                                
-                            </select>
-                            <small>{errors.batchId && errors.batchId}</small>
+                            </select>                            
                   </Col>      
                   <Col lg={6} md={12} className="batchCl mt-4 mb-sm-2">                        
                             <button type="submit" className='form-control btn btn-primary' onClick={studentSave}> Submit </button>
@@ -258,4 +231,5 @@ const {values,handleBlur,handleChange,handleSubmit,errors} = useFormik({
     </div>
   )
 }
+
 export default Student

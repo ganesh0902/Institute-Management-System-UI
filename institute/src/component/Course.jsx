@@ -104,14 +104,20 @@ const CourseContent =({instituteId})=>{
             
         },
         {
-            name:"Description",            
-            selector:row=>row.description,
-            sortable:true
+            name: "topics Name",
+            selector: row => row.topics && row.topics.length > 0 
+            ? row.topics.map(topic => topic.topicName).join(", ") 
+            : 'N/A',            
+            sortable: true,
+            width: "200px"
         },
         {
-            name:"Skills",            
-            selector:row=>row.skills,
-            sortable:true
+            name: "Content",
+            selector: row => row.topics && row.topics.length > 0
+                ? row.topics.map(topic => topic.content || 'No Content').join(", ")
+                : 'N/A',
+            sortable: true,
+            style: { width: '250px' }
         },
         {
             name:"Fees",            
@@ -141,7 +147,7 @@ const CourseContent =({instituteId})=>{
                 </div>
             ),            
             button: true,
-            width:'280px'
+            width:'200px'
           },
       ];
      
@@ -222,13 +228,14 @@ const CourseContent =({instituteId})=>{
             <div className='containers' style={{paddingTop:"10px"}}>                
                 <div style={{float:"right"}}> <input type="text" placeholder='Enter Course Name' onChange={handleFilter}></input> </div>
                 <div style={{float:"right"}}> <button className="btn btn-primary p-2 pl-3 mt-1" onClick={()=>setNewCourse(!addCourse)}> Add new Course </button></div>          
-                <DataTable 
+               <div style={{margin:"10px"}}>
+                <DataTable width="80%"
                     columns={column} 
                     data={allCourses}
                     fixedHeader
                     >                    
-                </DataTable>      
-           
+                </DataTable>     
+                </div>
             </div>                                
             </div>
             <Modal size="xl" isOpen={addCourse} toggle={()=>setNewCourse(!addCourse)} className="batchModal">

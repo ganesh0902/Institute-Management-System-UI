@@ -8,7 +8,7 @@ import {getCourseIdAndNameRecord} from '../apis/courseApis';
 
 const token = localStorage.getItem('authToken');
 
-const BatchContent=({instituteId})=>{
+const Batch=({instituteId})=>{
 
     const[fDate,setFDate]=useState("");
     const[tDate,setToDate]=useState("");    
@@ -118,6 +118,7 @@ const BatchContent=({instituteId})=>{
         saveBatch(batch);
     }
     return(
+        <Suspense fallback={<Loader/>}>
         <main className='main-container'>
             <div className="b-main-component">
                 <div className="row course-header">
@@ -282,16 +283,8 @@ const BatchContent=({instituteId})=>{
                 </ModalBody>
             </Modal>                   
         </main>
+        </Suspense>
     )
 }
-
-// Home component with Suspense and fallback loader
-const  Batch=()=>({ instituteId }) =>{
-    return (
-      <Suspense fallback={<Loader />}>
-        <BatchContent instituteId={instituteId} />
-      </Suspense>
-    );
-  }
 
 export default Batch
