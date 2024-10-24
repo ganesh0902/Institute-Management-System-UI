@@ -1,7 +1,5 @@
 import { useState,useEffect, Suspense } from 'react';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
-import * as Yup from 'yup';
-import e from 'cors';
 import DataTable from 'react-data-table-component';
 import { BsPencil, BsTrash, BsEye } from 'react-icons/bs';
 import Swal from 'sweetalert2'
@@ -25,15 +23,6 @@ const CourseContent =({instituteId})=>{
     
     const[updatedCourse,setUpdatedCourse]=useState(null);       
     const [topics, setTopics] = useState([{ topicName: '', content: '' }]);
-    
-    const skillSet = [
-        { name: 'Java', id: 'NY' },
-        { name: 'Spring boot', id: 'RM' },
-        { name: 'Hibernate', id: 'LDN' },
-        { name: 'Microservices', id: 'IST' },
-        { name: 'Reactjs', id: 'PRS' }
-    ];
-   
 
     const handleTopicChange = (index, event) => {
         const { name, value } = event.target;
@@ -75,7 +64,8 @@ const CourseContent =({instituteId})=>{
             console.log(response);
             setNewCourse(false);
             setUpdatedCourse(false);
-            setNewCourse(!addCourse);
+            setNewCourse(false);
+
         }
         catch(error)
         {
@@ -191,9 +181,7 @@ const CourseContent =({instituteId})=>{
       }               
 
     const handleSubmit1 = () => {
-        const courseData = {
-            // courseName: document.querySelector('input[name="courseName"]').value,
-            // fees: document.querySelector('input[name="fees"]').value,
+        const courseData = {            
             courseName: courseName,
             fees: fees,
 
@@ -204,6 +192,9 @@ const CourseContent =({instituteId})=>{
             }))
         };        
         saveCourse(courseData);
+        setCourseName('');   // Reset courseName
+        setFees('');         // Reset fees
+        setTopics([]);
     }
 
     const handleUpdateSubmit = () => {
