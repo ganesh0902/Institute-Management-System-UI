@@ -214,6 +214,7 @@ const CourseContent =({instituteId})=>{
     };
                
     return(
+        
         <main className='main-container-course'>
             <div className="c-main-component ">                               
             <div className='containers' style={{paddingTop:"10px"}}>                

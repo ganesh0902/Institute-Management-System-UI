@@ -9,7 +9,7 @@ import Loader from "../component/Loader"
 import {saveStudent} from '../apis/studentApis'
 import {searchStudent,getBatchTileAndDateRecord,getStudentRecordByInstitute} from '../apis/studentApis'
 
-const Student=({instituteId}) =>{
+const StudentContent=({instituteId}) =>{
 
   const [formData, setFormData] = useState({
     studentName: '',
@@ -44,7 +44,7 @@ const studentSave=async ()=>{
 }
 
   const search = async () => {        
-    if(formData.studentName!="")
+    if(formData.studentName!=="")
     {
       const filterResult = await searchStudent(formData);
       setStudent(filterResult);
@@ -79,7 +79,20 @@ const studentSave=async ()=>{
 
   useEffect(()=>{
 
-    console.log("Student Record is ",student);
+    getBatchTitleAndDate();
+    
+    const getStudent=async ()=>{
+      
+      if(instituteId===0)
+      {
+        return"Loading...";
+      }
+      const response  = await getStudentRecordByInstitute(instituteId);
+      setStudent(response);
+    }
+    getStudent();
+
+    console.log("Institute Id is in student ",instituteId);
   },[student]);
 
   useEffect(()=>{    
@@ -94,7 +107,7 @@ const studentSave=async ()=>{
       setStudent(response);
     }
     getStudent();
-  },[addStudent,addStudent]);
+  },[addStudent]);
 
   const getBatchTitleAndDate=(async ()=>{    
     
@@ -160,8 +173,8 @@ const studentSave=async ()=>{
             student.map((student,index)=>(
               <div className='col-12 col-sm-12 col-md-4 shadow mt-2'>
                 <NavLink to={`/stdDetails/${student.stdId}`} className="stdNavLink">
-                <div className=''>                   
-                   <img class="card-img-top rounded teacher-image-in-teacher-list" src={`../student/${student.image}`} alt="Card image cap" />
+                <div className='stdprofile'>                   
+                   <img class="card-img-top rounded h-5" src={`../student/${student.image}`} alt="Card image cap" />
                 </div>
                 <div className='stdCard'>
                    <label> Username </label> <small> {student.firstName} &nbsp; {student.lastName} </small>                 
@@ -221,7 +234,7 @@ const studentSave=async ()=>{
                                   ))
                                 }                                                                
                             </select>                            
-                  </Col>      
+                  </Col>                       
                   <Col lg={6} md={12} className="batchCl mt-4 mb-sm-2">                        
                             <button type="submit" className='form-control btn btn-primary' onClick={studentSave}> Submit </button>
                   </Col>   
@@ -230,6 +243,16 @@ const studentSave=async ()=>{
       </Modal>
     </div>
   )
+}
+
+
+const Student=({instituteId})=>{
+
+  return (
+      <Suspense fallback={<Loader />}>
+        <StudentContent instituteId={instituteId} />
+      </Suspense>
+    );
 }
 
 export default Student

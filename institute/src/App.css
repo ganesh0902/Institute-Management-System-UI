@@ -919,6 +919,11 @@ width: 100%;
 
   text-decoration: none;
 }
+.stdContainer .stdprofile img{
+
+  height: 300px !important; 
+}
+
 .stdDetailsContainer{
   background-color: #F1F0FF;
   height: 98%;
