@@ -17,15 +17,13 @@ import Loader from "../Loader"
 
 import { useEffect } from "react"
 
-const HomePage=(props)=>{
+const HomePage=({loginStatus,instituteId})=>{
 
     const[modalLogin,setModalLogin]=useState(false);
     const[modalSignUp,setModalSignUp]=useState(false);
     const[loaderToggle,setLoaderToggle]=useState(false);
     const[isWorking,setIsWorking]  =useState(false);
-    const[teacherDetails,setTeacherDetails]=useState([]);
-
-    const {loginStatus}=props;    
+    const[teacherDetails,setTeacherDetails]=useState([]);    
     
     const initialValueForSignIn={
         username:"",
@@ -183,7 +181,7 @@ const HomePage=(props)=>{
 
             {/* courses  */}            
             <br/>
-            <CourseCarousel/>
+            <CourseCarousel instituteId={instituteId}/>
             <br/>
             {/* registration section */}            
 

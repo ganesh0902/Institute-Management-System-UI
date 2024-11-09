@@ -1,11 +1,9 @@
-import axios from "axios";
 
 const getCourseNameAPIS="http://localhost:8999/course/getCourseIdAndName/";
 const getCourseIdAndNameApis="http://localhost:8999/course/getCourseIdAndName/";
 const getAllCoursesAPI="http://localhost:8999/course/institute/";
 const API_SAVE_COURSE="http://localhost:8999/course/";
                               
-
 const token = localStorage.getItem('authToken');
 const instituteId = localStorage.getItem("INSTITUTED_ID");
 export const getCourserNameAndId=async ()=>{
@@ -36,12 +34,12 @@ export const getCourserNameAndId=async ()=>{
 }
 
 export const getCourseIdAndNameRecord=async (institutesId)=>{
-
+    
     const response  = await fetch(getCourseIdAndNameApis+institutesId,{
         method:"GET",
         headers:{
             'Content-Type':'application/json',
-            'Authorization': `Bearer ${token}`, 
+            'Authorization':`Bearer ${token}`
         }
     });
 

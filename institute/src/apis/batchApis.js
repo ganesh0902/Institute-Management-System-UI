@@ -1,5 +1,5 @@
 import axios from "axios"
-import { json } from "react-router-dom";
+
 
 const getBatchTitleAndDateAPIS="http://localhost:8999/batch/batchTitleAndDate/";
 const updateBatchAPI="http://localhost:8999/batch/";

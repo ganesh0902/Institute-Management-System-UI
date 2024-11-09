@@ -1,30 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Link } from 'react-router-dom';
 import { MdStarRate } from 'react-icons/md';
-import NavigationBar from "./NavigationBar"
+import { getCourseIdAndNameRecord } from '../../apis/courseApis';
 import { FaInstagram,FaGithub,FaLinkedin  } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa6";
 import { CiTwitter } from "react-icons/ci";
-import { IoMdTime } from 'react-icons/io';
 import c1 from '../../images/c1.jpg'
-import c2 from '../../images/c2.jpg'
-import c3 from '../../images/c3.jpg'
-import c4 from '../../images/c4.jpg'
-import c5 from '../../images/c5.jpg'
-import c6 from '../../images/c6.jpg'
-import profile from '../../images/pro1.webp'
-import profile2 from '../../images/pro2.webp'
-import profile3 from '../../images/pro3.webp'
-import profile4 from '../../images/pro4.webp'
-import { useRef,useEffect } from 'react';
 import { getBatchByInstitute,getBatchById } from '../../apis/batchApis';
 import Batch from '../Batch';
-import { useState } from 'react';
-import { Modal ,ModalBody, ModalHeader, Row,Col, Input} from "reactstrap"
-
+import { Modal ,ModalBody, ModalHeader, Row,Col} from "reactstrap"
+import Loader from '../Loader';
+import { isEmpty } from 'lodash';
 
 const CustomPrevArrow = (props) => (
     <button {...props} className="slick-prev">
@@ -37,11 +25,12 @@ const CustomNextArrow = (props) => (
         Next
     </button>
 );
-const CourseCarousel = () => {
+const CourseCarouselContent = ({instituteId}) => {
 
     const[batch,setBatch]=useState([]);
     const[detailsModal,setDetailsModal]=useState(false);
-    const[singleBatch,setSingleBatch]=useState([]);
+    const[singleBatch,setSingleBatch]=useState([]);    
+    const[course,setCourse]=useState([]);
 
     const settings = {
         dots: true,
@@ -71,7 +60,8 @@ const CourseCarousel = () => {
     useEffect(()=>{
 
         const getBatch=(async ()=>{
-            const response  = await getBatchByInstitute(1);
+            const response  = await getBatchByInstitute(2);
+
             setBatch(response);
         });
 
@@ -89,6 +79,21 @@ const CourseCarousel = () => {
         console.log("Selected Batch details", singleBatch);
         setDetailsModal(true);
     },[singleBatch]);
+
+    useEffect(()=>{
+
+        const getCourseIdAndName=async ()=>{
+            const response = await getCourseIdAndNameRecord(instituteId);
+            setCourse(response);
+            console.log("course Id And Name ", response);
+        };
+        getCourseIdAndName();
+    },[]);
+
+    if(course===null || course === isEmpty)
+    {
+        <Loader/>
+    }
    
     return (
         <section id="course">
@@ -103,15 +108,14 @@ const CourseCarousel = () => {
                         <p>We have the most complete range of software training courses needed by the professionals around the world.Please do contact us for any queries related to the courses.</p>
                         <h5> Here are some of the popular courses we offer. </h5>
                     </div>
-                    <div className="course-btn">
-                        <button className="btn btn-primary"> Java Full Stack </button>
-                        <button className="btn btn-primary"> Python Full Stack </button>
-                        <button className="btn btn-primary">  Power BI </button>
-
-                        <button className="btn btn-primary"> Java Full Stack </button>
-                        <button className="btn btn-primary"> Python Full Stack </button>
-                        <button className="btn btn-primary">  Power BI </button>
+                    <div>
+                        {
+                            course.map((cls)=>(
+                                <Link path="" className='btnCourseDetails'>{cls.courseName}</Link>
+                            ))
+                        }
                     </div>
+                    
                 </div>
             <Slider {...settings}>
                 {
@@ -119,7 +123,7 @@ const CourseCarousel = () => {
                     <div className="course-box mr-4">
                     <Link to="#" className="course-box-link" onClick={()=>toggle(data.bid)}>
                         <div className="courses m-2">
-                            <img src={`../batch/${data.image}`} alt="" />
+                            <img src={`../batch/${data.image}`} alt="" style={{height:"200px"}}/>
                             <div className="details">
                                 <span>Start Date {data.bid}</span>
                                 <h6>{data.batchTitle}</h6>
@@ -215,5 +219,15 @@ const CourseCarousel = () => {
         </section>
     );    
 };
+
+// Home component with Suspense and fallback loader
+function CourseCarousel({ instituteId }) {
+    return (
+      <Suspense fallback={<Loader />}>
+        <CourseCarouselContent instituteId={instituteId} />
+      </Suspense>
+    );
+  }
+  
 
 export default CourseCarousel;

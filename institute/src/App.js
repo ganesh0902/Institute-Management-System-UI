@@ -1,9 +1,9 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Home from './Home';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Student from './component/Student';
 import Teacher from './component/Teacher'
@@ -26,6 +26,8 @@ import Assignments from './component/teacherComponent/Assignments';
 import SubmissionList from './component/teacherComponent/SubmissionList';
 import StudentList from './component/teacherComponent/StudentList';
 import PaymentComponent from './apis/paymentGateWay';
+import CourseDetailsHome from './courses/CourseDetailsHome';
+
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
   const[openSidebarToggleForTeacher,setOpenSidebarToggleForTeacher]=useState(false);
@@ -35,7 +37,7 @@ function App() {
 
   const[loginRole,setLoginRole]=useState();
   const[credentialId,setCredentialId]=useState(0);
-  let globalNUserId = 0;
+  
 const openSidebar=()=>{
 
   setOpenSidebarToggle(!openSidebarToggle);  
@@ -45,8 +47,7 @@ const setSidebarToggleTeacher=()=>{
   setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  }
 
   const loginStatus=async(role, nUserId)=>{    
-        
-    globalNUserId = nUserId;    
+            
     if(role==="TEACHER")
     {         
       setLoginRole(role);
@@ -80,7 +81,7 @@ const setSidebarToggleTeacher=()=>{
         !login && 
         <div className='home-page'>
           <NavigationBar/>
-          <HomePage loginStatus={loginStatus}/>          
+          <HomePage loginStatus={loginStatus} instituteId={localStorage.getItem("INSTITUTE_ID")}/>                
         </div>        
       }
       <div className="grid-container">                  
@@ -109,7 +110,7 @@ const setSidebarToggleTeacher=()=>{
           </Routes>
       } 
       {
-         loginRole==="TEACHER" &&
+         loginRole==="TEACHER" ?
          <>
           <TeacherRoot setSidebarToggleTeacher={setSidebarToggleTeacher}/>
           <TSidebar toggle={openSidebarToggleForTeacher}/>
@@ -123,6 +124,12 @@ const setSidebarToggleTeacher=()=>{
             <Route path='/student-list' element={<StudentList teacherId={localStorage.getItem("teacherId")}/>} />
             <Route path='/payment' element={<PaymentComponent/>}/>
           </Routes>
+         </>
+         :
+         <>
+           <Routes>
+            <Route path='/courseDetails' element={<CourseDetailsHome/>} />
+           </Routes>
          </>                  
       }                                  
         </div>       

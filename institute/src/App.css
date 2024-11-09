@@ -339,6 +339,35 @@ body {
   color: #424769;
   padding-left: 5px;
 }
+#course .course-box .courses img{
+  height: 300px !important; 
+
+}
+#course .btnCourseDetails{
+
+  display: inline-block;
+  padding: 5px 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: #007bff; /* Primary blue color */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btnCourseDetails:hover
+{
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: scale(1.05); 
+}
+
+.btnCourseDetails:active {
+  transform: scale(0.98); /* Slightly decrease size when clicked */
+  background-color: #004085; /* Even darker on active state */
+}
 
 .cHeading{
 
