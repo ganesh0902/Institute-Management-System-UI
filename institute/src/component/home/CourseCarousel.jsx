@@ -31,6 +31,7 @@ const CourseCarouselContent = ({instituteId}) => {
     const[detailsModal,setDetailsModal]=useState(false);
     const[singleBatch,setSingleBatch]=useState([]);    
     const[course,setCourse]=useState([]);
+    const[courseDetailsToggle,setCourseDetailsToggle]=useState()
 
     const settings = {
         dots: true,
@@ -90,6 +91,12 @@ const CourseCarouselContent = ({instituteId}) => {
         getCourseIdAndName();
     },[]);
 
+    const setToggleForCourseDetails=(courseId)=>{
+
+        setCourseDetailsToggle(!courseDetailsToggle);
+        alert(courseId);
+    }
+
     if(course===null || course === isEmpty)
     {
         <Loader/>
@@ -109,9 +116,9 @@ const CourseCarouselContent = ({instituteId}) => {
                         <h5> Here are some of the popular courses we offer. </h5>
                     </div>
                     <div>
-                        {
-                            course.map((cls)=>(
-                                <Link path="" className='btnCourseDetails'>{cls.courseName}</Link>
+                        {                            
+                            course.map((cls)=>(                                
+                                <button className='btn btn-primary m-2' onClick={()=>setToggleForCourseDetails(cls.courseId)}>{cls.courseName} </button>
                             ))
                         }
                     </div>
@@ -216,9 +223,19 @@ const CourseCarouselContent = ({instituteId}) => {
         </Row>                                                           
         </ModalBody>
         </Modal>
+
+    <Modal size="xl" isOpen={courseDetailsToggle} toggle={()=>setCourseDetailsToggle(!courseDetailsToggle)} className="Course Details">
+        <ModalHeader toggle={()=>setCourseDetailsToggle(!courseDetailsToggle)} className="addBatchTitle"> Course Details  </ModalHeader>
+        <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
+            <Row className='shadow p-3 shadow'>
+                <h2> This is Course Details</h2>
+            </Row>
+        </ModalBody>
+</Modal>
         </section>
     );    
 };
+
 
 // Home component with Suspense and fallback loader
 function CourseCarousel({ instituteId }) {

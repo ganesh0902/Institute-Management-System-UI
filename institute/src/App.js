@@ -76,12 +76,17 @@ const setSidebarToggleTeacher=()=>{
   return (
     <div >
   <Router>
-      {
+          <>
+           <Routes>
+            <Route path='/courseDetails/:courseId' element={<CourseDetailsHome/>} />
+           </Routes>
+         </>                  
+      {        
         // if user is not login show the navigationBar and HomePage
         !login && 
         <div className='home-page'>
           <NavigationBar/>
-          <HomePage loginStatus={loginStatus} instituteId={localStorage.getItem("INSTITUTE_ID")}/>                
+          <HomePage loginStatus={loginStatus} instituteId={localStorage.getItem("INSTITUTE_ID")}/>                          
         </div>        
       }
       <div className="grid-container">                  
@@ -128,7 +133,7 @@ const setSidebarToggleTeacher=()=>{
          :
          <>
            <Routes>
-            <Route path='/courseDetails' element={<CourseDetailsHome/>} />
+            <Route path='/courseDetails/:courseId' element={<CourseDetailsHome/>} />
            </Routes>
          </>                  
       }                                  
