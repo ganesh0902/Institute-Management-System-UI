@@ -13,6 +13,8 @@ import Batch from '../Batch';
 import { Modal ,ModalBody, ModalHeader, Row,Col} from "reactstrap"
 import Loader from '../Loader';
 import { isEmpty } from 'lodash';
+import { findBatchesByCourseId } from '../../apis/batchApis';
+
 
 const CustomPrevArrow = (props) => (
     <button {...props} className="slick-prev">
@@ -32,6 +34,9 @@ const CourseCarouselContent = ({instituteId}) => {
     const[singleBatch,setSingleBatch]=useState([]);    
     const[course,setCourse]=useState([]);
     const[courseDetailsToggle,setCourseDetailsToggle]=useState()
+    const[batchesByCourseId,setBatchesByCourseId]=useState([]);
+
+    const[update,setUpdate]=useState(false);
 
     const settings = {
         dots: true,
@@ -91,11 +96,25 @@ const CourseCarouselContent = ({instituteId}) => {
         getCourseIdAndName();
     },[]);
 
-    const setToggleForCourseDetails=(courseId)=>{
+    const setToggleForCourseDetails=async (courseId)=>{
 
+        try
+        {
+            const response  = await findBatchesByCourseId(course);
+            setBatchesByCourseId(response);
+            setUpdate(!update);
+        }
+        catch(Error)
+        {
+            console.error(Error);
+        }
         setCourseDetailsToggle(!courseDetailsToggle);
         alert(courseId);
     }
+    useEffect(()=>{
+
+        console.log(batchesByCourseId);
+    },[update]);
 
     if(course===null || course === isEmpty)
     {

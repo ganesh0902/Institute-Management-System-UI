@@ -10,6 +10,7 @@ const get_TeacherIdAndName="http://localhost:8999/teacher/getTeachers/"
 const getTeacherIdAndNameByCredential="http://localhost:9096/auth/teacher/"
 const get_findByBatchTitleAPI="http://localhost:8999/batch/batchTitle/";
 const getBatchesByTeacherAPI ="http://localhost:8999/batch/teacher/";
+const getBatchesByCourseId ="http://localhost:8999/batch/course/"
 
 const token = localStorage.getItem('authToken');
 
@@ -230,5 +231,39 @@ export const getBatchesByTeacher=async (tId)=>{
     catch(error)
     {
         console.log(error.statusText);
+    }        
+}
+export const findBatchesByCourseId=async(courseId)=>{
+ 
+    if(!courseId)
+    {
+        console.error("Course Id is mandatory to fetch batches");
+        return;
     }
+    try
+    {
+        const response  = await fetch(getBatchById+courseId,{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization': `Bearer ${token}`
+            },            
+        })
+
+        if(!response.ok)
+        {
+            throw new Error("Something went wrong while fetching data");
+        }
+
+        const data = await response.json();
+
+        console.log("Batches By Course Id ",data);
+        return data;
+    }
+    catch(error)
+    {
+          console.error("Failed to fetch batches by course ID:", error.message);
+          return;
+    }
+    
 }
