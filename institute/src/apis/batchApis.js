@@ -242,11 +242,11 @@ export const findBatchesByCourseId=async(courseId)=>{
     }
     try
     {
-        const response  = await fetch(getBatchById+courseId,{
-            method:"POST",
+        const response  = await fetch(getBatchesByCourseId+courseId,{
+            method:"GET",
             headers:{
                 'Content-Type':'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization':`Bearer ${token}`
             },            
         })
 
@@ -264,6 +264,5 @@ export const findBatchesByCourseId=async(courseId)=>{
     {
           console.error("Failed to fetch batches by course ID:", error.message);
           return;
-    }
-    
+    }    
 }

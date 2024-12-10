@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react';
+import profile3 from '../../images/pro3.webp'
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -10,7 +11,7 @@ import { CiTwitter } from "react-icons/ci";
 import c1 from '../../images/c1.jpg'
 import { getBatchByInstitute,getBatchById } from '../../apis/batchApis';
 import Batch from '../Batch';
-import { Modal ,ModalBody, ModalHeader, Row,Col} from "reactstrap"
+import { Modal ,ModalBody, ModalHeader, Row,Col,Button, Card,CardBody, CardTitle,CardText,} from "reactstrap"
 import Loader from '../Loader';
 import { isEmpty } from 'lodash';
 import { findBatchesByCourseId } from '../../apis/batchApis';
@@ -63,6 +64,37 @@ const CourseCarouselContent = ({instituteId}) => {
         ],
     };   
 
+    const allBatches = [
+        {
+            "batchTitle": "Web Technology",
+            "duration": "6 Months",
+            "startDate": "2024-11-01",
+            "endDate": "2025-05-08",
+            "status": "Start Very Soon",
+            "location": "Pune",
+            "time": "14:55",
+            "image": "25ba6802-6ce6-4b7c-a7a3-7e538ec62b4e_meeting.jpg.jpg",
+            "teacherId": 902,
+            "courseId": 2503,
+            "instituteId": 2,
+            "bid": 1602
+        },
+        {
+            "batchTitle": "Web Technology",
+            "duration": "6 Months",
+            "startDate": "2024-11-23",
+            "endDate": "2025-05-15",
+            "status": "Start Very Soon",
+            "location": "Mumbai",
+            "time": "20:19",
+            "image": "426b76a9-0d89-4181-a68f-9de1ddfa89e3_0_pUOSYV0s8QU-X-a0.jfif",
+            "teacherId": 902,
+            "courseId": 2503,
+            "instituteId": 2,
+            "bid": 1652
+        }
+    ]
+
     useEffect(()=>{
 
         const getBatch=(async ()=>{
@@ -89,11 +121,12 @@ const CourseCarouselContent = ({instituteId}) => {
     useEffect(()=>{
 
         const getCourseIdAndName=async ()=>{
-            const response = await getCourseIdAndNameRecord(instituteId);
+            const response = await getCourseIdAndNameRecord(2);
             setCourse(response);
             console.log("course Id And Name ", response);
         };
         getCourseIdAndName();
+        
     },[]);
 
     const setToggleForCourseDetails=async (courseId)=>{
@@ -242,15 +275,63 @@ const CourseCarouselContent = ({instituteId}) => {
         </Row>                                                           
         </ModalBody>
         </Modal>
-
+  
     <Modal size="xl" isOpen={courseDetailsToggle} toggle={()=>setCourseDetailsToggle(!courseDetailsToggle)} className="Course Details">
-        <ModalHeader toggle={()=>setCourseDetailsToggle(!courseDetailsToggle)} className="addBatchTitle"> Course Details  </ModalHeader>
-        <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
-            <Row className='shadow p-3 shadow'>
-                <h2> This is Course Details</h2>
-            </Row>
-        </ModalBody>
-</Modal>
+    <ModalHeader toggle={()=>setCourseDetailsToggle(!courseDetailsToggle)} className="addBatchTitle"> Course Details  </ModalHeader>
+      <ModalBody
+        className="modals"
+        style={{ background: "linear-gradient(to bottom, #94bbe9, #ffffff)" }}
+      >
+        <Row className="gy-4">
+          {allBatches.map((batch, index) => (
+            <Col lg={4} md={6} sm={12} key={index}>
+              <Card className="shadow-sm h-100">
+                <div className="card-image-container">
+                  <img
+                    src={profile3}
+                    alt={batch.batchTitle}
+                    className="img-fluid card-image text-center"
+                  />
+                </div>
+                <CardBody>
+                  <CardTitle tag="h5">{batch.batchTitle}</CardTitle>
+                  <CardText>
+                    <strong>Duration:</strong> {batch.duration}
+                  </CardText>
+                  <CardText>
+                    <strong>Start Date:</strong> {batch.startDate}
+                  </CardText>
+                  <CardText>
+                    <strong>End Date:</strong> {batch.endDate}
+                  </CardText>
+                  <CardText>
+                    <strong>Location:</strong> {batch.location}
+                  </CardText>
+                  <CardText>
+                    <strong>Time:</strong> {batch.time}
+                  </CardText>
+                  <CardText>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      className={
+                        batch.status === "Start Very Soon"
+                          ? "text-warning"
+                          : "text-success"
+                      }
+                    >
+                      {batch.status}
+                    </span>
+                  </CardText>
+                  <Button color="primary" block>
+                    More Details
+                  </Button>
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </ModalBody>
+    </Modal>
         </section>
     );    
 };
