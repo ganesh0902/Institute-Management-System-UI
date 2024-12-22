@@ -1,12 +1,12 @@
-import { Axios } from "axios"
 
 const token= localStorage.getItem("authToken");
 const getInstituteAPI=`http://localhost:8999/institute/details/`;
 const getTeacherDetails='http://localhost:8999/teacher/credential/'
 
-export const getInstitute=async (email)=>{
+export const getInstitute=async (InstituteId)=>{
     
-   const response =await fetch(getInstituteAPI+email,{
+    alert(InstituteId);
+   const response =await fetch(getInstituteAPI+InstituteId,{
 
         method:"GET",
         headers:{
@@ -28,6 +28,7 @@ export const getTeacherDetailsRecord=async (credentialId)=>{
     
     try
     {
+        alert(credentialId);
         const response  = await fetch(getTeacherDetails+credentialId,{
             method:"GET",
             headers:{

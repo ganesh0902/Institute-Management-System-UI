@@ -28,6 +28,7 @@ export const registration=(async (value)=>{
 export const getToken=async (value)=>{
 
     try{
+    
          const response  = await fetch(`http://localhost:9096/auth/token`,{
             method:'POST',
             headers:{

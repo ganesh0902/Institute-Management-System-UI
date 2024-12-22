@@ -30,6 +30,8 @@ function Header({openSidebar,logOutRoute,instituteId}) {
   };
   
   const userId = localStorage.getItem("USER_ID");
+
+  alert("USER ID in header"+userId);
   const getUserInformation=(user)=>{
 
     setUserInformation(user);

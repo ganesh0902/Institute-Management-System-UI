@@ -1,11 +1,10 @@
-import { Link, NavLink } from "react-router-dom"
+import { json, Link, NavLink } from "react-router-dom"
 import NavigationBar from "./NavigationBar"
 import profile from '../../images/pro1.webp'
 import profile2 from '../../images/pro2.webp'
 import profile3 from '../../images/pro3.webp'
 import profile4 from '../../images/pro4.webp'
 import { FaGraduationCap,FaInstagram ,FaFacebookF ,FaTwitter } from "react-icons/fa";
-import { MdStarRate } from "react-icons/md";
 import { Modal ,ModalBody,ModalHeader,Row,Col} from "reactstrap"
 import { useState } from "react"
 import CourseCarousel from './CourseCarousel'
@@ -51,13 +50,14 @@ const HomePage=({loginStatus,instituteId})=>{
         }                       
 
         setTimeout(async ()=>{                                                           
-            const validate  = await validateToken(token);  
+            const validate  = await validateToken(token);              
                           
             if (!validate) {                
                 alert("Token validation failed ",validate);
                 return;
             }
-            localStorage.setItem("USER_ID",validate.username);            
+            localStorage.setItem("USER_ID",validate.InstituteId);  
+            
             const user =  await getUserInformation(validate.username);             
 
             localStorage.setItem("ROLE",user.role);   
@@ -69,8 +69,8 @@ const HomePage=({loginStatus,instituteId})=>{
                 const data = await getTeacherDetailsRecord(user.id);                 
                 setTeacherDetails(data);                                  
             }
-
-            const instituteDetails = await getInstitute(validate.username);
+                        
+            const instituteDetails = await getInstitute(validate.InstituteId);
 
             if (instituteDetails && instituteDetails.id !== undefined) {
                 localStorage.setItem("INSTITUTE_ID", instituteDetails.id);

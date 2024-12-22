@@ -4,8 +4,6 @@ import { BsFillArchiveFill, BsFillGearFill } from 'react-icons/bs';
 import { getStudentCount, getTeacherCount, getCourseCount, getBatchCount } from './apis/adminHomeApi';
 import Loader from './component/Loader';
 
-
-
 // HomeContent component to handle fetching data and rendering UI
 const HomeContent = ({ instituteId }) => {
   const [student, setStudent] = useState(0);
