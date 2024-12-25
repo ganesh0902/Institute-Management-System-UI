@@ -236,7 +236,7 @@ const Assignments=()=>{
                 <div className='col-12 col-sm-12 col-md-8 shadow assignment-card'>
                     <h2> 
                     {
-                    students.filter(student => student.stdId === selectedStdId).length === 0 
+                        Array.isArray(students) && students.length === 0 
                         ? <div className='text-center'> No Student Submission Yet </div> 
                         : students.filter(student => student.stdId === selectedStdId).map(student => (
 

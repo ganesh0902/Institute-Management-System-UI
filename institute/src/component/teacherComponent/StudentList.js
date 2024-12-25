@@ -61,9 +61,6 @@ const StudentList=({teacherId})=>{
         }
     };
           
-
-    
-
     return(
         <div style={linkStyle}>
             <div className="row" id="student-list">

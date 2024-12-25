@@ -48,8 +48,7 @@ function Header({openSidebar,logOutRoute,instituteId}) {
       }
       else
       {
-        console.log("User Details is not fetch");
-        alert("User Id is ",userId);
+        console.log("User Details is not fetch");        
       }
     }
     getUserDetails();

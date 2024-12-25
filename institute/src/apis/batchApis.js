@@ -211,6 +211,7 @@ export const getBatchesByTeacher=async (tId)=>{
 
     try
     {
+    
       const response  =  await fetch(getBatchesByTeacherAPI+tId,{
             method:'GET',
             headers:{
