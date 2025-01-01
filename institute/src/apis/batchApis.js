@@ -246,8 +246,8 @@ export const findBatchesByCourseId=async(courseId)=>{
         const response  = await fetch(getBatchesByCourseId+courseId,{
             method:"GET",
             headers:{
-                'Content-Type':'application/json',
-                'Authorization':`Bearer ${token}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },            
         })
 

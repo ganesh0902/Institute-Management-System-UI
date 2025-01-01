@@ -133,7 +133,9 @@ const CourseCarouselContent = ({instituteId}) => {
 
         try
         {
-            const response  = await findBatchesByCourseId(course);
+            const response  = await findBatchesByCourseId(courseId);
+            console.log("In CourseCarousel");
+            console.log(response);            
             setBatchesByCourseId(response);
             setUpdate(!update);
         }
@@ -141,8 +143,7 @@ const CourseCarouselContent = ({instituteId}) => {
         {
             console.error(Error);
         }
-        setCourseDetailsToggle(!courseDetailsToggle);
-        alert(courseId);
+        setCourseDetailsToggle(!courseDetailsToggle);        
     }
     useEffect(()=>{
 
@@ -283,7 +284,7 @@ const CourseCarouselContent = ({instituteId}) => {
         style={{ background: "linear-gradient(to bottom, #94bbe9, #ffffff)" }}
       >
         <Row className="gy-4">
-          {allBatches.map((batch, index) => (
+          {batchesByCourseId.map((batch, index) => (
             <Col lg={4} md={6} sm={12} key={index}>
               <Card className="shadow-sm h-100">
                 <div className="card-image-container">
@@ -292,7 +293,7 @@ const CourseCarouselContent = ({instituteId}) => {
                     alt={batch.batchTitle}
                     className="img-fluid card-image text-center"
                   />
-                </div>
+                </div>                
                 <CardBody>
                   <CardTitle tag="h5">{batch.batchTitle}</CardTitle>
                   <CardText>
@@ -321,7 +322,7 @@ const CourseCarouselContent = ({instituteId}) => {
                     >
                       {batch.status}
                     </span>
-                  </CardText>
+                  </CardText>                  
                   <Button color="primary" block>
                     More Details
                   </Button>
