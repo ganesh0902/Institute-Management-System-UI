@@ -27,6 +27,7 @@ import SubmissionList from './component/teacherComponent/SubmissionList';
 import StudentList from './component/teacherComponent/StudentList';
 import PaymentComponent from './apis/paymentGateWay';
 import CourseDetailsHome from './courses/CourseDetailsHome';
+import DivisionMasterForm from './component/teachers/DivisionMasterForm';
 
 function App() {
   const[openSidebarToggle,setOpenSidebarToggle]=useState(false);  
@@ -72,13 +73,13 @@ const setSidebarToggleTeacher=()=>{
     setLogin(false);
   }
 
-
   return (
     <div >
   <Router>
           <>
            <Routes>
             <Route path='/courseDetails/:courseId' element={<CourseDetailsHome/>} />
+            <Route path='/division' element={<DivisionMasterForm/>} />   
            </Routes>
          </>                  
       {        
@@ -103,7 +104,8 @@ const setSidebarToggleTeacher=()=>{
       {
         login && loginRole ==="ADMIN" &&                  
           <Routes>                        
-              <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />        
+              <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />                 
+
               <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
               <Route path='/course' element={<Course instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 
               <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 

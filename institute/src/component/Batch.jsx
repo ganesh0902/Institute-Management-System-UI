@@ -67,7 +67,7 @@ const Batch=({instituteId})=>{
         const getAllBatch=async ()=>{
                       
             allCourseIdAndName();
-            allTeacherIdAndName();       
+            //allTeacherIdAndName();       
             getTeacherIdAndNameByIdentityService();                 
             const response  = await getBatchByInstitute(instituteId);
             setAllBatches(response);           
