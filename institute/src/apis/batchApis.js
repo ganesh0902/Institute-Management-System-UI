@@ -152,7 +152,8 @@ export const getTeacherIdAndNameByIdentityService=(async(institute)=>{
         const response  = await fetch(getTeacherIdAndNameByCredential+institute,{
             method:"GET",
             headers:{
-                'Content-Type':"application/json",                
+                'Content-Type':"application/json",     
+                'Authorization':`Bearer${token}`           
             }
         });
 

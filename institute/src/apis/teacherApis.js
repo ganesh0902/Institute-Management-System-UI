@@ -5,7 +5,7 @@ const updateTeacherAPI="http://localhost:8999/teacher/";
 const getTeacherIdAndTimeAPIS="http://localhost:9003/teacher/getTeachers";
 const API_SAVE_TEACHER="http://localhost:8999/teacher/";
 const getTeacherByIdAPI='http://localhost:8999/teacher/'
-const API_GET_TEACHER="http://localhost:8999/teacher/institute/"
+const API_GET_TEACHER="http://localhost:8999/teacher/institute/"     
 const SAVE_TEACHER_APIS="http://localhost:9096/auth/register"
 
 const token = localStorage.getItem("authToken");    

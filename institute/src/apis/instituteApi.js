@@ -4,8 +4,9 @@ const getInstituteAPI=`http://localhost:8999/institute/details/`;
 const getTeacherDetails='http://localhost:8999/teacher/credential/'
 
 export const getInstitute=async (InstituteId)=>{
-    
-    alert(InstituteId);
+
+    try{
+        
    const response =await fetch(getInstituteAPI+InstituteId,{
 
         method:"GET",
@@ -22,6 +23,12 @@ export const getInstitute=async (InstituteId)=>{
     const data = await response.json();    
     localStorage.setItem("INSTITUTED_ID", data.id);
     return data;
+
+    }
+    catch(error)
+    {
+        alert("Something went wrong while fetching institute");
+    }
 }
 
 export const getTeacherDetailsRecord=async (credentialId)=>{

@@ -61,7 +61,7 @@ const HomePage=({loginStatus,instituteId})=>{
             const user =  await getUserInformation(validate.username);             
 
             localStorage.setItem("ROLE",user.role);   
-
+            
             if(user.role ==='TEACHER')
             {
                 console.log("User Ids"+user.id);
@@ -83,7 +83,7 @@ const HomePage=({loginStatus,instituteId})=>{
                 return;
             }
 
-        },500);
+        },500);        
         
         if(token==="")
         {

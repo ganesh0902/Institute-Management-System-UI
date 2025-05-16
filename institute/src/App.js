@@ -48,22 +48,24 @@ const setSidebarToggleTeacher=()=>{
   setOpenSidebarToggleForTeacher(!openSidebarToggleForTeacher);  }
 
   const loginStatus=async(role, nUserId)=>{    
-            
-    if(role==="TEACHER")
-    {         
+             
+    if(role==="ROLE_TEACHER")
+    { 
+      alert("TEACHER");        
       setLoginRole(role);
       setUserId(nUserId); 
       setCredentialId(nUserId);     
     }
-    else if(role==="STUDENT")
+    else if(role==="ROLE_STUDENT")
     {
-      alert(role);
+      alert("Student");
       setLoginRole(role);
     }
-    else if(role==="ADMIN"){
+    else if(role==="ROLE_ADMIN"){
       
       setUserId(nUserId);
       setLoginRole(role);               
+      alert("ADMIN");
     }
     setLogin(true);
   }
@@ -93,16 +95,16 @@ const setSidebarToggleTeacher=()=>{
       <div className="grid-container">                  
       {
         // if admin is login show  side bar
-        login && loginRole==="ADMIN" &&
+        login && loginRole==="ROLE_ADMIN" &&
         <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar}/>                    
       }
       {
         // if admin is login show the header
-        login && loginRole ==="ADMIN" &&
+        login && loginRole ==="ROLE_ADMIN" &&
         <Header instituteId={localStorage.getItem("INSTITUTE_ID")} openSidebar={openSidebar}  logOutRoute={logOut}/>
       }     
       {
-        login && loginRole ==="ADMIN" &&                  
+        login && loginRole ==="ROLE_ADMIN" &&                  
           <Routes>                        
               <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />                 
 
@@ -117,7 +119,7 @@ const setSidebarToggleTeacher=()=>{
           </Routes>
       } 
       {
-         loginRole==="TEACHER" ?
+         loginRole==="ROLE_TEACHER" ?
          <>
           <TeacherRoot setSidebarToggleTeacher={setSidebarToggleTeacher}/>
           <TSidebar toggle={openSidebarToggleForTeacher}/>
