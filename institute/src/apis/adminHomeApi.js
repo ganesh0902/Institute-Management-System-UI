@@ -50,7 +50,7 @@ export const getTeacherCount=async (instituteId)=>{
     }).then(data=>{
 
         return data;
-    }).catch(error=>{
+    }).catch(error=>{        
         console.log("Error Fetching total Teacher ",error);
     })
 }

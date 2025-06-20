@@ -51,21 +51,21 @@ const setSidebarToggleTeacher=()=>{
              
     if(role==="ROLE_TEACHER")
     { 
-      alert("TEACHER");        
+      //alert("TEACHER");        
       setLoginRole(role);
       setUserId(nUserId); 
       setCredentialId(nUserId);     
     }
     else if(role==="ROLE_STUDENT")
     {
-      alert("Student");
+      //alert("Student");
       setLoginRole(role);
     }
     else if(role==="ROLE_ADMIN"){
       
       setUserId(nUserId);
       setLoginRole(role);               
-      alert("ADMIN");
+      //alert("ADMIN");
     }
     setLogin(true);
   }

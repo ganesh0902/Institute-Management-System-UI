@@ -211,9 +211,8 @@ export const getBatchById=async (batchId)=>{
 export const getBatchesByTeacher=async (tId)=>{
 
     try
-    {
-    
-      const response  =  await fetch(getBatchesByTeacherAPI+tId,{
+    {    
+        const response  =  await fetch(getBatchesByTeacherAPI+tId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -221,13 +220,16 @@ export const getBatchesByTeacher=async (tId)=>{
             }
         });
 
-        if(!response.ok)
-        {
-                throw new Error("Something went wrong while fetching batches for teacher admin");
-        }        
+        if (!response.ok) {
+             const errorMessage = await response.text();
+             alert(errorMessage); // Show the actual response error
+            throw new Error("Something went wrong while fetching batches for teacher admin");
+            }    
 
         const data = await response.json();
         console.log(data);
+        alert(JSON.stringify(data, null, 2)); // This will show the object as a formatted string
+
         return data;        
     }
     catch(error)
