@@ -61,12 +61,12 @@ const HomePage=({loginStatus,instituteId})=>{
             const user =  await getUserInformation(validate.username);             
 
             localStorage.setItem("ROLE",user.role);   
-            
-            if(user.role ==='TEACHER')
+                        
+            if(user.role ==='ROLE_TEACHER')
             {
                 console.log("User Ids"+user.id);
                 localStorage.setItem("userId",user.id);
-                const data = await getTeacherDetailsRecord(user.id);                 
+                const data = await getTeacherDetailsRecord(user.id);     
                 setTeacherDetails(data);                                  
             }
                         

@@ -7,6 +7,7 @@ const API_SAVE_TEACHER="http://localhost:8999/teacher/";
 const getTeacherByIdAPI='http://localhost:8999/teacher/'
 const API_GET_TEACHER="http://localhost:8999/teacher/institute/"     
 const SAVE_TEACHER_APIS="http://localhost:9096/auth/register"
+const GET_BATCH_API="http://localhost:8999/batch/"
 
 const token = localStorage.getItem("authToken");    
     
@@ -27,7 +28,7 @@ export const getTeacherByInstitute=async (institutesId)=>{
             throw new Error("Response was not okay",response.statusText);
         }
 
-        const data = await response.json();
+        const data = await response.json();       
         return data;
     }
     catch(error)
@@ -125,5 +126,27 @@ export const saveTeacher=async(teacher)=>{
     }
 
     const data = await response.text();    
+    return data;
+}
+
+export const getBatches=async (batchId)=>{
+    
+    
+    const response  = await fetch(GET_BATCH_API+batchId,{
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        }
+    });
+
+    if(!response.ok)
+    {
+        throw new Error("Api Response was not okay",response.statusText);
+    }
+    
+    const data= await response.json();
+    console.log("Batch's Record is in teacherAPIs");
+    console.log(data);
     return data;
 }

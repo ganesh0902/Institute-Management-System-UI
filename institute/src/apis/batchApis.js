@@ -83,8 +83,18 @@ export const updateBatch=async (bId, batch)=>{
 
 export const getBatchesByTeacherId=async (tId)=>{
 
-    const response = await axios.get(`http://localhost:8999/batch/teacherId/`+tId);
-    return response.data;
+    const response  = await fetch(`http://localhost:8999/batch/teacherId/`+tId,{
+        method:"GET",
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`,  
+        }});
+
+        if(!response.ok)
+        {
+            console.log("Response is not okay");
+        }
+    return await response.json();
 }
 
 export const saveBatchRecord=async (batch)=>{
@@ -210,6 +220,7 @@ export const getBatchById=async (batchId)=>{
 }
 export const getBatchesByTeacher=async (tId)=>{
 
+    alert(tId);
     try
     {    
         const response  =  await fetch(getBatchesByTeacherAPI+tId,{
@@ -222,7 +233,7 @@ export const getBatchesByTeacher=async (tId)=>{
 
         if (!response.ok) {
              const errorMessage = await response.text();
-             alert(errorMessage); // Show the actual response error
+             alert("hhh"+errorMessage); // Show the actual response error
             throw new Error("Something went wrong while fetching batches for teacher admin");
             }    
 

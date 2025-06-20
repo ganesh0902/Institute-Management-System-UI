@@ -11,7 +11,7 @@ import { MdMarkEmailRead } from "react-icons/md";
 import 'primereact/resources/themes/saga-blue/theme.css';  // Import PrimeReact themes
 import 'primereact/resources/primereact.min.css';          // Import PrimeReact CSS
 import 'primeicons/primeicons.css';  
-import {getTeachersNameAndIds} from '../../apis/teacherApis'
+import {getBatches,getTeachersNameAndIds} from '../../apis/teacherApis'
 import {updateBatch} from '../../apis/batchApis'
 import {getCourserNameAndId} from '../../apis/courseApis'
 import Loader from '../Loader';
@@ -39,15 +39,17 @@ const BatchDisplay=()=>{
     const[teachersName,setTeachersName]=useState([]);
     const[updateComponent,setUpdateComponent]=useState(false);
 
-    useEffect(()=>{        
-        fetch(`http://localhost:8999/batch/`+bId).then(async (result)=>{
-
-            await result.json().then((response)=>{
-                setBatch(response);                                   
-            })
-        })
-        teacherName();        
-    },[bId,updateComponent]);
+    useEffect(() => {
+    const fetchBatch = async () => {
+        try {       
+        const response = await getBatches(bId);
+        setBatch(response);        
+        } catch (error) {
+        console.error("Error fetching batch:", error);
+        }
+    };
+    fetchBatch();
+    }, [bId]);
 
     useEffect(()=>{        
         const {course}=batch;
@@ -99,10 +101,10 @@ const BatchDisplay=()=>{
         }
     }   
 
-    if(loadingTeacher)
-    {
-        return(<Loader/>)
-    }
+    // if(loadingTeacher)
+    // {
+    //     return(<Loader/>)
+    // }
     if (!course) {
         return <Loader/>; // Return loading indicator if course is not available yet
       }
@@ -209,55 +211,7 @@ const BatchDisplay=()=>{
                 </div>                    
             </div>
 
-            <Modal size="lg" isOpen={updateDialog} toggle={()=>setUpdateDialog(!updateDialog)} className="batchModal">
-                <ModalHeader toggle={()=>setUpdateDialog(!updateDialog)} className="addBatchTitle"> Update Batch </ModalHeader>
-                <ModalBody className="modals" style={{background: 'linear-gradient(to bottom, #94bbe9, #ffffff)'}}>
-                <Row>
-                    <Col lg={6} md={12}>
-                        <label className='batchCl' htmlFor="batchTitle"> Enter Batch Title Name </label>
-                        <input type="text" name="batchTitle" defaultValue={batch.batchTitle} onChange={(event)=>setBatchTitle(event.target.value)}/>
-                    </Col>
-                    <Col lg={6} md={12}>
-                        <label className='batchCl' htmlFor="batchDuration"> Enter Batch Duration </label>
-                        <input type="text" name="firstName" defaultValue={batch.duration} onChange={(event)=>setDuration(event.target.value)}/>
-                    </Col>
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchEndDate"> Enter Batch Start Date </label>
-                        <input type="date" name="firstName" className='form-control' defaultValue={batch.startDate} onChange={(event)=>setStartDate(event.target.value)}/>
-                    </Col>
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchStartDate"> Enter Batch End Date </label>
-                        <input type="date" name="firstName" className='form-control' defaultValue={batch.endDate} onChange={(event)=>setEndDate(event.target.value)}/>
-                    </Col>
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchLocation"> Enter Location </label>
-                        <input type="text" name="firstName" defaultValue={batch.location}  onChange={(event)=>setLocation(event.target.value)}/>
-                    </Col>       
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchTime"> Select Time </label>
-                        <input type="time" name="time" defaultChecked={batch.time}  onChange={(event)=>setTime(event.target.value)} className='form-control'/>                            
-                    </Col>            
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="batchStatus"> Enter Batch Status </label>
-                        <input type="text" name="firstName" readOnly defaultValue={batch.status} onChange={(event)=>setStatus(event.target.value)}/>
-                    </Col>                    
-                    <Col lg={6} md={12} className="mt-2">
-                        <label className='batchCl' htmlFor="teacherName"> Select Teacher </label>
-                        <select className='form-control pt-2 pb-2' onChange={(event)=>setTeacherId(event.target.value)}>
-                          <option value={batch.teacherId}>{batch.teacherDto.firstName}</option>  
-                       {
-                            teachersName.map((result)=>(
-                                <option value={result.teacherId}>{result.teacherName} </option>
-                            ))
-                       }
-                       </select>                                
-                    </Col>
-                    <Col lg={6} md={12} className="mt-4">
-                        <button className='btn btn-primary form-control' onClick={()=>batchUpdate()}> Submit </button>
-                    </Col>
-                </Row>                                    
-                </ModalBody>
-            </Modal>    
+           
         </section>                                     
     )
 }

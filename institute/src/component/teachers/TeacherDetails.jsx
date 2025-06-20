@@ -25,8 +25,7 @@ const TeacherDetails=()=>{
     
     useEffect(()=>{
         
-        getTeacher();
-        
+        getTeacher();        
         getBatches();            
     },[tId]);
 

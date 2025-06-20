@@ -34,7 +34,7 @@ const HomeContent = ({ instituteId }) => {
   };
 
   const getTeacher = async () => {
-    const response = await getTeacherCount(instituteId);
+    const response = await getTeacherCount(instituteId);    
     setTeacher(response);
   };
 
