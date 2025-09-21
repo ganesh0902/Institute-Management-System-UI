@@ -53,6 +53,7 @@ const Assignments=()=>{
     const getStudentByAssignment=async (assignmentId)=>{
         try
         {
+            alert("STD");
         const data = await getStudentByAssignmentIdAPI(assignmentId);
         setStudents(data);
         }
@@ -63,11 +64,15 @@ const Assignments=()=>{
     }
 
     useEffect(()=>{
+
+        
         console.log("BatchId "+batchId);
         console.log("Assignment");
         console.log(assignment);
         console.log("student list");
         console.log(students);
+
+        alert(Array.isArray(students));
         
     },[assignment,students,selectedStdId]);
 
@@ -80,7 +85,6 @@ const Assignments=()=>{
         return(<Loader/>)
     }
     
-
     const assignmentListCss={
         padding: '15px 15px 15px 0px', 
         marginTop: '10px', 
@@ -218,10 +222,14 @@ const Assignments=()=>{
             <div className='row'>                  
                 <div className='col-12 col-sm-12 col-md-4 shadow assignment-card'>
                 <div id='image-label-container'>
-                    {
+                    {/* {
                         students.length === 0 && <div className='text-center'> No Student Found Yet </div>
-                    }
+                    } */}
                     {
+                        Array.isArray(students) && students.map(student => (
+                        <div key={student.id}>{student.name}</div>
+                    ))}
+                    {/* {                        
                         students.map((student,index)=>(
                             <div className='image-label'>
                                 <NavLink to="#" onClick={()=>selectedStudent(student.stdId, student.assignmentId)}>                                
@@ -230,7 +238,7 @@ const Assignments=()=>{
                                 </NavLink>
                             </div>  
                         ))
-                    }                                       
+                    }                                        */}
                     </div>
                 </div>
                 <div className='col-12 col-sm-12 col-md-8 shadow assignment-card'>

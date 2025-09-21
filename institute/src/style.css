@@ -243,7 +243,7 @@ nav .navigationForDesktop{
   text-align: center;
 }
 
-#course .course-box{
+/* #course .course-box{
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
   gap: 1rem;
@@ -251,7 +251,16 @@ nav .navigationForDesktop{
   border-radius: 20px;
   margin-bottom: 20px;  
   margin-right: 10px;
+} */
+
+#course .course-box {
+  /* REMOVE display: grid and grid-template-columns */
+  margin-top: 50px;
+  border-radius: 20px;
+  margin-bottom: 20px;  
+  margin-right: 10px;
 }
+
 #course .course-box .course-box-link{
   text-decoration: none;
 }

@@ -230,6 +230,7 @@ export const getStudent=(async(stdId)=>{
     catch(error)
     {
         console.log(error);
+        alert(error);
     }
 })
 

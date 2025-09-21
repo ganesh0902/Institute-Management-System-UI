@@ -15,7 +15,8 @@ const Chatting=({stdId})=>{
     useEffect(()=>{
 
         const getStudentDetails=( async()=>{
-            const data = await getStudent(stdId);
+            
+            const data = await getStudent(stdId);            
             setStudent(data);
         })
         getStudentDetails();

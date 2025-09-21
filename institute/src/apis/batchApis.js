@@ -219,8 +219,7 @@ export const getBatchById=async (batchId)=>{
     }
 }
 export const getBatchesByTeacher=async (tId)=>{
-
-    alert(tId);
+    
     try
     {    
         const response  =  await fetch(getBatchesByTeacherAPI+tId,{
@@ -239,7 +238,7 @@ export const getBatchesByTeacher=async (tId)=>{
 
         const data = await response.json();
         console.log(data);
-        alert(JSON.stringify(data, null, 2)); // This will show the object as a formatted string
+      //  alert(JSON.stringify(data, null, 2)); // This will show the object as a formatted string
 
         return data;        
     }

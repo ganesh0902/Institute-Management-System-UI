@@ -107,7 +107,6 @@ const setSidebarToggleTeacher=()=>{
         login && loginRole ==="ROLE_ADMIN" &&                  
           <Routes>                        
               <Route path='/' element={<Home instituteId={localStorage.getItem("INSTITUTE_ID")}/>} />                 
-
               <Route path='/student' element={<Student instituteId={localStorage.getItem("INSTITUTE_ID")}/> }/> 
               <Route path='/course' element={<Course instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 
               <Route path='/batch' element={<Batch instituteId={localStorage.getItem("INSTITUTE_ID")} />}/> 

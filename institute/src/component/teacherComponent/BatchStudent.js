@@ -71,8 +71,6 @@ const BatchStudent=({teacherId})=>{
         console.log(Description);     
         console.log("Assignment is ");        
         console.log(assignment);    
-
-        alert(teacherId);
         await saveAssignment(assignment);
 
         alert("Record Save Successfully");
@@ -86,7 +84,6 @@ const BatchStudent=({teacherId})=>{
         console.log("Student Id is ");
         console.log(studentId);
     },[studentId]);
-
 
     const resetAssignment = () => {
         setAssignment({
@@ -118,7 +115,7 @@ const BatchStudent=({teacherId})=>{
                         </div>                                 
                         <div className="col-12 col-sm-12 col-md-12 shadow scroll mt-3">                           
                         {
-                        students.map((student,index)=>(                            
+                        Array.isArray(students) && students.map(student =>(                            
                             <div className="studentList">                                
                                 <div>
                                     <img src={a} alt=""/>

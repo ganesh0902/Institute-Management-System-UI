@@ -15,7 +15,7 @@ import { Modal ,ModalBody, ModalHeader, Row,Col,Button, Card,CardBody, CardTitle
 import Loader from '../Loader';
 import { isEmpty } from 'lodash';
 import { findBatchesByCourseId } from '../../apis/batchApis';
-
+import Slider1 from './Slider1';
 
 const CustomPrevArrow = (props) => (
     <button {...props} className="slick-prev">
@@ -63,38 +63,7 @@ const CourseCarouselContent = ({instituteId}) => {
             },
         ],
     };   
-
-    const allBatches = [
-        {
-            "batchTitle": "Web Technology",
-            "duration": "6 Months",
-            "startDate": "2024-11-01",
-            "endDate": "2025-05-08",
-            "status": "Start Very Soon",
-            "location": "Pune",
-            "time": "14:55",
-            "image": "25ba6802-6ce6-4b7c-a7a3-7e538ec62b4e_meeting.jpg.jpg",
-            "teacherId": 902,
-            "courseId": 2503,
-            "instituteId": 2,
-            "bid": 1602
-        },
-        {
-            "batchTitle": "Web Technology",
-            "duration": "6 Months",
-            "startDate": "2024-11-23",
-            "endDate": "2025-05-15",
-            "status": "Start Very Soon",
-            "location": "Mumbai",
-            "time": "20:19",
-            "image": "426b76a9-0d89-4181-a68f-9de1ddfa89e3_0_pUOSYV0s8QU-X-a0.jfif",
-            "teacherId": 902,
-            "courseId": 2503,
-            "instituteId": 2,
-            "bid": 1652
-        }
-    ]
-
+    
     useEffect(()=>{
 
         const getBatch=(async ()=>{
@@ -175,7 +144,6 @@ const CourseCarouselContent = ({instituteId}) => {
                             ))
                         }
                     </div>
-                    
                 </div>
             <Slider {...settings}>
                 {

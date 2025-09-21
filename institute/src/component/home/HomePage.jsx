@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import {registration, getToken, validateToken, getUserInformation} from '../../apis/authenticationApi'
 import {getInstitute, getTeacherDetailsRecord} from '../..//apis/instituteApi'
 import Loader from "../Loader"
-
 import { useEffect } from "react"
 
 const HomePage=({loginStatus,instituteId})=>{

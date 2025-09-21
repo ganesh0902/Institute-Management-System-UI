@@ -39,7 +39,7 @@ export const getToken=async (value)=>{
          
          if(!response.ok)
          {
-            throw new Error("Something went wrong while generating token")
+            throw new Error("Something went wrong while generating token"+response.text());
          }                      
          return response.text();        
     }

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Modal ,ModalBody,ModalHeader,Row,Col, Input} from "reactstrap"
 import axios from 'axios';
-import * as Yup from 'yup';
 import Loader from "../component/Loader"
 import {saveStudent} from '../apis/studentApis'
 import {searchStudent,getBatchTileAndDateRecord,getStudentRecordByInstitute} from '../apis/studentApis'
